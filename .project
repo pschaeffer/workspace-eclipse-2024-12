@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>ProxyServerA</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>httpcomponents-core-4.4.11 Java</name>
+			<type>2</type>
+			<location>C:/Users/Peter/HeadlampJetty/httpcomponents-core-4.4.11/httpcore/src/main/httpcomponents-core-4.4.11 Java</location>
+		</link>
+	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1770859805078</id>
+			<name></name>
+			<type>30</type>
+			<matcher>
+				<id>org.eclipse.core.resources.regexFilterMatcher</id>
+				<arguments>node_modules|\.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
+</projectDescription>
