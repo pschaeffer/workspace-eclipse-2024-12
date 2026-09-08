@@ -1,6 +1,10 @@
 package com.headlamp;
 import static com.headlamp.HDLmAssert.HDLmAssertAction;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,13 +16,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.script.*;
 
+/* import nu.validator.validation.EmbeddedValidator; */
+import nu.validator.client.EmbeddedValidator; 
+import nu.validator.validation.SimpleDocumentValidator;
+import nu.validator.xml.SystemErrErrorHandler;
+
 import org.graalvm.polyglot.*;
 import org.graalvm.polyglot.proxy.*;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.jsoup.parser.Parser;
+import org.jsoup.parser.ParseError;
 import org.mozilla.javascript.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 /**
  * HDLmHtml short summary.
  *
@@ -667,8 +681,8 @@ public class HDLmHtml {
     finally {
     	org.mozilla.javascript.Context.exit();
     }
-    /* Optionaly log some debugging information */
-	  boolean   logIsDebugEnabled=LOG.isDebugEnabled();
+    /* Optionally log some debugging information */
+	  boolean   logIsDebugEnabled = LOG.isDebugEnabled();
 		if (logIsDebugEnabled) {
 		  LOG.info("Original script - " + script);
 		  if (rvStr != null)
@@ -797,6 +811,266 @@ public class HDLmHtml {
 			return false;
 		return true;
 	}
+	/* This routine checks if some HTML (possibly including CSS, links, images, 
+	   JS, etc.) is valid or not. This routine returns true, if the web page 
+	   is valid. This routine returns false, if the web page is not valid. The
+	   caller can specify if errors should be reported or not.  This routine is
+     in use and tries to use the Jsoup HTML validator.*/  
+	protected static boolean  checkIfWebpageValid(final String webpage, 
+			                                          final HDLmReportErrors reportErrors) {
+		/* Check if the web page string is null */
+		if (webpage == null) {
+			String errorText = "Web page string passed to checkIfWebpageValid is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the report errors enum is null */
+		if (reportErrors == null) {
+			String errorText = "Report errors enum passed to checkIfWebpageValid is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the report errors enum is set to NONE */
+		if (reportErrors == HDLmReportErrors.NONE) {
+			String errorText = "Report errors enum passed to checkIfWebpageValid is set to NONE";
+			throw new NullPointerException(errorText);
+		}			
+    /* Optionally log some debugging information */
+	  boolean   logIsDebugEnabled = LOG.isDebugEnabled();
+		if (logIsDebugEnabled) {
+		  LOG.info("Original webpage - " + webpage);	
+		}
+		/* Assume the web page is valid */
+		boolean   rv = true;
+		/* Just return in all cases, for testing */
+		/*
+		if (1 == 2)
+			return rv;
+		*/
+    /* Create a parser and configure it to track up to 999 errors */
+    Parser  parser = Parser.htmlParser().setTrackErrors(999);
+    /* Parse the HTML using the tracking parser */
+    Document  doc = Jsoup.parse(webpage, "", parser);    
+    /* Retrieve the collected errors */
+    List<ParseError>  errors = parser.getErrors();
+    /* Check if no errors were found. Just return in this case. */
+		rv = errors.isEmpty();  
+    return rv;
+	}		
+	/* This routine checks if some HTML (possibly including CSS, links, images, 
+     JS, etc.) is valid or not. This routine returns true, if the web page 
+     is valid. This routine returns false, if the web page is not valid. The
+	   caller can specify if errors should be reported or not. This routine is
+	   not in use and tries to use the vnu HTML validator. */  
+	protected static boolean  checkIfWebpageValidNuNotUsed(final String webpage, 
+			                                                   final HDLmReportErrors reportErrors) {
+		/* Check if the web page string is null */
+		if (webpage == null) {
+			String errorText = "Web page string passed to checkIfWebpageValidNu is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the report errors enum is null */
+		if (reportErrors == null) {
+			String errorText = "Report errors enum passed to checkIfWebpageValidNu is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the report errors enum is set to NONE */
+		if (reportErrors == HDLmReportErrors.NONE) {
+			String errorText = "Report errors enum passed to checkIfWebpageValidNu is set to NONE";
+			throw new NullPointerException(errorText);
+		}			 
+		/* Assume the web page is valid */
+		boolean   rv = true;
+		/* Just return in all cases, for testing */
+		/*
+		if (1 == 2)
+			return rv;
+		*/  
+	  /* Try to validate the web page */
+	  try {
+	    /* Build the input stream */
+	    InputStream  inputStream = new ByteArrayInputStream(webpage.getBytes(StandardCharsets.UTF_8));
+		  /* Build the validator that is used to check the web page */ 
+		   
+		  EmbeddedValidator   validator = new EmbeddedValidator();
+			 
+		  // Initialize the validator
+		  
+      String output = validator.validate(
+        new ByteArrayInputStream(webpage.getBytes(StandardCharsets.UTF_8))
+      );
+      if (!output.isEmpty()) {
+        throw new Exception("Validation failed:\n " + output);
+      }
+		  
+		  
+		  
+	
+    } catch (SAXException e) {
+		 	rv = false;
+		 	System.out.println("✅ HTML is not perfectly valid!");
+		 	rv = false;
+	  } catch (IOException e) {
+		  rv = false;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			rv = false;
+	  } catch (Exception e) {
+	    rv = false;
+		  // TODO Auto-generated catch block
+		  e.printStackTrace();	
+		  rv = false;
+		}
+ 	  return rv;
+	}		
+	/* This routine checks if some HTML (possibly including CSS, links, images, 
+	   JS, etc.) is valid or not. This routine returns true, if the web page 
+	   is valid. This routine returns false, if the web page is not valid. The
+	   caller can specify if errors should be reported or not. This routine is
+	   not in use and tries to use the vnu HTML validator. */  
+	protected static boolean  checkIfWebpageValidNuNotUsee(final String webpage, 
+			                                                   final HDLmReportErrors reportErrors) {
+		/* Check if the web page string is null */
+		if (webpage == null) {
+			String errorText = "Web page string passed to checkIfWebpageValidNu is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the report errors enum is null */
+		if (reportErrors == null) {
+			String errorText = "Report errors enum passed to checkIfWebpageValidNu is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the report errors enum is set to NONE */
+		if (reportErrors == HDLmReportErrors.NONE) {
+			String errorText = "Report errors enum passed to checkIfWebpageValidNu is set to NONE";
+			throw new NullPointerException(errorText);
+		}			 
+		/* Assume the web page is valid */
+		boolean   rv = true;
+		/* Just return in all cases, for testing */
+		/*
+		if (1 == 2)
+			return rv;
+		*/  
+	  /* Try to validate the web page */
+	  try {
+	    /* Build the input stream */
+		  InputStream  inputStream = new ByteArrayInputStream(webpage.getBytes(StandardCharsets.UTF_8));
+			/* Build the validator that is used to check the web page */ 
+		  /*
+			EmbeddedValidator   validator = new EmbeddedValidator();
+			*/
+		  // Initialize the validator
+      SimpleDocumentValidator validator = new SimpleDocumentValidator();
+      // Set up the main schema bundled with the library
+      validator.setUpMainSchema(EmbeddedValidator.SCHEMA_URL, new SystemErrErrorHandler());
+      validator.setUpValidatorAndParsers(null, true, false);
+      
+      // Prepare your HTML stream
+      ByteArrayInputStream    in = new ByteArrayInputStream(webpage.getBytes(StandardCharsets.UTF_8));
+      InputSource   source = new InputSource(in);
+      
+      // Check HTML structure 
+      System.out.println("Starting HTML validation...");
+      validator.checkHtmlInputSource(source);    
+	    System.out.println("✅ HTML is perfectly valid!");
+	
+	  } catch (SAXException e) {
+		 	rv = false;
+		 	System.out.println("✅ HTML is not perfectly valid!");
+		 	rv = false;
+	  } catch (IOException e) {
+		  rv = false;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			rv = false;
+	  } catch (Exception e) {
+	    rv = false;
+		  // TODO Auto-generated catch block
+		  e.printStackTrace();	
+		  rv = false;
+		}
+	  return rv;
+	}		
+	/* This routine checks if some HTML (possibly including CSS, links, images, 
+     JS, etc.) is valid or not. This routine returns true, if the web page 
+     is valid. This routine returns false, if the web page is not valid. The
+     caller can specify if errors should be reported or not. This routine is
+     not in use and tries to use the vnu HTML validator. */  
+	protected static boolean  checkIfWebpageValidNuNotUsef(final String webpage, 
+			                                                   final HDLmReportErrors reportErrors) {
+		/* Check if the web page string is null */
+		if (webpage == null) {
+			String errorText = "Web page string passed to checkIfWebpageValidNu is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the report errors enum is null */
+		if (reportErrors == null) {
+			String errorText = "Report errors enum passed to checkIfWebpageValidNu is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the report errors enum is set to NONE */
+		if (reportErrors == HDLmReportErrors.NONE) {
+			String errorText = "Report errors enum passed to checkIfWebpageValidNu is set to NONE";
+			throw new NullPointerException(errorText);
+		}			 
+		/* Assume the web page is valid */
+		boolean   rv = true;
+		/* Just return in all cases, for testing */
+		/*
+		if (1 == 2)
+			return rv;
+		*/  
+    /* Try to validate the web page */
+	  try {
+	    /* Build the input stream */
+	 	  InputStream  inputStream = new ByteArrayInputStream(webpage.getBytes(StandardCharsets.UTF_8));
+			/* Build the validator that is used to check the web page */ 
+	 	  /*
+			EmbeddedValidator   validator = new EmbeddedValidator();
+			*/
+	 	  SimpleDocumentValidator   validator = new SimpleDocumentValidator();
+	    validator.setUpMainSchema("http://s.validator.nu/html5-rdfalite.rnc", new SystemErrErrorHandler());
+ 	    // Configure a custom error handler or rely on the system handler
+	    // True flags configure it for HTML5 parsing behavior
+	    validator.setUpValidatorAndParsers(new SystemErrErrorHandler(), true, false);
+	   
+	    // Check the document
+	    validator.checkHtmlInputSource(new InputSource(inputStream));
+	    
+	    
+	    /* Set the output format to GNU style (readable error logs) */
+	    /*
+	    validator.setOutputFormat(EmbeddedValidator.OutputFormat.GNU);
+	    */
+	    /* Stream the web page string into the validator using UTF-8 */
+	    /*
+	    String  outStr = validator.validate(inputStream);
+	    */
+	    // If the output reporting string is not empty, errors were caught
+	    /*
+	    if (!outStr.isEmpty()) 
+				rv = false;
+		  */
+			
+	     
+	    System.out.println("✅ HTML is perfectly valid!");
+	
+	  } catch (SAXException e) {
+		 	rv = false;
+		 	System.out.println("✅ HTML is not perfectly valid!");
+		 	rv = false;
+	  } catch (IOException e) {
+	 	  rv = false;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			rv = false;
+	  } catch (Exception e) {
+	    rv = false;
+	 	  // TODO Auto-generated catch block
+		  e.printStackTrace();	
+		  rv = false;
+		}
+	  return rv;
+	}		
   /* This routine executes some JavaScript using the scripting 
      engine loaded by this routine. The caller can specify if
      errors should be reported or not. */ 

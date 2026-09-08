@@ -777,15 +777,11 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 				case "executeOpenAIRequest":
 					handleMessageExecuteOpenAIRequest(topNodeJsonElement);
 					break;
-				/* The executeOpenAIRequest message is used to execute an Open AI request. 
-				   The client provides the message headers, the body of the OpenAI request
-				   and the output format. The server (this code) provides the Open AI key 
+				/* The executeOpenRouterRequest message is used to execute an Open Router request. 
+				   The client provides the message headers, the body of the Open Router request
+				   and the output format. The server (this code) provides the Open Router key 
 				   used to execute the request. This approach eliminates the need to store
-				   the Open AI key on the client (presumably JavaScript).
-				   
-				   This request type does not appear to be used. It appears that the client
-				   doesn't use 'executeOpenRouterRequest' in any form. The client invokes
-				   Open Router instead by using 'webpageImprover'. */  
+				   the Open Router key on the client (presumably JavaScript). */  
 				case "executeOpenRouterRequest":
 					handleMessageExecuteOpenRouterRequest(topNodeJsonElement);
 					break;
@@ -843,12 +839,6 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 				  break;
 			  case "updateTreeNode":
 				  handleMessageUpdateTreeNode(topNodeJsonElement);
-				  break;
-			  case "webpageImprover":
-				  handleMessageWebpageImprover(topNodeJsonElement);
-				  break;
-			  case "websiteImprover":
-				  handleMessageWebsiteImprover(topNodeJsonElement);
 				  break;
 			  /* Report an error if the request type did not match one of the expected choices */
 			  default:
@@ -1151,8 +1141,26 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 				HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 64);
 				break;
 	  	}
+			/* Check if the caller passed a LLM model string. The string might
+			   be the name of a specific model or it might be a request that a 
+			   certain type of model be used. */
+			String  llmModelStr = null;
+			if (HDLmJson.hasJsonKey(jsonElement, "HDLmLlmModelStr")) {
+				llmModelStr = HDLmWebSocketInternalAdapter.getJsonString(jsonElement,
+						                                                     "HDLmLlmModelStr",
+						                                                     session);
+				if (llmModelStr == null)
+					break;
+			}			
+			/* Declare a response object used below */
+			HDLmResponse  aiResponse;
 			/* Pass the body string to the Open AI routine */
+			/* 
 			HDLmResponse  aiResponse = HDLmOpenAI.executeOpenAIRequest(bodyStr);
+			*/
+			/* Pass the body string and the optional LLM model string 
+			   to the Open AI routine */
+			aiResponse = HDLmOpenAI.executeOpenAIRequest(bodyStr, llmModelStr);
 			int           returnCode = aiResponse.getReturnCode();
 			if (returnCode != 0) {
 				String errorText = aiResponse.getErrorMessage();
@@ -1172,8 +1180,7 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 	   The client provides the body of the request and the output format. The server
 	   (this code) provides the Open Router key used to execute the request. This
 	   approach eliminates the need to store the Open Router key on the client
-	   (presumably JavaScript). This routine does not appear to be in use at this
-	   time. The client invoke uses the 'webpageImprover' routine instead. */
+	   (presumably JavaScript). */
 	protected void         handleMessageExecuteOpenRouterRequest(final JsonElement jsonElement) {
 		/* What follows is a dummy loop used only to allow break to work */
 		while (true) {
@@ -1199,9 +1206,21 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 				HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 64);
 				break;
 			}
-			HDLmResponse  aiResponse = null;
-			/* Pass the body string to the Open Router routine */
-			aiResponse = HDLmOpenRouter.executeOpenRouterRequest(bodyStr);			
+			/* Check if the caller passed a LLM model string. The string might
+			   be the name of a specific model or it might be a request that a 
+			   certain type of model be used. */
+			String  llmModelStr = null;
+			if (HDLmJson.hasJsonKey(jsonElement, "HDLmLlmModelStr")) {
+				llmModelStr = HDLmWebSocketInternalAdapter.getJsonString(jsonElement,
+						                                                     "HDLmLlmModelStr",
+						                                                     session);
+				if (llmModelStr == null)
+					break;
+			}
+			/* Declare a response object used below */
+			HDLmResponse  aiResponse;
+			/* Pass the body string and the LLM string to the Open Router routine */
+			aiResponse = HDLmOpenRouter.executeOpenRouterRequest(bodyStr, llmModelStr);			
 			int           returnCode = aiResponse.getReturnCode();
 			if (returnCode != 0) {
 				String errorText = aiResponse.getErrorMessage();
@@ -1686,13 +1705,14 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 			boolean   rulesValid = true;
 			for (int i = 0; i < rulesArraySize; i++) {		
 				boolean       scriptsValid = true;
+				boolean       webpagesValid = true;
 				JsonElement   jsonElementRule = rulesArrayJson.get(i);
 				/* Check if we have mod entry. We should always
 			     have a mod entry unless we are sending some 
 			     other type of node to the server.  */
 		  	String  treeTypeEntry = HDLmWebSocketInternalAdapter.getJsonString(jsonElementRule, 
-		  			                                                           "type", 
-		  			                                                           session);
+		  			                                                               "type", 
+		  			                                                               session);
 				if (treeTypeEntry == null) 
 				  break;
 				/* The following check can only be run if we are storing
@@ -1748,11 +1768,33 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 							scriptsValid = false;
 					}
 				}		
+				/* We have a lot more work to do for web page rules */
+				if (ruleType.equals("webpage")) {
+					/* Get and check the node path JSON and the size of the node path JSON */
+					ArrayList<String>   webpagesArray = HDLmWebSocketInternalAdapter.getStringsFromJson(modDetailsElement,
+							                                                                                "webpages",    
+							                                                                                session,
+							                                                                                HDLmZeroLengthOk.ZEROLENGTHNOTOK);
+					if (webpagesArray == null)
+				    break;	
+					int   webpagesArraySize = webpagesArray.size();
+					/* Process each script */
+					for (int j = 0; j < webpagesArraySize; j++) {		
+						String    webpageString = webpagesArray.get(j);  
+						boolean   webpageValid = HDLmHtml.checkIfWebpageValid(webpageString, 
+								                                                  HDLmReportErrors.REPORTERRORS);
+						/* Check if the current web page is invalid, if it is, then 
+						   the entire set of webpages is treated as invalid */
+						if (webpageValid == false)
+							webpagesValid = false;
+					}
+				}
 				/* Skip the current rule if the invalid scripts flag is set */
 				/*
 				scriptsValid = true;
 				*/
-				if (scriptsValid == false) {
+				if (scriptsValid == false ||
+						webpagesValid == false) {
 			    rulesValid = false;
 			    break;
 				}
@@ -2060,109 +2102,7 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 			HDLmWebSocketInternalAdapter.sendSuccess(session, null, null, null);
 			break;
 		}
-	} 
-	/* The webpageImprover message is used to execute the webpage improver flow.
-	   The client provides the body of the initial Open Router request. The server
-	   executes the first request, converts each improvement what value to markup,
-	   and returns a normalized payload with why, what, and markup. */
-	protected void         handleMessageWebpageImprover(final JsonElement jsonElement) {
-		/* What follows is a dummy loop used only to allow break to work */
-		while (true) {
-			/* Check if the JSON element instance passed by the caller is null */
-			if (jsonElement == null) {
-				String  errorText = "JSON element instance passed to handleMessageWebpageImprover is null";
-				HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 26);
-				break;
-			}
-			/* Check if the inbound JSON element has the required keys */
-			String  bodyStr = null;
-			if (HDLmJson.hasJsonKey(jsonElement, "HDLmBodyStr")) {
-				bodyStr = HDLmWebSocketInternalAdapter.getJsonString(jsonElement,
-						                                                "HDLmBodyStr",
-						                                                session);
-				if (bodyStr == null)
-					break;
-			}
-			/* The body string was not found in the inbound JSON.
-			   Report an error and exit. */
-			else {
-				String errorText = "Body string not found in inbound JSON in handleMessageWebpageImprover";
-				HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 64);
-				break;
-			}
-			/* Declare a response object used below */
-			HDLmResponse  aiResponse;
-			/* One of the webpage improver routines is not executed. The high-level
-			   routine is never used. The high-level routine assumes that calls 
-			   always return 'why' and 'what' values. This is not always the case. */
-			/*
-			if (1 == 2)
-	  		aiResponse = HDLmOpenRouter.executeWebpageImproverRequest(bodyStr); 
-	  	*/
-			/* Pass the body string to the webpage improver routine */
-			aiResponse = HDLmOpenRouter.executeOpenRouterRequest(bodyStr); 
-			int           returnCode = aiResponse.getReturnCode();
-			if (returnCode != 0) {
-				String errorText = aiResponse.getErrorMessage();
-				if (errorText == null) {
-					errorText = "Unknown error returned by executeOpenRouterRequest";
-				}
-				HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 51);
-				break;
-			}
-			String  returnString = aiResponse.getReturnString();
-			/* Send a success message back to the caller */
-			HDLmWebSocketInternalAdapter.sendString(session, returnString);
-			break;
-		}
-	}	
-	/* The websiteImprover message is used to execute the website improver flow.
-     The client provides the body of the initial Open Router request. The server
-     executes the request and returns the improved website to the caller. */ 
-	protected void         handleMessageWebsiteImprover(final JsonElement jsonElement) {
-		/* What follows is a dummy loop used only to allow break to work */
-		while (true) {
-			/* Check if the JSON element instance passed by the caller is null */
-			if (jsonElement == null) {
-				String  errorText = "JSON element instance passed to handleMessageWebsiteImprover is null";
-				HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 26);
-				break;
-			}
-			/* Check if the inbound JSON element has the required keys */
-			String  bodyStr = null;
-			if (HDLmJson.hasJsonKey(jsonElement, "HDLmBodyStr")) {
-				bodyStr = HDLmWebSocketInternalAdapter.getJsonString(jsonElement,
-						                                                 "HDLmBodyStr",
-						                                                 session);
-				if (bodyStr == null)
-					break;
-			}
-			/* The body string was not found in the inbound JSON.
-			   Report an error and exit. */
-			else {
-				String errorText = "Body string not found in inbound JSON in handleMessageWebsiteImprover";
-				HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 64);
-				break;
-			}
-			/* Declare a response object used below */
-			HDLmResponse  aiResponse;
-			/* Pass the body string to the webpage improver routine */
-		  aiResponse = HDLmOpenRouter.executeOpenRouterRequest(bodyStr);
-			int           returnCode = aiResponse.getReturnCode();
-			if (returnCode != 0) {
-				String errorText = aiResponse.getErrorMessage();
-				if (errorText == null) {
-					errorText = "Unknown error returned by executeOpenRouterRequest";
-				}
-				HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 51);
-				break;
-			}
-			String  returnString = aiResponse.getReturnString();
-			/* Send a success message back to the caller */
-			HDLmWebSocketInternalAdapter.sendString(session, returnString);
-			break;
-		}
-	}
+	} 	
 	/* This routine is invoked when a binary message is sent. So far this routine
 	   has not been used. */
 	@Override

@@ -365,16 +365,28 @@ public class HDLmOpenAI {
 	/* Execute an Open AI API request. The request could really 
 	   be anything. The caller provides the body which defines 
 	   the actual request. */
-	protected static HDLmResponse  executeOpenAIRequest(String bodyStr) {
+	protected static HDLmResponse  executeOpenAIRequest(String bodyStr, String llmModelStr) {
 		/* Check one or more values passed by the caller */
 		if (bodyStr == null) {
 			String   errorText = "Body string reference passed to executeOpenAIRequest is null";
 			throw new NullPointerException(errorText);			
 		}		
-		/* Get the Open AI GPT model from the configuration values */ 
-		String  apiGptModel = HDLmConfigInfo.getOpenAIApiGptModel();
+		/* The LLM string is optional. If it is null, 
+		   then the default model string will be used. */
+		if (llmModelStr == null &&
+				llmModelStr != null) {
+			String   errorText = "LLM string reference passed to executeOpenRouterRequest is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the caller passed an actual LLM model string. If so, 
+		   then use the value that was passed. If not, get a value from
+		   the configuration. */
+		if (llmModelStr == null) {   
+		  /* Get the Open AI GPT model from the configuration values */ 
+		  llmModelStr = HDLmConfigInfo.getOpenAIApiGptModel();
+		}
 		/* Replace the dummy model string with the actual model string */
-		bodyStr = bodyStr.replace("dummyModel", apiGptModel);
+		bodyStr = bodyStr.replace("dummyModel", llmModelStr);
 		/* Build a response object that can be returned to the caller */
 		HDLmResponse  executeResponse = new HDLmResponse();
 	  /* Build a header list for use later */

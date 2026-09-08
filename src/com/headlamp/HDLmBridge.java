@@ -383,7 +383,7 @@ public class HDLmBridge {
 		else {
 			/* This is the default code under Window. Many values are set 
 			   to avoid further checking */ 
-			if (1 == 2) {
+			if (1 == 1) {
 				bypassAllChecking = true;
 				checkMatch = true;
 				checkLastTimeFailure = false;

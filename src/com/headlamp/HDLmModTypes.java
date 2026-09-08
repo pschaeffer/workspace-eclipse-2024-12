@@ -62,6 +62,8 @@ public enum HDLmModTypes {
   TITLE,
   @SerializedName("visit")
   VISIT,  
+  @SerializedName("webpage")
+  WEBPAGE,
   @SerializedName("width")
   WIDTH,   
   /* The entries below are not valid rule types. However, some instances 
@@ -93,7 +95,7 @@ public enum HDLmModTypes {
 				    "SCRIPT",
 				    "STYLE", "TEXT", 
 				    "TEXTCHECKED", "TITLE",
-				    "VISIT", "WIDTH",
+				    "VISIT", "WEBPAGE", "WIDTH",
 				    /* The entries below are not valid rule types. However, some instances 
 				       of HDLmMod (actually the classes that extend HDLmMod) are not used 
 				       for rules. These types are for the other uses of HDLmMod extensions.

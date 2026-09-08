@@ -142,9 +142,21 @@ public class HDLmMainServlet extends HttpServlet {
 		   	  String   errorFormat = "Define value for get JavaScript file name not found (%s)";
 				  String   errorText = String.format(errorFormat, "HDLMGETJSVALUE");
 				  HDLmAssertAction(false, errorText);		    	
-		    }						
+		    }
+		    /* Get the name used for the JavaScript file constructed by 
+           this code. The name is used in several places. As a 
+           consequence, the name is maintained as a define value.
+           A second value is provided because the marvelouslandofoz.com
+           website can not be currently changed */ 
+        String  getJTName = HDLmDefines.getString("HDLMGETJTVALUE");
+		    if (getJTName == null) {
+		   	  String   errorFormat = "Define value for the second get JavaScript file name not found (%s)";
+				  String   errorText = String.format(errorFormat, "HDLMGETJTVALUE");
+				  HDLmAssertAction(false, errorText);		    	
+		    }	
 		    /* Check if this is a request for the JavaScript program we really want */
-	      if (pathValueString.equals("/" + getJSName + ".js")) {
+	      if (pathValueString.equals("/" + getJSName + ".js") ||
+	          pathValueString.equals("/" + getJTName + ".js")) {	
 	      	getGenericJsCheck = true;
 				}
 	      HDLmTiming.addTiming(HDLmTimingTypes.GENERAL, "After check for generic JavaScript in doAll"); 

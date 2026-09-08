@@ -232,12 +232,29 @@ public class HDLmConfig {
 	    Map.entry("openAIApiKeySchaeffes",                new HDLmConfig(HDLmConfigTypes.STRING,  "")),	
 	    Map.entry("openAIMaximumStringLength",            new HDLmConfig(HDLmConfigTypes.INT,     "6000")),	
 	    Map.entry("openAIName",                           new HDLmConfig(HDLmConfigTypes.STRING,  "openai")),
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "moonshotai/kimi-k3")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "meta/muse-spark-1.1")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "nvidia/nemotron-3-embed-1b:free")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "openai/gpt-5.6-luna-pro")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "openai/gpt-5.6-luna")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "~x-ai/grok-latest")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "x-ai/grok-4.5")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "anthropic/claude-sonnet-5")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "google/gemini-3.5-flash")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "anthropic/claude-opus-4.7-fast")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "~moonshotai/kimi-latest")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "~anthropic/claude-sonnet-latest")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "~openai/gpt-latest")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "~anthropic/claude-fable-latest")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "deepseek/deepseek-v4-pro")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "moonshotai/kimi-k3")), */
 	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "openai/gpt-4o-mini")), */
 	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "openai/gpt-5.4-mini")), */
 	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "openai/gpt-5.5")), */
 	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "anthropic/claude-opus-4.7")), */ 
-	    Map.entry("openRouterApiModel",                   new HDLmConfig(HDLmConfigTypes.STRING,  "anthropic/claude-opus-4.8")), 
-	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "anthropic/claude-fable-5")), */
+	    /* Map.entry("openRouterApiModel",                new HDLmConfig(HDLmConfigTypes.STRING,  "anthropic/claude-opus-4.8")), */ 
+	    Map.entry("openRouterApiModel",                   new HDLmConfig(HDLmConfigTypes.STRING,  "anthropic/claude-fable-5")),
+	    Map.entry("openRouterApiModelFallback",           new HDLmConfig(HDLmConfigTypes.STRING,  "anthropic/claude-opus-4.8")),
 	    Map.entry("openRouterImageApiModel",              new HDLmConfig(HDLmConfigTypes.STRING,  "google/gemini-3.1-flash-image-preview")),
 	    Map.entry("openRouterMaximumStringLength",        new HDLmConfig(HDLmConfigTypes.INT,     "6000")),
 	    Map.entry("openRouterTestApiKey",                 new HDLmConfig(HDLmConfigTypes.STRING,  "")),	

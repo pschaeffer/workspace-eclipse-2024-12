@@ -113,7 +113,8 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("proxySecureDomain,");
     builder.addLine("forceSelectStringValue,");
     builder.addLine("logRuleMatching,");
-    builder.addLine("readyState) {");
+    builder.addLine("readyState,");
+    builder.addLine("handlingARealMod) {");
     builder.addLine("sessionStorage.setItem(\"HDLmSessionRuleInfoHostName\",hostNameValue);");
     builder.addLine("sessionStorage.setItem(\"HDLmSessionRuleInfoDivisionName\",divisionNameValue);");
     builder.addLine("sessionStorage.setItem(\"HDLmSessionRuleInfoSiteName\",siteNameValue);");
@@ -147,7 +148,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("null,null,");
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod.name,");
     builder.addLine("curMod.path,curMod.type,pathValueStr,null,null);");
-    builder.addLine("postTrace.matcherror=matchError;");
+    builder.addLine("postTrace.matchError=matchError;");
     builder.addLine("HDLmSendUpdates(localUpdates,'failure','1.0',postTrace);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -162,7 +163,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("null,null,");
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod.name,");
     builder.addLine("curMod.path,curMod.type,pathValueStr,null,null);");
-    builder.addLine("postTrace.matcherror=matchError;");
+    builder.addLine("postTrace.matchError=matchError;");
     builder.addLine("HDLmSendUpdates(localUpdates,'failure','1.0',postTrace);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -198,7 +199,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("null,null,");
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod.name,");
     builder.addLine("curMod.path,curMod.type,pathValueStr,null,null);");
-    builder.addLine("postTrace.matcherror=matchError;");
+    builder.addLine("postTrace.matchError=matchError;");
     builder.addLine("HDLmSendUpdates(localUpdates,'failure','1.0',postTrace);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -246,7 +247,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("null,null,");
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod.name,");
     builder.addLine("curMod.path,curMod.type,pathValueStr,null,null);");
-    builder.addLine("postTrace.matcherror=matchError;");
+    builder.addLine("postTrace.matchError=matchError;");
     builder.addLine("HDLmSendUpdates(localUpdates,'failure','1.0',postTrace);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -278,7 +279,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod.name,");
     builder.addLine("curMod.path,curMod.type,pathValueStr,");
     builder.addLine("oldText,newText);");
-    builder.addLine("postTrace.matcherror='attribute';");
+    builder.addLine("postTrace.matchError='attribute';");
     builder.addLine("HDLmSendUpdates(localUpdates,'href','1.0',postTrace);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -311,7 +312,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("curModExtra!=null&&");
     builder.addLine("curModExtra!='')");
     builder.addLine("localReason=curModExtra;");
-    builder.addLine("postTrace.matcherror='extract';");
+    builder.addLine("postTrace.matchError='extract';");
     builder.addLine("HDLmSendUpdates(localUpdates,localReason,'1.0',postTrace);");
     builder.addLine("break;");
     builder.addLine("}");
@@ -351,7 +352,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("curModExtra!=null&&");
     builder.addLine("curModExtra!='')");
     builder.addLine("localReason=curModExtra;");
-    builder.addLine("postTrace.matcherror='modify';");
+    builder.addLine("postTrace.matchError='modify';");
     builder.addLine("HDLmSendUpdates(localUpdates,localReason,'1.0',postTrace);");
     builder.addLine("break;");
     builder.addLine("}");
@@ -380,7 +381,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("curModExtra!=null&&");
     builder.addLine("curModExtra!='')");
     builder.addLine("localReason=curModExtra;");
-    builder.addLine("postTrace.matcherror='notify';");
+    builder.addLine("postTrace.matchError='notify';");
     builder.addLine("HDLmSendUpdates(localUpdates,localReason,'1.0',postTrace);");
     builder.addLine("}");
     builder.addLine("for (let i=0;i<nodeListLength;i++) {");
@@ -422,7 +423,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("curModExtra!=null&&");
     builder.addLine("curModExtra!='')");
     builder.addLine("localReason=curModExtra;");
-    builder.addLine("postTrace.matcherror='click';");
+    builder.addLine("postTrace.matchError='click';");
     builder.addLine("HDLmSendUpdates(localUpdates,localReason,'1.0',postTrace);");
     builder.addLine("}");
     builder.addLine("})());");
@@ -436,7 +437,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("sessionIndexValue,parametersArray,sessionIdJS,");
     builder.addLine("parameterNumber,lookupValue,");
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod,");
-    builder.addLine("pathValueStr);");
+    builder.addLine("pathValueStr,handlingARealMod);");
     builder.addLine("break;");
     builder.addLine("}");
     builder.addLine("case'changeattrs':");
@@ -457,6 +458,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("case'text':");
     builder.addLine("case'textchecked':");
     builder.addLine("case'title':");
+    builder.addLine("case'webpage':");
     builder.addLine("case'width':{");
     builder.addLine("let newTexts=curMod.values;");
     builder.addLine("let newCount=curMod.valuesCount;");
@@ -489,7 +491,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod.name,");
     builder.addLine("curMod.path,curMod.type,pathValueStr,");
     builder.addLine("null,null);");
-    builder.addLine("postTrace.matcherror=matchError;");
+    builder.addLine("postTrace.matchError=matchError;");
     builder.addLine("HDLmSendUpdates(localUpdates,'failure','1.0',postTrace);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -572,6 +574,9 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("curType=='title') {");
     builder.addLine("oldText=curNode.textContent;");
     builder.addLine("}");
+    builder.addLine("else if (curType=='webpage') {");
+    builder.addLine("oldText='';");
+    builder.addLine("}");
     builder.addLine("if (curType=='textchecked') {");
     builder.addLine("let textMatch=HDLmCheckTextMatches(oldText,curModExtra,");
     builder.addLine("matchError,postTrace,postRuleTracing,");
@@ -628,6 +633,9 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("}");
     builder.addLine("else if (curType=='script') {");
     builder.addLine("if (readyState=='complete')");
+    builder.addLine("HDLmIncrementUpdateCount(curNode,matchModifiedName);");
+    builder.addLine("}");
+    builder.addLine("else if (curType=='webpage') {");
     builder.addLine("HDLmIncrementUpdateCount(curNode,matchModifiedName);");
     builder.addLine("}");
     builder.addLine("else{");
@@ -739,6 +747,11 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("curType=='textchecked') {");
     builder.addLine("curNode.textContent=newText;");
     builder.addLine("}");
+    builder.addLine("else if (curType=='webpage') {");
+    builder.addLine("const blob=new Blob([newText],{type:'text/html'});");
+    builder.addLine("const blobUrl=URL.createObjectURL(blob);");
+    builder.addLine("window.location.href=blobUrl;");
+    builder.addLine("}");
     builder.addLine("let localUpdates=new Object();");
     builder.addLine("HDLmSaveChange(localUpdates,sessionIndexValueUsed,");
     builder.addLine("sessionIndexValue,parametersArray,sessionIdJS,");
@@ -746,7 +759,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod.name,");
     builder.addLine("curMod.path,curMod.type,pathValueStr,");
     builder.addLine("oldText,newText);");
-    builder.addLine("postTrace.matcherror=matchError;");
+    builder.addLine("postTrace.matchError=matchError;");
     builder.addLine("HDLmSendUpdates(localUpdates,curType,'1.0',postTrace);");
     builder.addLine("break;");
     builder.addLine("}");
@@ -769,7 +782,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod.name,");
     builder.addLine("curMod.path,curMod.type,pathValueStr,");
     builder.addLine("null,null);");
-    builder.addLine("postTrace.matcherror=matchError;");
+    builder.addLine("postTrace.matchError=matchError;");
     builder.addLine("HDLmSendUpdates(localUpdates,'failure','1.0',postTrace);");
     builder.addLine("}");
     builder.addLine("}");
@@ -900,15 +913,6 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("let changesValue=changesObj[keyValue];");
     builder.addLine("switch (keyValue) {");
     builder.addLine("case'text':");
-    builder.addLine("case'title':{");
-    builder.addLine("if (matchUpdateCount>0) {");
-    builder.addLine("forceBreak=true;");
-    builder.addLine("break;");
-    builder.addLine("}");
-    builder.addLine("if (testFlag==false)");
-    builder.addLine("curNode.textContent=changesValue;");
-    builder.addLine("break;");
-    builder.addLine("}");
     builder.addLine("case'textchecked':{");
     builder.addLine("let actualText=curNode.textContent;");
     builder.addLine("let requiredText=changesValue[0];");
@@ -926,12 +930,21 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("curNode.textContent=changesValue[1];");
     builder.addLine("break;");
     builder.addLine("}");
+    builder.addLine("case'title':{");
+    builder.addLine("if (matchUpdateCount>0) {");
+    builder.addLine("forceBreak=true;");
+    builder.addLine("break;");
+    builder.addLine("}");
+    builder.addLine("if (testFlag==false)");
+    builder.addLine("curNode.textContent=changesValue;");
+    builder.addLine("break;");
+    builder.addLine("}");
     builder.addLine("case'visit':{");
     builder.addLine("let countHigh=HDLmHandleVisitRequest(changesValue,postTrace,testFlag,sessionIndexValueUsed,");
     builder.addLine("sessionIndexValue,parametersArray,sessionIdJS,");
     builder.addLine("parameterNumber,lookupValue,");
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod,");
-    builder.addLine("pathValueStr);");
+    builder.addLine("pathValueStr,handlingARealMod);");
     builder.addLine("if (countHigh==true)");
     builder.addLine("forceBreak=true;");
     builder.addLine("break;");
@@ -978,7 +991,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("parameterNumber,lookupValue,");
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod.name,");
     builder.addLine("curMod.path,curMod.type,pathValueStr,actualText,requiredText);");
-    builder.addLine("postTrace.matcherror=matchError;");
+    builder.addLine("postTrace.matchError=matchError;");
     builder.addLine("HDLmSendUpdates(localUpdates,'failure','1.0',postTrace);");
     builder.addLine("}");
     builder.addLine("rv=false;;");
@@ -1918,7 +1931,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("sessionIndexValue,parametersArray,sessionIdJS,");
     builder.addLine("parameterNumber,lookupValue,");
     builder.addLine("hostNameValue,divisionNameValue,siteNameValue,curMod,");
-    builder.addLine("pathValueStr) {");
+    builder.addLine("pathValueStr,handlingARealMod) {");
     builder.addLine("let countHigh=false;");
     builder.addLine("let updateName='HDLmUpdateCount'+curMod.name;");
     builder.addLine("if (isNaN(window[updateName]))");
@@ -1943,7 +1956,10 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("curMod.path,curMod.type,pathValueStr,");
     builder.addLine("oldText,newText);");
     builder.addLine("let localReason=curMod.type;");
-    builder.addLine("postTrace.matcherror='visit';");
+    builder.addLine("if (handlingARealMod)");
+    builder.addLine("postTrace.matchError='Fired';");
+    builder.addLine("else");
+    builder.addLine("postTrace.matchError='visit';");
     builder.addLine("HDLmSendUpdates(localUpdates,localReason,'1.0',postTrace);");
     builder.addLine("return countHigh;");
     builder.addLine("}");
@@ -2217,6 +2233,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("for (let i=0;i<modsArrayLength;i++) {");
     builder.addLine("let curMod=modsArray[i];");
     builder.addLine("try{");
+    builder.addLine("let handlingARealMod=true;");
     builder.addLine("HDLmApplyMod(pathValueStr,");
     builder.addLine("curMod,");
     builder.addLine("sessionIdJS,");
@@ -2232,7 +2249,8 @@ class HDLmBuildJsCompressBlanks{
       builder.addLine("null,");
     builder.addLine("'"+forceSelectString+"',");
     builder.addLine(""+logRuleMatchingString+",");
-    builder.addLine("readyState);");
+    builder.addLine("readyState,");
+    builder.addLine("handlingARealMod);");
     builder.addLine("}");
     builder.addLine("catch (errorObj) {");
     builder.addLine("console.log(errorObj);");
@@ -2516,6 +2534,7 @@ class HDLmBuildJsCompressBlanks{
     builder.addLine("const sessionIdJS='"+sessionIdJava+"';");
     builder.addLine("const parametersArray=HDLmGetParametersArray()");
     builder.addLine("const readyState='unknown';");
+    builder.addLine("let handlingARealMod=false;");
     builder.addLine("HDLmApplyMod(pathValueStr,");
     builder.addLine("curMod,");
     builder.addLine("sessionIdJS,");
@@ -2531,7 +2550,8 @@ class HDLmBuildJsCompressBlanks{
       builder.addLine("null,");
     builder.addLine("'"+forceSelectString+"',");
     builder.addLine("'"+logRuleMatchingString+"',");
-    builder.addLine("readyState);");
+    builder.addLine("readyState,");
+    builder.addLine("handlingARealMod);");
     builder.addLine("</script>");
     actualJS=builder.getLinesWithSuffix("\r\n");
 		if (useCreateFixedJS) {
@@ -3691,7 +3711,7 @@ class HDLmBuildJsCompressBlanks{
         "}"+
         "]"+
         "";
-	    static JsonParser  parser = HDLmMain.gsonJsonParserMain;
+	    static JsonParser  parser=new JsonParser();
 	    static JsonArray   rvJsonArray= (JsonArray) parser.parse(jsonString);
 }
     return getIndexJsonArrayLocal.rvJsonArray;

@@ -281,4 +281,20 @@ public class HDLmAi {
 		outputScript = inputScript;		 
 		return outputScript;		
 	}
+	/* Fix the input HTML (possibly including CSS, links, images, JS, etc.) 
+	   web page string passed by the caller */ 
+	protected static String  fixWebImproverWebpage(final String inputWebpage) {
+		/* Check if the input web page passed by the caller is null */
+		if (inputWebpage == null) {
+			String  errorText = "Input web page passed to fixWebImproverWebpage is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Set a few variables for changing the input web page */
+		int  newLineCounter = 0;
+		int  newLineIndex = -1;
+		String  outputWebpage = ""; 	
+		/* Modify the output web page as need be */
+		outputWebpage = inputWebpage;;		 
+		return outputWebpage;		
+	}
 }

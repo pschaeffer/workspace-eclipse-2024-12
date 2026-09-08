@@ -1731,7 +1731,7 @@ public class HDLmMod {
 	                               "subtype":       "editabletypelist"
 	                             },
 	                             {
-	                               "description":   "Scripts",
+	                               "description":   "New JS Scripts",
 	                               "source":        "scripts",
 	                               "fieldtype":     "textlist",
 	                               "subtype":       "script",
@@ -2214,6 +2214,101 @@ public class HDLmMod {
 	                             }
 	                           ]
 	                         },
+	    "webpage":         { "fields":
+	                           [
+	                             {
+	                               "description":   "Modification Name",
+	                               "source":        "name",
+	                               "fieldtype":     "iotext",
+	                               "subtype":       "modificationname"
+	                             },
+	                             {
+	                               "description":   "Modification Path Value",
+	                               "source":        "pathvalue",
+	                               "fieldtype":     "pathvalue",
+	                               "subtype":       "Path Value"
+	                             },
+	                             {
+	                               "description":   "Comments",
+	                               "source":        "comments",
+	                               "fieldtype":     "comminfo",
+	                               "subtype":       "comments"
+	                             },
+	                             {
+	                               "description":   "Extra Information",
+	                               "source":        "extra",
+	                               "fieldtype":     "extrainfo",
+	                               "subtype":       "extra"
+	                             },
+	 														 {
+	 															 "description":   "Probability",
+	 															 "source":        "probability",
+	 															 "fieldtype":     "float",
+	 															 "subtype":       "probability"
+	 														 },
+	 														 {
+	 															 "description":   "Use Mode",
+	 															 "source":        "usemode",
+	 															 "fieldtype":     "usemode",
+	 															 "subtype":       "usemode"
+	 														 },
+	                             {
+	                               "description":   "Created",
+	                               "source":        "created",
+	                               "fieldtype":     "dateio",
+	                               "subtype":       "outputdate"
+	                             },
+	                             {
+	                               "description":   "Last Modified",
+	                               "source":        "lastmodified",
+	                               "fieldtype":     "dateio",
+	                               "subtype":       "outputdate"
+	                             },
+	                             {
+	                               "description":   "CSS Selector",
+	                               "source":        "cssselector",
+	                               "fieldtype":     "cssinfo",
+	                               "subtype":       "cssselector"
+	                             },
+	                             {
+	                               "description":   "XPath Information",
+	                               "source":        "xpath",
+	                               "fieldtype":     "xpathinfo",
+	                               "subtype":       "xpath"
+	                             },
+	                             {
+	                               "description":   "Find Information",
+	                               "source":        "find",
+	                               "fieldtype":     "findinfo",
+	                               "subtype":       "find"
+	                             },
+	                             {
+	                               "description":   "Node Identifier",
+	                               "source":        "nodeiden",
+	                               "fieldtype":     "nodeiden",
+	                               "subtype":       "nodeiden"
+	                             },
+	                             {
+	                               "description":   "Parameter Number",
+	                               "source":        "parameter",
+	                               "fieldtype":     "ionumber",
+	                               "subtype":       "parameter"
+	                             },
+	                             {
+	                               "description":   "Modification Type",
+	                               "source":        "type",
+	                               "fieldtype":     "typelist",
+	                               "subtype":       "editabletypelist"
+	                             },
+	                             {
+	                               "description":   "Web Pages",
+	                               "source":        "webpages",
+	                               "fieldtype":     "textlist",
+	                               "subtype":       "webpage",
+	                               "datatype":      "array"
+	                             }
+	                           ]
+	                         },                     
 	    "width":           { "fields":
 	                           [
 	                             {
@@ -2362,6 +2457,8 @@ public class HDLmMod {
 	                      "valuesname": "titles" },
 	   "visit":       { "extraused": true,  "parmnumberused": true,  "longname": "visit",
 	                      "valuesname": "visitvalues" },
+	   "webpage":     { "extraused": false, "parmnumberused": true,  "longname": "web page",
+	                      "valuesname": "webpages" },
 	   "width":       { "extraused": false, "parmnumberused": true,  "longname": "width",
 	                      "valuesname": "widths" }
 	  }
@@ -4053,7 +4150,7 @@ public class HDLmMod {
 			                                                  jsonObject, 
 			                                                  jsonKeys, 
 			                                                  "scripts",
-							                                          null,
+							                                          1,
 							                                          null,
 							                                          errorMessagePrefix,
 							                                          errorNumberMissing,
@@ -4390,6 +4487,67 @@ public class HDLmMod {
 					                                                 HDLmZeroLengthOk.ZEROLENGTHNOTOK);
 					if (valuesCountLocal != null)
 				  	this.valuesCount = valuesCountLocal;
+				}
+				break;
+			}
+			/* Handle a webpage modification */
+			case WEBPAGE: {
+				/* This call makes sure that we can find the webpages key in the JSON object. 
+				   The webpages key is required for a web page modification. */	
+				{
+					String  errorMessagePrefix = "Modification";
+					int     errorNumberMissing = 3;
+					int     errorNumberIsNull = 4;
+					int     errorNumberIsPrimitive = 4;
+					int     errorNumberNotPrimitive = 4;
+					int     errorNumberNotArray = 4;
+					int     errorNumberException = 4;
+					int     errorNumberTooSmall = 70;
+					int     errorNumberTooLarge = 71; 
+					int     errorNumberInvalidLength = 4;
+					int     errorNumberInvalidWhiteSpace = 4;
+					this.values = HDLmField.checkFieldStringArray(editorType, 
+									                                      errorCounter,
+			                                                  errorMessages,
+			                                                  jsonObject, 
+			                                                  jsonKeys, 
+			                                                  "webpages",
+							                                          1,
+							                                          null,
+							                                          errorMessagePrefix,
+							                                          errorNumberMissing,
+							                                          errorNumberIsNull,
+							                                          errorNumberIsPrimitive,
+							                                          errorNumberNotPrimitive,
+							                                          errorNumberNotArray,
+							                                          errorNumberException,
+							                                          errorNumberTooSmall,
+							                                          errorNumberTooLarge, 
+							                                          errorNumberInvalidLength,
+							                                          errorNumberInvalidWhiteSpace);
+					/* Check each of the values and make sure it is a valid web page value */
+					if (this.values != null)
+					  HDLmMod.modFieldStringArrayWebpage(this.values,
+	                                             editorType, 
+	                                             errorCounter,
+	                                             errorMessages,
+					                                     jsonObject, 
+							                                 name, 
+							                                 HDLmReportErrors.REPORTERRORS);			
+					Integer  arraySize = null;
+					if (this.values != null)
+			  		arraySize = this.values.size(); 
+					/* This call checks for an empty array */
+					Integer valuesCountLocal = HDLmMod.modArrayCheck(editorType, 
+							                                             errorCounter,
+	                                                         errorMessages,
+					                                                 jsonObject, 
+					                                                 "webpages", 
+					                                                 arraySize,
+					                                                 HDLmZeroLengthOk.ZEROLENGTHNOTOK);
+					if (valuesCountLocal != null) {
+				  	this.valuesCount = valuesCountLocal;			  
+					}
 				}
 				break;
 			}
@@ -7393,6 +7551,102 @@ public class HDLmMod {
 	                               name, 
 	                               curValue, 
 	                               "Modification JSON invalid visit value", 
+	                               4, 
+	                               reportErrors);			
+		}
+		return rv;
+	}
+	/* Check each value in the values array and make sure it is a valid HTML (possibly 
+	   including CSS, links, images, JS, etc.) web page value */ 
+	protected static boolean  modFieldStringArrayWebpage(final ArrayList<String> values,
+			                                                 final HDLmEditorTypes editorType, 
+																					 					   final MutableInt errorCounter,
+										                                   final ArrayList<String> errorMessages,
+																										   final JsonObject jsonObject, 
+																										   final String name, 
+																										   final HDLmReportErrors reportErrors) {
+		if (values == null) {
+		  String  errorText = "Values list passed to modFieldStringArrayWebpage is null";
+		  throw new NullPointerException(errorText);
+		}
+		if (editorType == null) {
+		  String  errorText = "Editor type enum passed to modFieldStringArrayWebpage is null";
+		  throw new NullPointerException(errorText);
+		}
+		/* Check if the editor type passed by the caller is invalid */
+		if (editorType == HDLmEditorTypes.NONE) {
+		  HDLmAssertAction(false, "Editor type value is invalid in modFieldStringArrayWebpage");
+		}
+		if (errorCounter == null) {
+	   String  errorText = "Mutable int for error counter passed to modFieldStringArrayWebpage is null";
+		  throw new NullPointerException(errorText);
+		}
+		if (errorMessages == null) {
+			String  errorText = "ArrayList for error messages passed to modFieldStringArrayWebpage is null";
+			throw new NullPointerException(errorText);
+		}
+		if (jsonObject == null) {
+		  String  errorText = "JSON object passed to modFieldStringArrayWebpage is null";
+		  throw new NullPointerException(errorText);
+		}
+		if (name == null) {
+		  String  errorText = "Name string passed to modFieldStringArrayWebpage is null";
+		  throw new NullPointerException(errorText);
+		}
+		if (reportErrors == null) {
+		  String  errorText = "Report errors enum passed to modFieldStringArrayWebpage is null";
+		  throw new NullPointerException(errorText);
+		}
+		/* Declare and define a few values */
+		boolean   rv = true;
+		/* Check each of the values in the values list */
+		int   valuesLength = values.size();
+		for (int i = 0; i < valuesLength; i++) {
+			/* Get the current string value and remove any leading and trailing blanks */
+			String  curValue = values.get(i);
+			int     curValueLength = curValue.length();
+			/* Check if the current web page is an empty string */
+			if (curValueLength == 0) {
+				rv = false;
+				HDLmField.reportError(editorType, 
+						                  errorCounter,
+	                            errorMessages,
+		                          jsonObject, 
+		                          name, 
+		                          "Modification JSON web page is empty", 
+		                          4, 
+		                          reportErrors);	
+			}	
+			/* Check if the current web page is all-blanks */
+			if (curValueLength > 0 && StringUtils.isWhitespace(curValue)) {
+				rv = false;
+				HDLmField.reportError(editorType, 
+						                  errorCounter,
+	                            errorMessages,
+		                          jsonObject, 
+		                          name, 
+		                          "Modification JSON web page is blank", 
+		                          4, 
+		                          reportErrors);	
+			}			
+			/* Fix the current HTML (possibly including CSS, links, images, JS, etc.) web page */			
+			String  curValueUpdated = HDLmAi.fixWebImproverWebpage(curValue);
+			values.set(i, curValueUpdated);
+			/* Check if the current web page is valid */
+			boolean   webpageValid = HDLmHtml.checkIfWebpageValid(curValueUpdated, 
+					                                                  HDLmReportErrors.DONTREPORTERRORS);
+			/* webpageValid = true; */
+			if (webpageValid)
+				continue;
+			/* Report that the web page is not valid */
+			rv = false;
+			HDLmField.reportErrorValue(editorType, 
+					                       errorCounter,
+	                               errorMessages,
+	                               jsonObject, 
+	                               name, 
+	                               curValue, 
+	                               "Modification JSON invalid web page value", 
 	                               4, 
 	                               reportErrors);			
 		}

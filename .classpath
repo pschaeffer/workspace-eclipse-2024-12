@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="httpcomponents-core-4.4.11 Java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -10,7 +9,7 @@
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/commons-lang3-3.9/commons-lang3-3.9.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/gson-from-maven/gson-2.11.0.jar" sourcepath="C:/Users/pscha/.m2/repository/com/google/code/gson/gson/2.8.5/gson-2.8.5-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/jsoup/jsoup-1.12.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/jsoup/jsoup-1.23.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/httpcomponents-client-4.5.9/lib/fluent-hc-4.5.9.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/httpcomponents-client-4.5.9/lib/httpcore-4.4.11.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/httpcomponents-client-4.5.9/lib/httpclient-win-4.5.9.jar"/>
@@ -27,10 +26,6 @@
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/apache-log4j-2.17.1-bin/log4j-core-2.17.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/apache-log4j-2.17.1-bin/log4j-1.2-api-2.17.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/apache-log4j-2.17.1-bin/log4j-api-2.17.1.jar"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/workspace-4.33.0"/>
-=======
->>>>>>> 2ffa7ab (commit 2026-07-02 Number 1)
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/slf4j-1.7.32/slf4j-api-1.7.32.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/slf4j-1.7.32/slf4j-log4j12-1.7.32.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/TwelveMonkeys/imageio-webp-3.8.1.jar"/>
@@ -89,5 +84,5 @@
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/Mozilla-Rhino/rhino-1.8.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/workspace-eclipse-2024-12/ProxyServerA/ProxyServer.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/java-image-hash-master/Java-Image-Hash-Master.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/validator-main/validator-26.8.30.jar"/><classpathentry kind="output" path="bin"/>
 </classpath>

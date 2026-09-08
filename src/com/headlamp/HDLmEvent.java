@@ -542,11 +542,19 @@ public class HDLmEvent {
 		   rule name */
 		String  eventName = hostName + "/" + divisionName + "/" +
                         siteName + "/" + ruleName;
+		/* Check if the event name can be found in the map of events. 
+	     In some cases, we may need to add a "www." prefix to the 
+	     host name to find the event in the map. */ 
+		if (!eventsMap.containsKey(eventName)) {
+			String eventNameWithPrefix = "www." + eventName;
+			if (eventsMap.containsKey(eventNameWithPrefix)) 
+				eventName = eventNameWithPrefix; 
+		}
 		/* Make sure the events map has the current event */
 		if (!eventsMap.containsKey(eventName)) {
 			String  errorFormat = "Events map does not have current event (%s)"; 
 			String  errorText = String.format(errorFormat,  eventName);
-			HDLmAssertAction(false, errorText);					
+			HDLmAssertAction(false, errorText); 	
 		}
 		/* Get the event from the events map */
 		HDLmEvent   curEvent = eventsMap.get(eventName);

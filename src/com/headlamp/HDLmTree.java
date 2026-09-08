@@ -1019,7 +1019,7 @@ public class HDLmTree {
 				}
 				e2Name = e2Element.getAsString();
 				if (e2Name == null) {
-					String errorFormat = "String value for member name (%s) not obtained from JSON object";
+					String  errorFormat = "String value for member name (%s) not obtained from JSON object";
 					String  errorText = String.format(errorFormat, "name");
 					HDLmAssertAction(false, errorText);
 				}
@@ -5579,6 +5579,8 @@ public class HDLmTree {
 		else if (startupMode == HDLmStartupMode.NONE) {
 		  HDLmAssertAction(false, "Startup mode value passed to modifyModTree is invalid");
 		}
+		/* Set a few local variables for use below */
+		boolean   logIsDebugEnabled = LOG.isDebugEnabled();
 		/* Check if we are handling the companies node. All of the individual companies
 		   must be added to the companies node. */
 		switch (type) {
@@ -5713,6 +5715,20 @@ public class HDLmTree {
 				}
 				/* Get the values from the node path */
 				String  nameCompany = path.get(2);
+				if (logIsDebugEnabled) {
+					String   strFormat = "Company name is (%s)";
+					String   strText = String.format(strFormat, nameCompany);
+				  LOG.debug(strText);			
+				}
+				/* The name of the host (company) with no www prefix is used to 
+				   build the event in the event map and rule in the rule map. 
+				   The rule may or may not have a www prefix in the company
+				   name. The company name is always fixed here. */
+				/* This code is no longer in use. We use the actual host name 
+				   (which may include a "www." prefix in all cases. */
+				/* 
+				String  nameCompanyNoPrefix = HDLmString.removePrefix("www.", nameCompany);
+				*/
 				String  nameDivision = path.get(4);
 				String  nameSite = path.get(5);
 				String  nameModification = path.get(6);

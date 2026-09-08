@@ -70,6 +70,9 @@ public class HDLmDefines {
 	  Map.entry("HDLMGEMPREFIX",                             "HDLmGemPrfx"),
 	  Map.entry("HDLMGETDATA",                               "HDLmGetData"),
 	  Map.entry("HDLMGETJSVALUE",                            "HDLmGetJS"),
+	  /* A second value is provided because the marvelouslandofoz.com website
+	     can not be currently changed */
+	  Map.entry("HDLMGETJTVALUE",                            "HDLmGetJT"),
 	  Map.entry("HDLMGRAALSYNTAXERROR",                      "SyntaxError"),
 	  Map.entry("HDLMGXEPREFIX",                             "HDLmGxePrfx"),
 	  Map.entry("HDLMLEFTDEF",                               "leftDef"),

@@ -1,0 +1,226 @@
+2026-09-01T20:45:08,317 [main] INFO  com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Starting...
+2026-09-01T20:45:08,791 [main] INFO  com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Start completed.
+2026-09-01T20:45:16,451 [main] WARN  org.eclipse.jetty.server.handler.ContextHandler [] - o.e.j.s.ServletContextHandler@1e545821{/,null,STOPPED} contextPath ends with /
+2026-09-01T20:45:16,665 [main] INFO  org.eclipse.jetty.server.Server [] - jetty-11.0.12; built: 2022-09-14T02:38:00.723Z; git: d5b8c29485f5f56a14be5f20c2ccce81b93c5555; jvm 22.0.2+9
+2026-09-01T20:45:16,750 [main] INFO  org.eclipse.jetty.server.handler.ContextHandler [] - Started o.e.j.s.ServletContextHandler@74960e9d{/,null,AVAILABLE}
+2026-09-01T20:45:16,752 [main] INFO  org.eclipse.jetty.server.handler.ContextHandler [] - Started o.e.j.s.ServletContextHandler@5d124d29{/api/socket/info,null,AVAILABLE}
+2026-09-01T20:45:16,805 [main] INFO  org.eclipse.jetty.server.handler.ContextHandler [] - Started o.e.j.s.ServletContextHandler@3c88191b{/HDLmWebSocketServer,null,AVAILABLE}
+2026-09-01T20:45:16,808 [main] INFO  org.eclipse.jetty.server.handler.ContextHandler [] - Started o.e.j.s.ServletContextHandler@1e545821{/api/socket,null,AVAILABLE}
+2026-09-01T20:45:16,849 [main] INFO  org.eclipse.jetty.server.AbstractConnector [] - Started ServerConnector@ce12fbb{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:80}
+2026-09-01T20:45:16,857 [main] INFO  org.eclipse.jetty.util.ssl.SslContextFactory [] - x509=X509@497ed877(headlamp,h=[javaproxya.dnsalias.com, owo.dnsalias.com, owo.secure.dnsalias.com, www.owo.dnsalias.com, www.owo.secure.dnsalias.com],a=[],w=[]) for Server@3cb6e0ee[provider=null,keyStore=null,trustStore=null]
+2026-09-01T20:45:16,859 [main] INFO  org.eclipse.jetty.util.ssl.SslContextFactory [] - x509=X509@7b6141f0(owo,h=[oneworldobservatory.com, www.oneworldobservatory.com],a=[],w=[]) for Server@3cb6e0ee[provider=null,keyStore=null,trustStore=null]
+2026-09-01T20:45:16,907 [main] INFO  org.eclipse.jetty.server.AbstractConnector [] - Started ServerConnector@6e8fdd19{SSL, (ssl, alpn, h2, http/1.1)}{0.0.0.0:443}
+2026-09-01T20:45:16,910 [main] INFO  org.eclipse.jetty.server.Server [] - Started Server@3c28e5b6{STARTING}[11.0.12,sto=0] @26175ms
+2026-09-01T20:45:26,557 [qtp1995627225-48] INFO  com.headlamp.HDLmWebSocketInternalServlet [] - HDLmWebSocketInternalServlet configure
+2026-09-01T20:45:26,725 [qtp1995627225-49] INFO  com.headlamp.HDLmMainServlet [] - Access from 127.0.0.1:56757 - port 443 - using GET - host name javaproxya.dnsalias.com - original path value /io/bucket/search/?q=[[[%27content%27,%27eq%27,%27pass_javaa%27,%27pass_javaa%27]]]
+2026-09-01T20:45:26,773 [qtp1995627225-48] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketConnect
+2026-09-01T20:45:26,793 [qtp1995627225-62] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketText - {"configNames":["entriesBridgePassword","entriesBridgeUserid"],"HDLmRequestType":"getConfigValues"}
+2026-09-01T20:45:26,872 [qtp1995627225-62] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - sendString - {"configsList":[{"configName":"entriesBridgePassword","configValue":"headlamp5432"},{"configName":"entriesBridgeUserid","configValue":"admin"}]}
+2026-09-01T20:45:26,881 [qtp1995627225-62] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketClose - 1005 - null
+2026-09-02T10:33:26,743 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=53m34s12ms811µs100ns).
+2026-09-02T16:10:43,113 [qtp1995627225-50] INFO  com.headlamp.HDLmMainServlet [] - Access from 127.0.0.1:54484 - port 443 - using GET - host name javaproxya.dnsalias.com - original path value /HDLmGetJS.js
+2026-09-02T16:10:43,156 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - Referrer header not obtained from request - request string was (Request(GET https://javaproxya.dnsalias.com/HDLmGetJS.js)@430c4100)
+2026-09-02T16:10:43,165 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - sec-fetch-mode: no-cors
+2026-09-02T16:10:43,166 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - sec-fetch-storage-access: none
+2026-09-02T16:10:43,166 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - te: trailers
+2026-09-02T16:10:43,166 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - sec-fetch-site: cross-site
+2026-09-02T16:10:43,166 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - accept-language: en-US,en;q=0.9
+2026-09-02T16:10:43,166 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - priority: u=2
+2026-09-02T16:10:43,167 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - accept-encoding: gzip, deflate, br, zstd
+2026-09-02T16:10:43,167 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:154.0) Gecko/20100101 Firefox/154.0
+2026-09-02T16:10:43,167 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - accept: */*
+2026-09-02T16:10:43,167 [qtp1995627225-50] INFO  com.headlamp.HDLmJetty [] - sec-fetch-dest: script
+2026-09-02T16:10:43,896 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - java.lang.Thread.getStackTrace(Thread.java:2418)
+2026-09-02T16:10:43,897 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmUtility.logStackTrace(HDLmUtility.java:2091)
+2026-09-02T16:10:43,897 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmUtility.logStackTrace(HDLmUtility.java:2083)
+2026-09-02T16:10:43,898 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmUtility.filePutAppendLineLogs(HDLmUtility.java:1089)
+2026-09-02T16:10:43,899 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmSession.writeLog(HDLmSession.java:306)
+2026-09-02T16:10:43,900 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmMain.getJsMain(HDLmMain.java:1800)
+2026-09-02T16:10:43,900 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmJetty.handleJavaScriptRequest(HDLmJetty.java:3321)
+2026-09-02T16:10:43,900 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmMainServlet.doAll(HDLmMainServlet.java:516)
+2026-09-02T16:10:43,901 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmMainServlet.doGet(HDLmMainServlet.java:617)
+2026-09-02T16:10:43,901 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - jakarta.servlet.http.HttpServlet.service(HttpServlet.java:500)
+2026-09-02T16:10:43,901 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - jakarta.servlet.http.HttpServlet.service(HttpServlet.java:587)
+2026-09-02T16:10:43,901 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:764)
+2026-09-02T16:10:43,903 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:529)
+2026-09-02T16:10:43,903 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:221)
+2026-09-02T16:10:43,903 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1380)
+2026-09-02T16:10:43,904 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:176)
+2026-09-02T16:10:43,904 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:484)
+2026-09-02T16:10:43,905 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:174)
+2026-09-02T16:10:43,905 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1302)
+2026-09-02T16:10:43,905 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:129)
+2026-09-02T16:10:43,905 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:192)
+2026-09-02T16:10:43,906 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:122)
+2026-09-02T16:10:43,908 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.gzip.GzipHandler.handle(GzipHandler.java:822)
+2026-09-02T16:10:43,908 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:141)
+2026-09-02T16:10:43,909 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:122)
+2026-09-02T16:10:43,909 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.Server.handle(Server.java:563)
+2026-09-02T16:10:43,909 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.HttpChannel.lambda$handle$0(HttpChannel.java:505)
+2026-09-02T16:10:43,909 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.HttpChannel.dispatch(HttpChannel.java:762)
+2026-09-02T16:10:43,910 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:497)
+2026-09-02T16:10:43,910 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.HttpChannel.run(HttpChannel.java:457)
+2026-09-02T16:10:43,910 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.runTask(AdaptiveExecutionStrategy.java:421)
+2026-09-02T16:10:43,910 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.consumeTask(AdaptiveExecutionStrategy.java:390)
+2026-09-02T16:10:43,911 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce(AdaptiveExecutionStrategy.java:277)
+2026-09-02T16:10:43,911 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.produce(AdaptiveExecutionStrategy.java:199)
+2026-09-02T16:10:43,911 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.http2.HTTP2Connection.produce(HTTP2Connection.java:208)
+2026-09-02T16:10:43,911 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.http2.server.HTTP2ServerConnection.onOpen(HTTP2ServerConnection.java:122)
+2026-09-02T16:10:43,913 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.AbstractEndPoint.upgrade(AbstractEndPoint.java:451)
+2026-09-02T16:10:43,913 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.NegotiatingServerConnection.onFillable(NegotiatingServerConnection.java:125)
+2026-09-02T16:10:43,913 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:314)
+2026-09-02T16:10:43,913 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:100)
+2026-09-02T16:10:43,914 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.ssl.SslConnection$DecryptedEndPoint.onFillable(SslConnection.java:558)
+2026-09-02T16:10:43,915 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.ssl.SslConnection.onFillable(SslConnection.java:379)
+2026-09-02T16:10:43,917 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.ssl.SslConnection$2.succeeded(SslConnection.java:146)
+2026-09-02T16:10:43,917 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:100)
+2026-09-02T16:10:43,917 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.SelectableChannelEndPoint$1.run(SelectableChannelEndPoint.java:53)
+2026-09-02T16:10:43,917 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.runTask(AdaptiveExecutionStrategy.java:421)
+2026-09-02T16:10:43,918 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.consumeTask(AdaptiveExecutionStrategy.java:390)
+2026-09-02T16:10:43,919 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce(AdaptiveExecutionStrategy.java:277)
+2026-09-02T16:10:43,919 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.produce(AdaptiveExecutionStrategy.java:199)
+2026-09-02T16:10:43,919 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.MonitoredQueuedThreadPool$1.run(MonitoredQueuedThreadPool.java:73)
+2026-09-02T16:10:43,919 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:933)
+2026-09-02T16:10:43,919 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:1077)
+2026-09-02T16:10:43,920 [qtp1995627225-50] INFO  com.headlamp.HDLmUtility [] - java.lang.Thread.run(Thread.java:1570)
+2026-09-02T16:10:44,371 [qtp1995627225-60] INFO  com.headlamp.HDLmMainServlet [] - Access from 127.0.0.1:54488 - port 443 - using POST - host name javaproxya.dnsalias.com - original path value /HDLmPostData - Post Payload - HDLmPostData={"updates":[{"indexValue":0.422385538976523,"indexUsed":false,"parameters":"","sessionId":"9829d1a3-0a4d-47e3-8a08-7082da587879","parmNumber":-1,"lookupValue":-1,"hostName":"","divisionName":"example.com","siteName":"example.com","modName":"load page","modPathValue":"//.*/","modType":"visit","pathValue":"/C:/Users/pscha/Documents/Headlamp%20Software/themarvelouslandofoz.com%20Version%201/index.html","oldValue":null,"newValue":null}],"reason":"visit","weight":"1.0","error":{"matcherror":"visit"}}
+2026-09-02T16:10:44,398 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - java.lang.Thread.getStackTrace(Thread.java:2418)
+2026-09-02T16:10:44,400 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmUtility.logStackTrace(HDLmUtility.java:2091)
+2026-09-02T16:10:44,400 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmUtility.logStackTrace(HDLmUtility.java:2083)
+2026-09-02T16:10:44,400 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmUtility.filePutAppendLineLogs(HDLmUtility.java:1089)
+2026-09-02T16:10:44,400 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmJetty.handleSpecialPost(HDLmJetty.java:4445)
+2026-09-02T16:10:44,400 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmMainServlet.doAll(HDLmMainServlet.java:458)
+2026-09-02T16:10:44,400 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - com.headlamp.HDLmMainServlet.doPost(HDLmMainServlet.java:653)
+2026-09-02T16:10:44,400 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - jakarta.servlet.http.HttpServlet.service(HttpServlet.java:520)
+2026-09-02T16:10:44,401 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - jakarta.servlet.http.HttpServlet.service(HttpServlet.java:587)
+2026-09-02T16:10:44,401 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:764)
+2026-09-02T16:10:44,402 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:529)
+2026-09-02T16:10:44,402 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:221)
+2026-09-02T16:10:44,402 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1380)
+2026-09-02T16:10:44,403 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:176)
+2026-09-02T16:10:44,404 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:484)
+2026-09-02T16:10:44,404 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:174)
+2026-09-02T16:10:44,405 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1302)
+2026-09-02T16:10:44,405 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:129)
+2026-09-02T16:10:44,405 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:192)
+2026-09-02T16:10:44,406 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:122)
+2026-09-02T16:10:44,406 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.gzip.GzipHandler.handle(GzipHandler.java:822)
+2026-09-02T16:10:44,406 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:141)
+2026-09-02T16:10:44,406 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:122)
+2026-09-02T16:10:44,406 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.Server.handle(Server.java:563)
+2026-09-02T16:10:44,407 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.HttpChannel.lambda$handle$0(HttpChannel.java:505)
+2026-09-02T16:10:44,407 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.HttpChannel.dispatch(HttpChannel.java:762)
+2026-09-02T16:10:44,407 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:497)
+2026-09-02T16:10:44,407 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.server.HttpChannel.run(HttpChannel.java:457)
+2026-09-02T16:10:44,408 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.runTask(AdaptiveExecutionStrategy.java:421)
+2026-09-02T16:10:44,408 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.consumeTask(AdaptiveExecutionStrategy.java:390)
+2026-09-02T16:10:44,408 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce(AdaptiveExecutionStrategy.java:277)
+2026-09-02T16:10:44,408 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.produce(AdaptiveExecutionStrategy.java:199)
+2026-09-02T16:10:44,408 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.http2.HTTP2Connection.produce(HTTP2Connection.java:208)
+2026-09-02T16:10:44,409 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.http2.HTTP2Connection.onFillable(HTTP2Connection.java:155)
+2026-09-02T16:10:44,409 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.http2.HTTP2Connection$FillableCallback.succeeded(HTTP2Connection.java:378)
+2026-09-02T16:10:44,409 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:100)
+2026-09-02T16:10:44,409 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.ssl.SslConnection$DecryptedEndPoint.onFillable(SslConnection.java:558)
+2026-09-02T16:10:44,409 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.ssl.SslConnection.onFillable(SslConnection.java:379)
+2026-09-02T16:10:44,409 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.ssl.SslConnection$2.succeeded(SslConnection.java:146)
+2026-09-02T16:10:44,411 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:100)
+2026-09-02T16:10:44,411 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.io.SelectableChannelEndPoint$1.run(SelectableChannelEndPoint.java:53)
+2026-09-02T16:10:44,413 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.runTask(AdaptiveExecutionStrategy.java:421)
+2026-09-02T16:10:44,417 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.consumeTask(AdaptiveExecutionStrategy.java:390)
+2026-09-02T16:10:44,417 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce(AdaptiveExecutionStrategy.java:277)
+2026-09-02T16:10:44,418 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.lambda$new$0(AdaptiveExecutionStrategy.java:139)
+2026-09-02T16:10:44,418 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:411)
+2026-09-02T16:10:44,418 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.MonitoredQueuedThreadPool$1.run(MonitoredQueuedThreadPool.java:73)
+2026-09-02T16:10:44,418 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:933)
+2026-09-02T16:10:44,418 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:1077)
+2026-09-02T16:10:44,419 [qtp1995627225-60] INFO  com.headlamp.HDLmUtility [] - java.lang.Thread.run(Thread.java:1570)
+2026-09-02T16:10:44,445 [qtp1995627225-60] WARN  org.eclipse.jetty.server.HttpChannel [] - /HDLmPostData
+java.lang.AssertionError: Header not obtained from the request (referer)
+	at com.headlamp.HDLmAssert.HDLmAssertAction(HDLmAssert.java:28) ~[bin/:?]
+	at com.headlamp.HDLmJetty.getReferrerHostName(HDLmJetty.java:1495) ~[bin/:?]
+	at com.headlamp.HDLmJetty.handleSpecialPost(HDLmJetty.java:4448) ~[bin/:?]
+	at com.headlamp.HDLmMainServlet.doAll(HDLmMainServlet.java:458) ~[bin/:?]
+	at com.headlamp.HDLmMainServlet.doPost(HDLmMainServlet.java:653) ~[bin/:?]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:520) ~[jetty-jakarta-servlet-api-5.0.2.jar:?]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:587) ~[jetty-jakarta-servlet-api-5.0.2.jar:?]
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:764) ~[jetty-servlet-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:529) ~[jetty-servlet-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:221) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1380) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:176) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:484) ~[jetty-servlet-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:174) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1302) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:129) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:192) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:122) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.gzip.GzipHandler.handle(GzipHandler.java:822) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:141) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:122) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.Server.handle(Server.java:563) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.HttpChannel.lambda$handle$0(HttpChannel.java:505) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.HttpChannel.dispatch(HttpChannel.java:762) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:497) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.server.HttpChannel.run(HttpChannel.java:457) ~[jetty-server-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.runTask(AdaptiveExecutionStrategy.java:421) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.consumeTask(AdaptiveExecutionStrategy.java:390) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce(AdaptiveExecutionStrategy.java:277) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.produce(AdaptiveExecutionStrategy.java:199) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.http2.HTTP2Connection.produce(HTTP2Connection.java:208) ~[http2-common-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.http2.HTTP2Connection.onFillable(HTTP2Connection.java:155) ~[http2-common-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.http2.HTTP2Connection$FillableCallback.succeeded(HTTP2Connection.java:378) ~[http2-common-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:100) ~[jetty-io-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.io.ssl.SslConnection$DecryptedEndPoint.onFillable(SslConnection.java:558) ~[jetty-io-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.io.ssl.SslConnection.onFillable(SslConnection.java:379) ~[jetty-io-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.io.ssl.SslConnection$2.succeeded(SslConnection.java:146) ~[jetty-io-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:100) ~[jetty-io-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.io.SelectableChannelEndPoint$1.run(SelectableChannelEndPoint.java:53) ~[jetty-io-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.runTask(AdaptiveExecutionStrategy.java:421) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.consumeTask(AdaptiveExecutionStrategy.java:390) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce(AdaptiveExecutionStrategy.java:277) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.lambda$new$0(AdaptiveExecutionStrategy.java:139) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:411) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.MonitoredQueuedThreadPool$1.run(MonitoredQueuedThreadPool.java:73) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:933) ~[jetty-util-11.0.12.jar:11.0.12]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:1077) ~[jetty-util-11.0.12.jar:11.0.12]
+	at java.lang.Thread.run(Thread.java:1570) [?:?]
+2026-09-02T17:38:15,426 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=28m40s712ms825µs800ns).
+2026-09-02T23:22:44,279 [main] INFO  com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Starting...
+2026-09-02T23:22:44,695 [main] INFO  com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Start completed.
+2026-09-02T23:22:52,564 [main] WARN  org.eclipse.jetty.server.handler.ContextHandler [] - o.e.j.s.ServletContextHandler@54c425b1{/,null,STOPPED} contextPath ends with /
+2026-09-02T23:22:52,786 [main] INFO  org.eclipse.jetty.server.Server [] - jetty-11.0.12; built: 2022-09-14T02:38:00.723Z; git: d5b8c29485f5f56a14be5f20c2ccce81b93c5555; jvm 22.0.2+9
+2026-09-02T23:22:52,885 [main] INFO  org.eclipse.jetty.server.handler.ContextHandler [] - Started o.e.j.s.ServletContextHandler@101bdd1c{/,null,AVAILABLE}
+2026-09-02T23:22:52,886 [main] INFO  org.eclipse.jetty.server.handler.ContextHandler [] - Started o.e.j.s.ServletContextHandler@4844930a{/api/socket/info,null,AVAILABLE}
+2026-09-02T23:22:52,942 [main] INFO  org.eclipse.jetty.server.handler.ContextHandler [] - Started o.e.j.s.ServletContextHandler@11f23203{/HDLmWebSocketServer,null,AVAILABLE}
+2026-09-02T23:22:52,945 [main] INFO  org.eclipse.jetty.server.handler.ContextHandler [] - Started o.e.j.s.ServletContextHandler@54c425b1{/api/socket,null,AVAILABLE}
+2026-09-02T23:22:52,981 [main] INFO  org.eclipse.jetty.server.AbstractConnector [] - Started ServerConnector@67d4c48d{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:80}
+2026-09-02T23:22:52,988 [main] INFO  org.eclipse.jetty.util.ssl.SslContextFactory [] - x509=X509@6842c101(headlamp,h=[javaproxya.dnsalias.com, owo.dnsalias.com, owo.secure.dnsalias.com, www.owo.dnsalias.com, www.owo.secure.dnsalias.com],a=[],w=[]) for Server@234cd86c[provider=null,keyStore=null,trustStore=null]
+2026-09-02T23:22:52,989 [main] INFO  org.eclipse.jetty.util.ssl.SslContextFactory [] - x509=X509@2c48cede(owo,h=[oneworldobservatory.com, www.oneworldobservatory.com],a=[],w=[]) for Server@234cd86c[provider=null,keyStore=null,trustStore=null]
+2026-09-02T23:22:53,045 [main] INFO  org.eclipse.jetty.server.AbstractConnector [] - Started ServerConnector@1a21f43f{SSL, (ssl, alpn, h2, http/1.1)}{0.0.0.0:443}
+2026-09-02T23:22:53,050 [main] INFO  org.eclipse.jetty.server.Server [] - Started Server@361cd35c{STARTING}[11.0.12,sto=0] @23411ms
+2026-09-02T23:23:12,647 [qtp1403662281-48] INFO  com.headlamp.HDLmWebSocketInternalServlet [] - HDLmWebSocketInternalServlet configure
+2026-09-02T23:23:12,770 [qtp1403662281-49] INFO  com.headlamp.HDLmMainServlet [] - Access from 127.0.0.1:58766 - port 443 - using GET - host name javaproxya.dnsalias.com - original path value /io/bucket/search/?q=[[[%27content%27,%27eq%27,%27pass_javaa%27,%27pass_javaa%27]]]
+2026-09-02T23:23:12,829 [qtp1403662281-48] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketConnect
+2026-09-02T23:23:12,847 [qtp1403662281-61] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketText - {"configNames":["entriesBridgePassword","entriesBridgeUserid"],"HDLmRequestType":"getConfigValues"}
+2026-09-02T23:23:12,902 [qtp1403662281-61] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - sendString - {"configsList":[{"configName":"entriesBridgePassword","configValue":"headlamp5432"},{"configName":"entriesBridgeUserid","configValue":"admin"}]}
+2026-09-02T23:23:12,909 [qtp1403662281-61] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketClose - 1005 - null
+2026-09-02T23:26:19,234 [qtp1403662281-58] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketConnect
+2026-09-02T23:26:19,237 [qtp1403662281-69] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketText - {"configNames":["entriesBridgePassword","entriesBridgeUserid"],"HDLmRequestType":"getConfigValues"}
+2026-09-02T23:26:19,239 [qtp1403662281-69] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - sendString - {"configsList":[{"configName":"entriesBridgePassword","configValue":"headlamp5432"},{"configName":"entriesBridgeUserid","configValue":"admin"}]}
+2026-09-02T23:26:19,241 [qtp1403662281-69] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketClose - 1005 - null
+2026-09-02T23:26:19,248 [qtp1403662281-51] INFO  com.headlamp.HDLmMainServlet [] - Access from 127.0.0.1:63293 - port 443 - using GET - host name javaproxya.dnsalias.com - original path value /io/bucket/search/?q=[[[%27content%27,%27eq%27,%27pass_javaa%27,%27pass_javaa%27]]]
+2026-09-02T23:42:30,053 [qtp1403662281-58] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketConnect
+2026-09-02T23:42:30,055 [qtp1403662281-75] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketText - {"configNames":["entriesBridgePassword","entriesBridgeUserid"],"HDLmRequestType":"getConfigValues"}
+2026-09-02T23:42:30,057 [qtp1403662281-75] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - sendString - {"configsList":[{"configName":"entriesBridgePassword","configValue":"headlamp5432"},{"configName":"entriesBridgeUserid","configValue":"admin"}]}
+2026-09-02T23:42:30,060 [qtp1403662281-75] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketClose - 1005 - null
+2026-09-02T23:42:30,066 [qtp1403662281-72] INFO  com.headlamp.HDLmMainServlet [] - Access from 127.0.0.1:57123 - port 443 - using GET - host name javaproxya.dnsalias.com - original path value /io/bucket/search/?q=[[[%27content%27,%27eq%27,%27pass_javaa%27,%27pass_javaa%27]]]
+2026-09-02T23:44:19,740 [qtp1403662281-67] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketConnect
+2026-09-02T23:44:19,743 [qtp1403662281-81] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketText - {"configNames":["entriesBridgePassword","entriesBridgeUserid"],"HDLmRequestType":"getConfigValues"}
+2026-09-02T23:44:19,745 [qtp1403662281-81] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - sendString - {"configsList":[{"configName":"entriesBridgePassword","configValue":"headlamp5432"},{"configName":"entriesBridgeUserid","configValue":"admin"}]}
+2026-09-02T23:44:19,747 [qtp1403662281-81] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketClose - 1005 - null
+2026-09-02T23:44:19,758 [qtp1403662281-55] INFO  com.headlamp.HDLmMainServlet [] - Access from 127.0.0.1:64345 - port 443 - using GET - host name javaproxya.dnsalias.com - original path value /io/bucket/search/?q=[[[%27content%27,%27eq%27,%27pass_javaa%27,%27pass_javaa%27]]]
+2026-09-02T23:45:26,200 [qtp1403662281-74] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketConnect
+2026-09-02T23:45:26,202 [qtp1403662281-86] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketText - {"configNames":["entriesBridgePassword","entriesBridgeUserid"],"HDLmRequestType":"getConfigValues"}
+2026-09-02T23:45:26,204 [qtp1403662281-86] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - sendString - {"configsList":[{"configName":"entriesBridgePassword","configValue":"headlamp5432"},{"configName":"entriesBridgeUserid","configValue":"admin"}]}
+2026-09-02T23:45:26,205 [qtp1403662281-86] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketClose - 1005 - null
+2026-09-02T23:45:26,214 [qtp1403662281-65] INFO  com.headlamp.HDLmMainServlet [] - Access from 127.0.0.1:61982 - port 443 - using GET - host name javaproxya.dnsalias.com - original path value /io/bucket/search/?q=[[[%27content%27,%27eq%27,%27pass_javaa%27,%27pass_javaa%27]]]

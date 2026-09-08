@@ -332,7 +332,7 @@ public class HDLmRule {
 		 	    /* Get a summary string for the error. The link is associated with this
 		 	       summary string */
 		 	    JsonObject  jsonObject = jsonElement.getAsJsonObject();
-		 	    String  ruleStatusSummary = jsonObject.getAsJsonPrimitive("matcherror").getAsString();   
+		 	    String  ruleStatusSummary = jsonObject.getAsJsonPrimitive("matchError").getAsString();   
 		 	    ruleStatusSummary = HDLmString.ucFirst(ruleStatusSummary);    	    
 	 			  /* Build the get request for the href */ 
 			    String getKey = HDLmDefines.getString("HDLMGETDATA");
@@ -512,13 +512,21 @@ public class HDLmRule {
 		/* Build the overall rule name from the host name, division name, 
 		   site name, and rule name */
 		String  ruleNameOverall = hostName + "/" + divisionName + "/" +
-                              siteName + "/" + ruleName;
+                              siteName + "/" + ruleName;		
+		/* Check if the rule name can be found in the map of rules. 
+       In some cases, we may need to add a "www." prefix to the 
+       host name to find the rule in the map. */ 
+		if (!rulesMap.containsKey(ruleNameOverall)) {
+			String ruleNameOverallWithPrefix = "www." + ruleNameOverall;
+			if (rulesMap.containsKey(ruleNameOverallWithPrefix)) 
+				ruleNameOverall = ruleNameOverallWithPrefix; 
+		}		
 		/* Make sure the rules map has the current rule. Note that the check
 		   is done using the overall rule name, not just the rule name itself.  */
 		if (!rulesMap.containsKey(ruleNameOverall)) {
 			String  errorFormat = "Rules map does not have current rule (%s)"; 
 			String  errorText = String.format(errorFormat,  ruleName);
-			HDLmAssertAction(false, errorText);					
+			HDLmAssertAction(false, errorText);	
 		}
 		/* Get the existing rule instance from the rules map */
 		HDLmRule   curRule = rulesMap.get(ruleNameOverall);

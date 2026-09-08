@@ -350,16 +350,35 @@ private static final Logger LOG = LoggerFactory.getLogger(HDLmOpenRouter.class);
 	/* Execute an Open Router API request. The request could really
 	  be anything. The caller provides the body which defines
 	  the actual request. */
-	protected static HDLmResponse  executeOpenRouterRequest(String bodyStr) {
+	protected static HDLmResponse  executeOpenRouterRequest(String bodyStr, String llmModelStr) {
 		/* Check one or more values passed by the caller */
 		if (bodyStr == null) {
 			String   errorText = "Body string reference passed to executeOpenRouterRequest is null";
 			throw new NullPointerException(errorText);
 		}
-		/* Get the Open Router model from the configuration values */
-		String  apiModel = HDLmConfigInfo.getOpenRouterApiModel();
+		/* The LLM string is optional. If it is null, 
+		   then the default model string will be used. */
+		if (llmModelStr == null &&
+				llmModelStr != null) {
+			String   errorText = "LLM string reference passed to executeOpenRouterRequest is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Get the Open Router model that we should use */
+		/* If the caller did not provide a model string, then 
+		   get the default model string from the configuration 
+		   values */
+    if (llmModelStr == null) {
+ 		  /* Get the default Open Router model from the configuration values */
+	    llmModelStr = HDLmConfigInfo.getOpenRouterApiModel();
+	  }
+		/* Check if the caller asked that a fallback model string,
+		   be used. If this is true, then get the fallback model. */  
+		else if (llmModelStr.equalsIgnoreCase("fallback")) {
+			/* Get the fallback Open Router model from the configuration values */
+			llmModelStr = HDLmConfigInfo.getOpenRouterApiModelFallback();
+		}
 		/* Replace the dummy model string with the actual model string */
-		bodyStr = bodyStr.replace("dummyModel", apiModel);
+		bodyStr = bodyStr.replace("dummyModel", llmModelStr);
 		/* Build a response object that can be returned to the caller */
 		HDLmResponse  executeResponse = new HDLmResponse();
 		/* Build a header list for use later */

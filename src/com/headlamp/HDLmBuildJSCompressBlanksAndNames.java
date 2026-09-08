@@ -113,7 +113,8 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("z4,");
     builder.addLine("d4,");
     builder.addLine("m4,");
-    builder.addLine("z6) {");
+    builder.addLine("z6,");
+    builder.addLine("handlingARealMod) {");
     builder.addLine("sessionStorage.setItem(\"HDLmSessionRuleInfoHostName\",k2);");
     builder.addLine("sessionStorage.setItem(\"HDLmSessionRuleInfoDivisionName\",Y);");
     builder.addLine("sessionStorage.setItem(\"HDLmSessionRuleInfoSiteName\",C2);");
@@ -147,7 +148,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("null,null,");
     builder.addLine("k2,Y,C2,D.name,");
     builder.addLine("D.path,D.type,y6,null,null);");
-    builder.addLine("y9.matcherror=m9;");
+    builder.addLine("y9.matchError=m9;");
     builder.addLine("j6(m3,'failure','1.0',y9);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -162,7 +163,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("null,null,");
     builder.addLine("k2,Y,C2,D.name,");
     builder.addLine("D.path,D.type,y6,null,null);");
-    builder.addLine("y9.matcherror=m9;");
+    builder.addLine("y9.matchError=m9;");
     builder.addLine("j6(m3,'failure','1.0',y9);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -198,7 +199,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("null,null,");
     builder.addLine("k2,Y,C2,D.name,");
     builder.addLine("D.path,D.type,y6,null,null);");
-    builder.addLine("y9.matcherror=m9;");
+    builder.addLine("y9.matchError=m9;");
     builder.addLine("j6(m3,'failure','1.0',y9);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -246,7 +247,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("null,null,");
     builder.addLine("k2,Y,C2,D.name,");
     builder.addLine("D.path,D.type,y6,null,null);");
-    builder.addLine("y9.matcherror=m9;");
+    builder.addLine("y9.matchError=m9;");
     builder.addLine("j6(m3,'failure','1.0',y9);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -278,7 +279,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("k2,Y,C2,D.name,");
     builder.addLine("D.path,D.type,y6,");
     builder.addLine("w7,q2);");
-    builder.addLine("y9.matcherror='attribute';");
+    builder.addLine("y9.matchError='attribute';");
     builder.addLine("j6(m3,'href','1.0',y9);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -311,7 +312,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("E!=null&&");
     builder.addLine("E!='')");
     builder.addLine("m2=E;");
-    builder.addLine("y9.matcherror='extract';");
+    builder.addLine("y9.matchError='extract';");
     builder.addLine("j6(m3,m2,'1.0',y9);");
     builder.addLine("break;");
     builder.addLine("}");
@@ -351,7 +352,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("E!=null&&");
     builder.addLine("E!='')");
     builder.addLine("m2=E;");
-    builder.addLine("y9.matcherror='modify';");
+    builder.addLine("y9.matchError='modify';");
     builder.addLine("j6(m3,m2,'1.0',y9);");
     builder.addLine("break;");
     builder.addLine("}");
@@ -380,7 +381,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("E!=null&&");
     builder.addLine("E!='')");
     builder.addLine("m2=E;");
-    builder.addLine("y9.matcherror='notify';");
+    builder.addLine("y9.matchError='notify';");
     builder.addLine("j6(m3,m2,'1.0',y9);");
     builder.addLine("}");
     builder.addLine("for (let i=0;i<u6;i++) {");
@@ -422,7 +423,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("E!=null&&");
     builder.addLine("E!='')");
     builder.addLine("m2=E;");
-    builder.addLine("y9.matcherror='click';");
+    builder.addLine("y9.matchError='click';");
     builder.addLine("j6(m3,m2,'1.0',y9);");
     builder.addLine("}");
     builder.addLine("})());");
@@ -436,7 +437,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("sessionIndexValue,x6,B8,");
     builder.addLine("x4,m8,");
     builder.addLine("k2,Y,C2,D,");
-    builder.addLine("y6);");
+    builder.addLine("y6,handlingARealMod);");
     builder.addLine("break;");
     builder.addLine("}");
     builder.addLine("case'changeattrs':");
@@ -457,6 +458,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("case'text':");
     builder.addLine("case'textchecked':");
     builder.addLine("case'title':");
+    builder.addLine("case'webpage':");
     builder.addLine("case'width':{");
     builder.addLine("let q4=D.values;");
     builder.addLine("let o5=D.valuesCount;");
@@ -489,7 +491,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("k2,Y,C2,D.name,");
     builder.addLine("D.path,D.type,y6,");
     builder.addLine("null,null);");
-    builder.addLine("y9.matcherror=m9;");
+    builder.addLine("y9.matchError=m9;");
     builder.addLine("j6(m3,'failure','1.0',y9);");
     builder.addLine("}");
     builder.addLine("break;");
@@ -572,6 +574,9 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("P=='title') {");
     builder.addLine("w7=K.textContent;");
     builder.addLine("}");
+    builder.addLine("else if (P=='webpage') {");
+    builder.addLine("w7='';");
+    builder.addLine("}");
     builder.addLine("if (P=='textchecked') {");
     builder.addLine("let D4=e7(w7,E,");
     builder.addLine("m9,y9,y8,");
@@ -628,6 +633,9 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("}");
     builder.addLine("else if (P=='script') {");
     builder.addLine("if (z6=='complete')");
+    builder.addLine("h6(K,n1);");
+    builder.addLine("}");
+    builder.addLine("else if (P=='webpage') {");
     builder.addLine("h6(K,n1);");
     builder.addLine("}");
     builder.addLine("else{");
@@ -739,6 +747,11 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("P=='textchecked') {");
     builder.addLine("K.textContent=q2;");
     builder.addLine("}");
+    builder.addLine("else if (P=='webpage') {");
+    builder.addLine("const blob=new Blob([q2],{type:'text/html'});");
+    builder.addLine("const blobUrl=URL.createObjectURL(blob);");
+    builder.addLine("window.location.href=blobUrl;");
+    builder.addLine("}");
     builder.addLine("let m3=new Object();");
     builder.addLine("j0(m3,sessionIndexValueUsed,");
     builder.addLine("sessionIndexValue,x6,B8,");
@@ -746,7 +759,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("k2,Y,C2,D.name,");
     builder.addLine("D.path,D.type,y6,");
     builder.addLine("w7,q2);");
-    builder.addLine("y9.matcherror=m9;");
+    builder.addLine("y9.matchError=m9;");
     builder.addLine("j6(m3,P,'1.0',y9);");
     builder.addLine("break;");
     builder.addLine("}");
@@ -769,7 +782,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("k2,Y,C2,D.name,");
     builder.addLine("D.path,D.type,y6,");
     builder.addLine("null,null);");
-    builder.addLine("y9.matcherror=m9;");
+    builder.addLine("y9.matchError=m9;");
     builder.addLine("j6(m3,'failure','1.0',y9);");
     builder.addLine("}");
     builder.addLine("}");
@@ -900,15 +913,6 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("let v=t[l5];");
     builder.addLine("switch (l5) {");
     builder.addLine("case'text':");
-    builder.addLine("case'title':{");
-    builder.addLine("if (n4>0) {");
-    builder.addLine("d0=true;");
-    builder.addLine("break;");
-    builder.addLine("}");
-    builder.addLine("if (D3==false)");
-    builder.addLine("K.textContent=v;");
-    builder.addLine("break;");
-    builder.addLine("}");
     builder.addLine("case'textchecked':{");
     builder.addLine("let a=K.textContent;");
     builder.addLine("let z9=v[0];");
@@ -926,12 +930,21 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("K.textContent=v[1];");
     builder.addLine("break;");
     builder.addLine("}");
+    builder.addLine("case'title':{");
+    builder.addLine("if (n4>0) {");
+    builder.addLine("d0=true;");
+    builder.addLine("break;");
+    builder.addLine("}");
+    builder.addLine("if (D3==false)");
+    builder.addLine("K.textContent=v;");
+    builder.addLine("break;");
+    builder.addLine("}");
     builder.addLine("case'visit':{");
     builder.addLine("let x=h5(v,y9,D3,sessionIndexValueUsed,");
     builder.addLine("sessionIndexValue,x6,B8,");
     builder.addLine("x4,m8,");
     builder.addLine("k2,Y,C2,D,");
-    builder.addLine("y6);");
+    builder.addLine("y6,handlingARealMod);");
     builder.addLine("if (x==true)");
     builder.addLine("d0=true;");
     builder.addLine("break;");
@@ -978,7 +991,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("x4,m8,");
     builder.addLine("k2,Y,C2,D.name,");
     builder.addLine("D.path,D.type,y6,a,z9);");
-    builder.addLine("y9.matcherror=m9;");
+    builder.addLine("y9.matchError=m9;");
     builder.addLine("j6(m3,'failure','1.0',y9);");
     builder.addLine("}");
     builder.addLine("rv=false;;");
@@ -1918,7 +1931,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("sessionIndexValue,x6,B8,");
     builder.addLine("x4,m8,");
     builder.addLine("k2,Y,C2,D,");
-    builder.addLine("y6) {");
+    builder.addLine("y6,handlingARealMod) {");
     builder.addLine("let x=false;");
     builder.addLine("let E2='HDLmUpdateCount'+D.name;");
     builder.addLine("if (isNaN(window[E2]))");
@@ -1943,7 +1956,10 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("D.path,D.type,y6,");
     builder.addLine("w7,q2);");
     builder.addLine("let m2=D.type;");
-    builder.addLine("y9.matcherror='visit';");
+    builder.addLine("if (handlingARealMod)");
+    builder.addLine("y9.matchError='Fired';");
+    builder.addLine("else");
+    builder.addLine("y9.matchError='visit';");
     builder.addLine("j6(m3,m2,'1.0',y9);");
     builder.addLine("return x;");
     builder.addLine("}");
@@ -2217,6 +2233,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("for (let i=0;i<o0;i++) {");
     builder.addLine("let D=n9[i];");
     builder.addLine("try{");
+    builder.addLine("let handlingARealMod=true;");
     builder.addLine("d7(y6,");
     builder.addLine("D,");
     builder.addLine("B8,");
@@ -2232,7 +2249,8 @@ class HDLmBuildJsCompressBlanksAndNames{
       builder.addLine("null,");
     builder.addLine("'"+d3+"',");
     builder.addLine(""+m5+",");
-    builder.addLine("z6);");
+    builder.addLine("z6,");
+    builder.addLine("handlingARealMod);");
     builder.addLine("}");
     builder.addLine("catch (b1) {");
     builder.addLine("console.log(b1);");
@@ -2516,6 +2534,7 @@ class HDLmBuildJsCompressBlanksAndNames{
     builder.addLine("const B8='"+B7+"';");
     builder.addLine("const x6=g9()");
     builder.addLine("const z6='unknown';");
+    builder.addLine("let handlingARealMod=false;");
     builder.addLine("d7(y6,");
     builder.addLine("D,");
     builder.addLine("B8,");
@@ -2531,7 +2550,8 @@ class HDLmBuildJsCompressBlanksAndNames{
       builder.addLine("null,");
     builder.addLine("'"+d3+"',");
     builder.addLine("'"+m5+"',");
-    builder.addLine("z6);");
+    builder.addLine("z6,");
+    builder.addLine("handlingARealMod);");
     builder.addLine("</script>");
     actualJS=builder.getLinesWithSuffix("\r\n");
 		if (useCreateFixedJS) {
@@ -3691,7 +3711,7 @@ class HDLmBuildJsCompressBlanksAndNames{
         "}"+
         "]"+
         "";
-	    static JsonParser  parser = HDLmMain.gsonJsonParserMain;
+	    static JsonParser  parser=new JsonParser();
 	    static JsonArray   rvJsonArray= (JsonArray) parser.parse(jsonString);
 }
     return getIndexJsonArrayLocal.rvJsonArray;

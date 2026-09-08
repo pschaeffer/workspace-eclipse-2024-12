@@ -2440,6 +2440,13 @@ public class HDLmMain {
 		   As a consequence, this step must come before any database 
 		   connections are established. */
 		HDLmConfig.setConfigurationValues(); 
+		/* This is just test code for validating HTML (possibly including CSS, links,
+		   images, JS, etc.) */  	  
+		/*
+		String  badHtml = "<!DOCTYPE html><html><head><title>Test</title></head><body><p>Unclosed paragraph element</div></body></html>";
+		String  goodHtml = "<!DOCTYPE html><html><head><title>Test</title></head><body><p>Unclosed paragraph element</body></html>";
+    HDLmHtml.checkIfWebpageValidNuNotUsed(badHtml, HDLmReportErrors.REPORTERRORS);  
+    */
 		/* This is just test code for strings */
 		/* String testStringNull = null; */
 		/* String testStringConvert = testStringNull.toString(); */		
@@ -2747,7 +2754,7 @@ public class HDLmMain {
 		  ServerConnector   connectorHttp2 = null;
 		  MonitoredQueuedThreadPool   threadPool = null;
 	    /* Build a new HTTP configuration. This configuration is used later. */
-		  HttpConfiguration httpConfig = null;
+		  HttpConfiguration   httpConfig = null;
 	    httpConfig = new HttpConfiguration();
 	    httpConfig.setSecureScheme("https");
 	    httpConfig.setSecurePort(443);
@@ -2804,6 +2811,13 @@ public class HDLmMain {
 		   		                                     http2ConnectionFactory,
 		   		                                     new HttpConnectionFactory(httpsConfig));
 		      connectorHttp2.setPort(443);
+		      /* This was a temporary fix for a connection problem that was encountered. 
+		         The problem was that the connection was not being made to the correct host. 
+		         The fix was to set the host to localhost. This fix may not be needed in the future.
+		         This fix is not need for Chrome, but only for Firefox. */
+		      /*
+		      connectorHttp2.setHost("localhost");
+		      */
 	    	}
 	    }
 	    /* Build a connector for HTTP/3. This code is not in use because the

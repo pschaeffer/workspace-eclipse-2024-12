@@ -457,9 +457,13 @@ public class HDLmConfigInfo {
   protected static int   getOpenAIMaximumStringLength() {
     return HDLmConfig.getInteger("openAIMaximumStringLength");
   }
-	/* Get the Open Router API model */
+	/* Get the default Open Router API model */
 	protected static String  getOpenRouterApiModel() {
 		return HDLmConfig.getString("openRouterApiModel");
+	}
+	/* Get the fallback Open Router API model */
+	protected static String  getOpenRouterApiModelFallback() {
+		return HDLmConfig.getString("openRouterApiModelFallback");
 	}
 	/* Get the Open Router image API model */
 	protected static String  getOpenRouterImageApiModel() {

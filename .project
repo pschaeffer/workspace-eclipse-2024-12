@@ -5,16 +5,15 @@
 	<projects>
 	</projects>
 	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>httpcomponents-core-4.4.11 Java</name>
-			<type>2</type>
-			<location>C:/Users/Peter/HeadlampJetty/httpcomponents-core-4.4.11/httpcore/src/main/httpcomponents-core-4.4.11 Java</location>
-		</link>
-	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1770859805078</id>

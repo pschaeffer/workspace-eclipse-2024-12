@@ -1,0 +1,101 @@
+2026-08-10T01:28:59,033 [qtp1765165869-77] INFO  com.headlamp.HDLmMainServlet [] - Access from 127.0.0.1:54638 - port 443 - using GET - host name javaproxya.dnsalias.com - original path value /server-status
+2026-08-10T01:29:39,434 [qtp1765165869-72] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketConnect
+2026-08-10T01:29:39,438 [qtp1765165869-136] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketText - {"HDLmRequestType":"webpageImprover","HDLmBodyStr":"{\"model\":\"dummyModel\",\"messages\":[{\"role\":\"system\",\"content\":\"You are an expert at improving webpages to increase conversion rates and revenue.\\nCopy everything from the old HTML to the generated HTML by default unless a change is made.\\nIf Desired changes is empty, devise some improvements on your own while considering the contents of the Undesired changes field if any.\\nIf Desired changes is not empty, do not devise any improvements on your own and only use the Desired changes field while considering the Undesired changes field.\\nIf the User suggestion is empty, ignore it.\\nFor each improvement, create a hash code using the DJB2 algorithm.\\nStart with the value 5381.\\nHash the What value and the Why value together.\\nConvert the final unsigned hash value to hexadecimal.\\nPrefix each hash with HDLmClass.\\nReturn each improvement hash code using the key Hash.\\nMark changed HTML by adding a class with the exact hash value that includes the HDLmClass prefix.\\nReturn complete improved HTML and a list of improvements.\\n\"},{\"role\":\"user\",\"content\":\"Please improve the HTML from the passed URL to increase conversion rates and revenue.\\nReturn the complete improved HTML and a list of improvements made, each with a What field and a Why field and a Hash field.\\n\\nURL:\\nhttps://www.yogadirect.com/\\nUser suggestion: \\nDesired changes: ()\\nUndesired changes: ()\\n\"}],\"plugins\":[{\"id\":\"response-healing\"}],\"tools\":[{\"type\":\"openrouter:web_fetch\",\"parameters\":{\"max_content_tokens\":100000}}],\"response_format\":{\"type\":\"json_schema\",\"json_schema\":{\"name\":\"webpage_improvements_improver_response\",\"description\":\"Response containing improved HTML and improvements list\",\"strict\":true,\"schema\":{\"type\":\"object\",\"properties\":{\"improvedHtml\":{\"type\":\"string\"},\"improvements\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"What\":{\"type\":\"string\"},\"Why\":{\"type\":\"string\"},\"Hash\":{\"type\":\"string\"}},\"required\":[\"What\",\"Why\",\"Hash\"],\"additionalProperties\":false}}},\"required\":[\"improvedHtml\",\"improvements\"],\"additionalProperties\":false}}}}","HDLmLlmModelStr":"meta-llama/llama-4-scout"}
+2026-08-10T01:29:39,443 [qtp1765165869-136] INFO  com.headlamp.HDLmOpenRouter [] - Starting timestamp 2026-08-10T06:29:39.443113400Z
+2026-08-10T01:29:42,162 [qtp1765165869-136] WARN  org.apache.http.client.protocol.ResponseProcessCookies [] - Invalid cookie header: "set-cookie: __cf_bm=vzfxxO3_n7RTelToJ1WHPbRC1cktBhMjpahi_RQSSb4-1786343385.7374675-1.0.1.1-nY2fpk4AE6R47M7AiXSnKNEwaegrlMcmVLbWmgsPWGQmWpjFqUbs0nkgdEi748ML_TfOYrWXk6ZySl1wvGk4pJDCIDvcHBZ1MV4lOnfBuJerXqv.xZ4p3fi9Hx5vtKs2; HttpOnly; SameSite=None; Secure; Path=/; Domain=openrouter.ai; Expires=Mon, 10 Aug 2026 06:59:48 GMT". Invalid 'expires' attribute: Mon, 10 Aug 2026 06:59:48 GMT
+2026-08-10T01:29:42,170 [qtp1765165869-136] INFO  com.headlamp.HDLmCurlApache [] - In HDLmApacheResponse.runCurlResponse - HTTP code (502) URL (https://openrouter.ai/api/v1/chat/completions)
+2026-08-10T01:29:42,170 [qtp1765165869-136] ERROR com.headlamp.HDLmLogMsg [] - HDLm Curl 1 Curl request failed - HTTP code (502) URL (https://openrouter.ai/api/v1/chat/completions)
+2026-08-10T01:29:42,173 [qtp1765165869-136] INFO  com.headlamp.HDLmOpenRouter [] - Ending timestamp 2026-08-10T06:29:42.172422700Z
+2026-08-10T01:29:42,177 [qtp1765165869-136] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - sendString - {"resultDesired":false,"resultMessage":"HTTP/1.1 502 Bad Gateway","resultCode":51}
+2026-08-10T01:29:42,179 [qtp1765165869-136] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketClose - 1005 - null
+2026-08-10T10:12:47,126 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=39m1s523ms729µs900ns).
+2026-08-10T10:28:21,701 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m34s580ms678µs300ns).
+2026-08-10T15:09:13,768 [qtp1765165869-76] INFO  com.headlamp.HDLmMainServlet [] - Access from 127.0.0.1:51507 - port 443 - using GET - host name javaproxya.dnsalias.com - original path value /server-status
+2026-08-10T15:09:45,080 [qtp1765165869-72] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketConnect
+2026-08-10T15:09:45,085 [qtp1765165869-193] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketText - {"HDLmRequestType":"webpageImprover","HDLmBodyStr":"{\"model\":\"dummyModel\",\"messages\":[{\"role\":\"system\",\"content\":\"You are an expert at improving webpages to increase conversion rates and revenue.\\nCopy everything from the old HTML to the generated HTML by default unless a change is made.\\nIf Desired changes is empty, devise some improvements on your own while considering the contents of the Undesired changes field if any.\\nIf Desired changes is not empty, do not devise any improvements on your own and only use the Desired changes field while considering the Undesired changes field.\\nIf the User suggestion is empty, ignore it.\\nFor each improvement, create a hash code using the DJB2 algorithm.\\nStart with the value 5381.\\nHash the What value and the Why value together.\\nConvert the final unsigned hash value to hexadecimal.\\nPrefix each hash with HDLmClass.\\nReturn each improvement hash code using the key Hash.\\nMark changed HTML by adding a class with the exact hash value that includes the HDLmClass prefix.\\nReturn complete improved HTML and a list of improvements.\\n\"},{\"role\":\"user\",\"content\":\"Please improve the HTML from the passed URL to increase conversion rates and revenue.\\nReturn the complete improved HTML and a list of improvements made, each with a What field and a Why field and a Hash field.\\n\\nURL:\\nhttps://www.yogadirect.com/\\nUser suggestion: \\nDesired changes: ()\\nUndesired changes: ()\\n\"}],\"plugins\":[{\"id\":\"response-healing\"}],\"tools\":[{\"type\":\"openrouter:web_fetch\",\"parameters\":{\"max_content_tokens\":100000}}],\"response_format\":{\"type\":\"json_schema\",\"json_schema\":{\"name\":\"webpage_improvements_improver_response\",\"description\":\"Response containing improved HTML and improvements list\",\"strict\":true,\"schema\":{\"type\":\"object\",\"properties\":{\"improvedHtml\":{\"type\":\"string\"},\"improvements\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"What\":{\"type\":\"string\"},\"Why\":{\"type\":\"string\"},\"Hash\":{\"type\":\"string\"}},\"required\":[\"What\",\"Why\",\"Hash\"],\"additionalProperties\":false}}},\"required\":[\"improvedHtml\",\"improvements\"],\"additionalProperties\":false}}}}","HDLmLlmModelStr":"meta-llama/llama-4-maverick"}
+2026-08-10T15:09:45,088 [qtp1765165869-193] INFO  com.headlamp.HDLmOpenRouter [] - Starting timestamp 2026-08-10T20:09:45.087595800Z
+2026-08-10T15:09:52,356 [qtp1765165869-193] WARN  org.apache.http.client.protocol.ResponseProcessCookies [] - Invalid cookie header: "set-cookie: __cf_bm=7VWyrY8yaiR4setP8FKDNRBThgT725GIRrsS1JytWdo-1786392592.3814583-1.0.1.1-4ZdQnjuAzsadgLBs2UFPFEii1a8PyPM8FqBibseCKIQRbXYoGNCEjGiXUnpa90M6h2MkYpjW00._b_oqsf4OacS49L.82OiCPthPikWaT171XuFcrXdrateCA3Xd_hIG; HttpOnly; SameSite=None; Secure; Path=/; Domain=openrouter.ai; Expires=Mon, 10 Aug 2026 20:39:59 GMT". Invalid 'expires' attribute: Mon, 10 Aug 2026 20:39:59 GMT
+2026-08-10T15:09:52,367 [qtp1765165869-193] INFO  com.headlamp.HDLmOpenRouter [] - Ending timestamp 2026-08-10T20:09:52.367617300Z
+2026-08-10T15:09:52,371 [qtp1765165869-193] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - sendString - 
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1786392592-FGQPp41yeHguFuyxV9ih","object":"chat.completion","created":1786392592,"model":"meta-llama/llama-4-maverick","provider":"OpenAI","system_fingerprint":null,"service_tier":null,"choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"stop","message":{"role":"assistant","content":null,"refusal":null,"reasoning":null}}],"usage":{"prompt_tokens":438,"completion_tokens":16,"total_tokens":454,"cost":0.0001693,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0},"cost_details":{"upstream_inference_cost":0.0001693,"upstream_inference_prompt_cost":0.0001533,"upstream_inference_completions_cost":0.000016}}}
+2026-08-10T15:09:52,376 [qtp1765165869-193] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketClose - 3000 - Close the web socket session in all cases
+2026-08-10T15:09:53,088 [qtp1765165869-72] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketConnect
+2026-08-10T15:09:53,101 [qtp1765165869-57] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketText - {"HDLmRequestType":"webpageImprover","HDLmBodyStr":"{\"model\":\"dummyModel\",\"messages\":[{\"role\":\"system\",\"content\":\"You are an expert at improving webpages to increase conversion rates and revenue.\\nCopy everything from the old HTML to the generated HTML by default unless a change is made.\\nIf Desired changes is empty, devise some improvements on your own while considering the contents of the Undesired changes field if any.\\nIf Desired changes is not empty, do not devise any improvements on your own and only use the Desired changes field while considering the Undesired changes field.\\nIf the User suggestion is empty, ignore it.\\nFor each improvement, create a hash code using the DJB2 algorithm.\\nStart with the value 5381.\\nHash the What value and the Why value together.\\nConvert the final unsigned hash value to hexadecimal.\\nPrefix each hash with HDLmClass.\\nReturn each improvement hash code using the key Hash.\\nMark changed HTML by adding a class with the exact hash value that includes the HDLmClass prefix.\\nReturn complete improved HTML and a list of improvements.\\n\"},{\"role\":\"user\",\"content\":\"Please improve the HTML from the passed URL to increase conversion rates and revenue.\\nReturn the complete improved HTML and a list of improvements made, each with a What field and a Why field and a Hash field.\\n\\nURL:\\nhttps://www.yogadirect.com/\\nUser suggestion: \\nDesired changes: ()\\nUndesired changes: ()\\n\"}],\"plugins\":[{\"id\":\"response-healing\"}],\"tools\":[{\"type\":\"openrouter:web_fetch\",\"parameters\":{\"max_content_tokens\":100000}}],\"response_format\":{\"type\":\"json_schema\",\"json_schema\":{\"name\":\"webpage_improvements_improver_response\",\"description\":\"Response containing improved HTML and improvements list\",\"strict\":true,\"schema\":{\"type\":\"object\",\"properties\":{\"improvedHtml\":{\"type\":\"string\"},\"improvements\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"What\":{\"type\":\"string\"},\"Why\":{\"type\":\"string\"},\"Hash\":{\"type\":\"string\"}},\"required\":[\"What\",\"Why\",\"Hash\"],\"additionalProperties\":false}}},\"required\":[\"improvedHtml\",\"improvements\"],\"additionalProperties\":false}}}}","HDLmLlmModelStr":"meta-llama/llama-4-maverick"}
+2026-08-10T15:09:53,101 [qtp1765165869-57] INFO  com.headlamp.HDLmOpenRouter [] - Starting timestamp 2026-08-10T20:09:53.101211600Z
+2026-08-10T15:09:56,939 [qtp1765165869-57] WARN  org.apache.http.client.protocol.ResponseProcessCookies [] - Invalid cookie header: "set-cookie: __cf_bm=Sw03nCufCINMcnlWLzpjtu7Vn7B9uNjNzjrheKa2lYo-1786392600.326773-1.0.1.1-uOChoFeq0ifg6VTkQxWvvDgnAQZu26aUkjvSphHVKmE1gvINoH8pT6_2U8q.SKoZ0CLGGovUfG0lNH697iJuMsW3oQ5oAXBvRXYi3whsD9cK5fh5QQYrs27xzIjq4LKP; HttpOnly; SameSite=None; Secure; Path=/; Domain=openrouter.ai; Expires=Mon, 10 Aug 2026 20:40:04 GMT". Invalid 'expires' attribute: Mon, 10 Aug 2026 20:40:04 GMT
+2026-08-10T15:09:57,061 [qtp1765165869-57] INFO  com.headlamp.HDLmOpenRouter [] - Ending timestamp 2026-08-10T20:09:57.061428400Z
+2026-08-10T15:09:57,061 [qtp1765165869-57] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - sendString - 
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1786392600-DyIPpoKNGimAKspCuAlY","object":"chat.completion","created":1786392600,"model":"meta-llama/llama-4-maverick","provider":"OpenAI","system_fingerprint":null,"service_tier":null,"choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"stop","message":{"role":"assistant","content":null,"refusal":null,"reasoning":null}}],"usage":{"prompt_tokens":447,"completion_tokens":16,"total_tokens":463,"cost":0.000100536,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0},"cost_details":{"upstream_inference_cost":0.000100536,"upstream_inference_prompt_cost":0.0000894,"upstream_inference_completions_cost":0.000011136}}}
+2026-08-10T15:09:57,063 [qtp1765165869-57] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketClose - 3000 - Close the web socket session in all cases
+2026-08-10T15:09:57,099 [qtp1765165869-57] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketConnect
+2026-08-10T15:09:57,396 [qtp1765165869-162] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketText - {"HDLmRequestType":"webpageImprover","HDLmBodyStr":"{\"model\":\"dummyModel\",\"messages\":[{\"role\":\"system\",\"content\":\"You are an expert at improving webpages to increase conversion rates and revenue.\\nCopy everything from the old HTML to the generated HTML by default unless a change is made.\\nIf Desired changes is empty, devise some improvements on your own while considering the contents of the Undesired changes field if any.\\nIf Desired changes is not empty, do not devise any improvements on your own and only use the Desired changes field while considering the Undesired changes field.\\nIf the User suggestion is empty, ignore it.\\nFor each improvement, create a hash code using the DJB2 algorithm.\\nStart with the value 5381.\\nHash the What value and the Why value together.\\nConvert the final unsigned hash value to hexadecimal.\\nPrefix each hash with HDLmClass.\\nReturn each improvement hash code using the key Hash.\\nMark changed HTML by adding a class with the exact hash value that includes the HDLmClass prefix.\\nReturn complete improved HTML and a list of improvements.\\n\"},{\"role\":\"user\",\"content\":\"Please improve the HTML from the passed URL to increase conversion rates and revenue.\\nReturn the complete improved HTML and a list of improvements made, each with a What field and a Why field and a Hash field.\\n\\nURL:\\nhttps://www.yogadirect.com/\\nUser suggestion: \\nDesired changes: ()\\nUndesired changes: ()\\n\"}],\"plugins\":[{\"id\":\"response-healing\"}],\"tools\":[{\"type\":\"openrouter:web_fetch\",\"parameters\":{\"max_content_tokens\":100000}}],\"response_format\":{\"type\":\"json_schema\",\"json_schema\":{\"name\":\"webpage_improvements_improver_response\",\"description\":\"Response containing improved HTML and improvements list\",\"strict\":true,\"schema\":{\"type\":\"object\",\"properties\":{\"improvedHtml\":{\"type\":\"string\"},\"improvements\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"What\":{\"type\":\"string\"},\"Why\":{\"type\":\"string\"},\"Hash\":{\"type\":\"string\"}},\"required\":[\"What\",\"Why\",\"Hash\"],\"additionalProperties\":false}}},\"required\":[\"improvedHtml\",\"improvements\"],\"additionalProperties\":false}}}}","HDLmLlmModelStr":"meta-llama/llama-4-maverick"}
+2026-08-10T15:09:57,397 [qtp1765165869-162] INFO  com.headlamp.HDLmOpenRouter [] - Starting timestamp 2026-08-10T20:09:57.397823200Z
+2026-08-10T15:10:02,072 [qtp1765165869-162] WARN  org.apache.http.client.protocol.ResponseProcessCookies [] - Invalid cookie header: "set-cookie: __cf_bm=OY340qY6WhV1kOt3v5rcdRAovxo4Gxe6haEGhxwosDI-1786392604.6315129-1.0.1.1-APPryISqJ7J5RADIlPuVg97g9BYQMC.Tai3hplCP7XPA6kl4ZbF9d8.HIca.u3MarAUn5qaQwdngMBAGT2gbgEZPj8g0Z8jTsTuJevr9kfRlS3eBRLJOuq6PjOrWJTsP; HttpOnly; SameSite=None; Secure; Path=/; Domain=openrouter.ai; Expires=Mon, 10 Aug 2026 20:40:09 GMT". Invalid 'expires' attribute: Mon, 10 Aug 2026 20:40:09 GMT
+2026-08-10T15:10:02,077 [qtp1765165869-162] INFO  com.headlamp.HDLmOpenRouter [] - Ending timestamp 2026-08-10T20:10:02.077385600Z
+2026-08-10T15:10:02,078 [qtp1765165869-162] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - sendString - 
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1786392604-tAWyhY6Q9bD5lXYPgFWl","object":"chat.completion","created":1786392604,"model":"meta-llama/llama-4-maverick","provider":"OpenAI","system_fingerprint":null,"service_tier":null,"choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"stop","message":{"role":"assistant","content":"openrouter_web_fetch(url=\"https://www.yogadirect.com/\")openrouter_web_fetch(url=\"https://www.yogadirect.com/\")","refusal":null,"reasoning":null}}],"usage":{"prompt_tokens":447,"completion_tokens":18,"total_tokens":465,"cost":0.000101928,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0},"cost_details":{"upstream_inference_cost":0.000101928,"upstream_inference_prompt_cost":0.0000894,"upstream_inference_completions_cost":0.000012528}}}
+2026-08-10T15:10:02,083 [qtp1765165869-57] INFO  com.headlamp.HDLmWebSocketInternalAdapter [] - onWebSocketClose - 3000 - Close the web socket session in all cases
+2026-08-10T17:50:05,110 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=29m6s801ms574µs200ns).
+2026-08-11T15:51:25,658 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=25m51s41ms438µs).
+2026-08-11T18:23:19,576 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=29m52s39ms133µs400ns).

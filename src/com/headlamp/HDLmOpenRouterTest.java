@@ -102,7 +102,7 @@ class HDLmOpenRouterTest {
 	@Test
 	void executeOpenRouterRequest() {
 		Throwable exception = assertThrows(RuntimeException.class,
-				                               () -> {HDLmOpenRouter.executeOpenRouterRequest(null);},
+				                               () -> {HDLmOpenRouter.executeOpenRouterRequest(null, null);},
 				                               "Expected RuntimeException");
 		String execMsg = exception.getMessage();
 		assertEquals("Body string reference passed to executeOpenRouterRequest is null", execMsg,
