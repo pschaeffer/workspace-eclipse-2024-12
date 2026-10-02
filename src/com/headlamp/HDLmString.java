@@ -362,6 +362,24 @@ public class HDLmString {
 	  }
 	  return partsList;
 	}
+	/* This routine find a character in a string. The index
+	   of the character is returned to the caller. If the 
+	   character is not found, then a value of -1 is returned
+	   to the caller. */
+	protected static int findCharString(final String inputString, final Character chToFind) {
+		/* Check if the values passed by the caller are null */
+		if (inputString == null) {
+			String errorText = "Input string value passed to findChar is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the character to find is null */
+		if (chToFind == null) {
+			String errorText = "Character to find value passed to findChar is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Look for the character in the string */
+		return inputString.indexOf(chToFind);
+	}
 	/* Build a string from all of the entries in an array of strings */
 	protected static String fromArray(final ArrayList<String> strArray) {
 		/* Check if the values passed by the caller are null */
@@ -1092,6 +1110,61 @@ public class HDLmString {
 		/* Return the final string to the caller */	 
 		return inStr;
 	}
+	/* This routine unconditionally removes some occurrences of invalid characters
+	   from a string. A few rules. The input string must not be null. This  
+	   is checked for, and not allowed. The input string can be zero-length. 
+	   This is not considered to be an error condition. If the character is
+	   not found in the input string, no error is reported. This is not 
+	   considered to be an error.
+	    
+	   If the maximum number of occurrences is exceeded, then invalid 
+	   characters are ignored. Of course, the maximum number can be set
+	   to a really high value. */ 
+  protected static String  removeInvalidChars(final String inStr, final int minValue, final int maxOccurences) { 
+		/* Check if the value passed by the caller is null */
+		if (inStr == null) {
+			String  errorText = "Input string value passed to removeChars is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the minimum value is invalid */ 
+		if (minValue < 0) {
+			String  errorFormat = "Minimum character value (%d) passed to removeInvalidChars is invalid";
+			String  errorText = String.format(errorFormat, minValue); 
+      Exception exception = new IllegalArgumentException(errorText);
+      throw new IllegalArgumentException(errorText, exception);
+		}
+		/* Check if the maximum number of occurrences value is invalid */ 
+		if (maxOccurences < 0) {
+			String  errorFormat = "Minimum character value (%d) passed to removeInvalidChars is invalid";
+			String  errorText = String.format(errorFormat, minValue); 
+      Exception exception = new IllegalArgumentException(errorText);
+      throw new IllegalArgumentException(errorText, exception);
+		}
+		/* Set a few values */
+		int     inStrLen = inStr.length(); 
+		int     invalidCharPriorLocation = -1;
+		int     invalidCharCount = 0;
+		String  outStr = "";
+		/* Loop through all of the characters in the input string */
+		for (int i = 0; i < inStrLen; i++) {
+			char curChar = inStr.charAt(i);
+			/* Check if the current character is invalid */
+			if ((int) curChar > minValue) {
+				/* Increment the invalid character count and check if we have 
+				   exceeded the maximum number of occurrences */	
+				invalidCharCount++;
+				if (invalidCharCount > maxOccurences)
+					continue;
+				if ((invalidCharPriorLocation + 1) <= (i - 1)) 
+					outStr += inStr.substring(invalidCharPriorLocation + 1, i);
+				invalidCharPriorLocation = i;
+			}
+		}
+	  /* Check for any remaining characters after the last invalid character */
+		if ((invalidCharPriorLocation + 1) <= (inStrLen - 1))
+			outStr += inStr.substring(invalidCharPriorLocation + 1, inStrLen);						
+		return outStr;
+  }
   /* Remove a file number tail (if any) from a string. Some strings end
 	   with a file number (of the form (nnn)) that must be removed for 
 	   duplicate checking. This routine checks if the input string has 

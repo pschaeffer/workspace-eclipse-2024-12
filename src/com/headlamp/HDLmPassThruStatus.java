@@ -26,7 +26,7 @@ public enum HDLmPassThruStatus {
 	   by the caller must not be null. */
 	protected static HDLmPassThruStatus valueOfString(String newType) {
 		if (newType == null) {
-		  String  errorText = "String passed to tree type conversion is null";
+		  String  errorText = "String passed to pass through status conversion is null";
 		  throw new NullPointerException(errorText);
 		}
 	  newType = newType.toUpperCase();

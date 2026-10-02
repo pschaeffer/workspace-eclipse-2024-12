@@ -81,7 +81,7 @@ public class HDLmThreadStatus {
      provides a reference to the status map for which statistics are needed. 
      The standard status map is always used. The statistics are returned as a 
      tree map so that they can be accessed in ascending name order. */ 
-  protected static TreeMap<String, String> getStatistics() {
+  protected static TreeMap<String, String>  getStatistics() {
   	var  status = statusMap;
   	var  statusStatsTree = new TreeMap<String, String>();
   	/* Get the status map size. This is the only value that can be obtained

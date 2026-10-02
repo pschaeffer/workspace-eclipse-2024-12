@@ -147,6 +147,7 @@ public class HDLmModTop extends HDLmMod {
 	  	String  errorText = "Company reference passed to addCompany is null";
 		  throw new NullPointerException(errorText);
 	  }
+	  /* System.out.println("In HDLmModTop.addCompanyTop - thread ID is " + HDLmUtility.getThreadId()); */
 		/* Get the companies pass-through reference */
 		HDLmModCompanies   companiesPassThru = getCompaniesReference();
 		if (companiesPassThru == null)

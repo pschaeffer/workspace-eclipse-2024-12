@@ -294,6 +294,7 @@ public class HDLmModLine extends HDLmMod {
 					                                    HDLmReportErrors.REPORTERRORS,
 					                                    HDLmZeroLengthOk.ZEROLENGTHNOTOK);
 		}
+	  testResults = curString;
 		/* Get a string and use it to set an instance field */ 
 	  {
 			String  errorMessagePrefix = "Line";

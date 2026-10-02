@@ -4533,10 +4533,10 @@ public class HDLmMod {
 	                                             errorMessages,
 					                                     jsonObject, 
 							                                 name, 
-							                                 HDLmReportErrors.REPORTERRORS);			
+							                                 HDLmReportErrors.REPORTERRORS);		
 					Integer  arraySize = null;
 					if (this.values != null)
-			  		arraySize = this.values.size(); 
+			  		arraySize = this.values.size();
 					/* This call checks for an empty array */
 					Integer valuesCountLocal = HDLmMod.modArrayCheck(editorType, 
 							                                             errorCounter,
@@ -7627,10 +7627,10 @@ public class HDLmMod {
 		                          name, 
 		                          "Modification JSON web page is blank", 
 		                          4, 
-		                          reportErrors);	
-			}			
+		                          reportErrors);
+			}
 			/* Fix the current HTML (possibly including CSS, links, images, JS, etc.) web page */			
-			String  curValueUpdated = HDLmAi.fixWebImproverWebpage(curValue);
+			String  curValueUpdated = HDLmAi.fixWebImproverWebpage(curValue, false);
 			values.set(i, curValueUpdated);
 			/* Check if the current web page is valid */
 			boolean   webpageValid = HDLmHtml.checkIfWebpageValid(curValueUpdated, 
@@ -7648,7 +7648,7 @@ public class HDLmMod {
 	                               curValue, 
 	                               "Modification JSON invalid web page value", 
 	                               4, 
-	                               reportErrors);			
+	                               reportErrors);
 		}
 		return rv;
 	}

@@ -283,7 +283,7 @@ public class HDLmAi {
 	}
 	/* Fix the input HTML (possibly including CSS, links, images, JS, etc.) 
 	   web page string passed by the caller */ 
-	protected static String  fixWebImproverWebpage(final String inputWebpage) {
+	protected static String  fixWebImproverWebpage(final String inputWebpage, final boolean jsonInput) {
 		/* Check if the input web page passed by the caller is null */
 		if (inputWebpage == null) {
 			String  errorText = "Input web page passed to fixWebImproverWebpage is null";
@@ -292,9 +292,26 @@ public class HDLmAi {
 		/* Set a few variables for changing the input web page */
 		int  newLineCounter = 0;
 		int  newLineIndex = -1;
-		String  outputWebpage = ""; 	
-		/* Modify the output web page as need be */
-		outputWebpage = inputWebpage;;		 
+		String  greaterThanString;
+		String  outputWebpage; 	 
+		/* We need to make one or more changes to the web page string so 
+	     that it will validate correctly. The first change is for HTML5.
+	     The second change removes a bad character. This change was made
+	     around 2026-09-08. */ 
+		/*
+    outputWebpage = inputWebpage.replaceFirst("(DOCTYPE html)(\\r\\r\\n)(.*)(\\r\\r\\n)(.*)(>)", "DOCTYPE HTML>");
+    outputWebpage = outputWebpage.replaceFirst("\"\\ufffd/>", "\"/>");	
+    */
+		if (jsonInput == false)  
+			greaterThanString = ">";			 
+		else  
+			greaterThanString = "\\u003e";	
+		/* Make a few changes to the input web page string */
+		int   indexDoctype = inputWebpage.indexOf("DOCTYPE html");  		
+		int   greaterThanIndex = inputWebpage.indexOf(greaterThanString);
+		outputWebpage = inputWebpage.substring(0, indexDoctype) + "DOCTYPE html" + inputWebpage.substring(greaterThanIndex);			
+		/* Remove any invalid characters from the output web page string */
+		outputWebpage = HDLmString.removeInvalidChars(outputWebpage, 256, 99999); 
 		return outputWebpage;		
 	}
 }

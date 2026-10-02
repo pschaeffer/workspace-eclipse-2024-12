@@ -176,6 +176,7 @@ public class HDLmModCompanies extends HDLmMod {
 			String   errorText = String.format(errorFormat, newName); 
 	  	throw new IllegalArgumentException(errorText);  	
 	  }
+	  /* System.out.println("In HDLmModCompanies.addCompanyCompanies - thread ID is " + HDLmUtility.getThreadId()); */
 	  /* Add the new company to the companies tree map */
 	  companiesTreeMap.put(newName,  newCompany);
 	  countCompanies++;
@@ -241,6 +242,56 @@ public class HDLmModCompanies extends HDLmMod {
   protected Instant      getLastModified() {
 	  return lastModified;		
   } 
+  /* This routine gets the number of companies by 
+     returning the size of the companies children
+     array */
+  protected static int   getNumberOfCompanies(final HDLmTree treeTop) {
+		/* Check if the tree top node reference passed by the caller is null */
+		if (treeTop == null) {
+			String errorText = "Tree top node reference passed to getNumberOfCompanies is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Get the tree lock */
+		/* System.out.println("In HDLmModCompanies.getNumberOfCompanies - lock count get is " + HDLmTree.getTreeLock()); */
+		/* Get a reference to the list of children for the 
+		   top tree node passed by the caller. Check if the 
+		   reference is null. */
+		ArrayList<HDLmTree>   topchildrenList = treeTop.getChildren();
+		/* Check if the children list reference is null */
+		if (topchildrenList == null) {
+			String errorText = "Top children list reference in getNumberOfCompanies is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Get a reference to the 'Companies' tree node instance 
+	     and check if the reference is null */
+		HDLmTree  companiesTreeNode = topchildrenList.get(0);		
+		/* Get the list of children for the Companies tree node */
+		ArrayList<HDLmTree>   companiesChildrenList = companiesTreeNode.getChildren();
+		/* Check if the children list reference is null */
+		if (companiesChildrenList == null) {
+			String errorText = "Companies children list reference in getNumberOfCompanies is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Get the number of companies by returning the size of the children list */
+		int   numberOfCompanies = companiesChildrenList.size();
+		/* Display the number of companies for debugging purposes */
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - thread ID " + HDLmUtility.getThreadId());
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - hex code for treeTop is " + treeTop);
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - treeTop node path is " + treeTop.getNodePath());
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - treeTop children is " + treeTop.getChildren());
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - hex code for Companies is " + companiesTreeNode);
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - Companies node path is " + companiesTreeNode.getNodePath());
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - Companies children is " + companiesChildrenList);
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - number of companies is " + numberOfCompanies);		
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - tree top children " + treeTop.getChildren());
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - hex code for tree top children get(0) is " + treeTop.getChildren().get(0));
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - tree top children get(0) children is " + treeTop.getChildren().get(0).getChildren());	
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - hex code for tree top children get(0) children get(0) is " + treeTop.getChildren().get(0).getChildren().get(0));
+		System.out.println("In HDLmModCompanies.getNumberOfCompanies - tree top children get(0) children get(0) node path is " + treeTop.getChildren().get(0).getChildren().get(0).getNodePath());
+		/* Release the tree lock */
+		/* System.out.println("In HDLmModCompanies.getNumberOfCompanies - lock count release is " + HDLmTree.releaseTreeLock()); */
+		return numberOfCompanies;
+  }
 	/* This routine sets the associated node type of this class
 	   instance to a null value */  
 	protected final void   setAssociatedNodeTypeNull() { 

@@ -660,6 +660,8 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 	protected void         handleMessage(final String message) {
 		/* Get the lock used to serialize all WebSocket operations */
 		HDLmDatabase.getDatabaseLock();
+		HDLmTree.getTreeLock();
+		/* System.out.println("In HDLmWebSocketIntenalAdaptor.handleMessage - lock count get is " + HDLmTree.getTreeLock()); */ 	
 		/* What follows is a dummy loop used only to allow break to work */
 		while (true) {
   		/* Check if the JSON message instance passed by the caller is null */
@@ -854,6 +856,8 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 		if (session != null) 
 		  HDLmWebSocketInternalAdapter.closeSession(session, 3000, "Close the web socket session in all cases");
 		/* Release the lock used to serialize all WebSocket operations */
+		/* System.out.println("In HDLmWebSocketIntenalAdaptor.handleMessage - lock count release is " + HDLmTree.releaseTreeLock()); */
+		HDLmTree.releaseTreeLock();
 		HDLmDatabase.releaseDatabaseLock();
 	}
 	/* This routine is invoked to handle inbound web sockets add tree node messages.
@@ -1685,6 +1689,7 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 			  HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 26);
 			  break;
 			}
+			/* System.out.println("In HDLmWebSocketInternalAdapter.handleMessageStoreTreeNodes - show debug info " + HDLmUtility.showDebugInfo()); */
 			boolean  logDebugEnabled = LOG.isDebugEnabled();
 			if (logDebugEnabled)
 			  LOG.debug("In HDLmWebSocketInternalAdapter.handleMessageStoreTreeNodes - at the start");
@@ -1764,8 +1769,11 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 								                                                    HDLmReportErrors.REPORTERRORS);
 						/* Check if the current script is invalid, if it is, then 
 						   the entire set of scripts is treated as invalid */
-						if (scriptValid == false)
+						if (scriptValid == false) {
+							String  errorText = "The script is not valid";
+			  			HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 89);
 							scriptsValid = false;
+						}
 					}
 				}		
 				/* We have a lot more work to do for web page rules */
@@ -1781,12 +1789,25 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 					/* Process each script */
 					for (int j = 0; j < webpagesArraySize; j++) {		
 						String    webpageString = webpagesArray.get(j);  
-						boolean   webpageValid = HDLmHtml.checkIfWebpageValid(webpageString, 
+						String    webpageFixedString = HDLmAi.fixWebImproverWebpage(webpageString, false);
+						/* Check if any changed were made to the web page.
+						   Change the JSON, if need be. */
+						if (webpageString.equals(webpageFixedString) == false) {
+							String  ruleJson = HDLmJson.getStringJson(jsonElementRule);
+							ruleJson = HDLmAi.fixWebImproverWebpage(ruleJson, true);
+						  JsonParser  parser = HDLmMain.gsonJsonParserMain;						  
+							jsonElementRule = parser.parse(ruleJson);
+						}
+						/* Check if the web page is valid */
+						boolean   webpageValid = HDLmHtml.checkIfWebpageValid(webpageFixedString, 
 								                                                  HDLmReportErrors.REPORTERRORS);
 						/* Check if the current web page is invalid, if it is, then 
 						   the entire set of webpages is treated as invalid */
-						if (webpageValid == false)
+						if (webpageValid == false) {
 							webpagesValid = false;
+							String  errorText = "The web page is not valid";
+			  			HDLmWebSocketInternalAdapter.sendFailure(session, errorText, 90);
+						}
 					}
 				}
 				/* Skip the current rule if the invalid scripts flag is set */
@@ -1866,6 +1887,14 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 			  	/* LOG.info("In HDLmWebSocketInternalAdapter.handleMessageStoreTreeNode - about to store a tree node"); */
 			  	String  hostName = storeNodePath.get(hostNamePathLength - 1);
 					/* Pass the JSON element to another routine for further handling */
+			  	/* 
+			  	try {
+						Thread.sleep(10000);
+					} 
+			  	catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+			  	*/
 					HDLmTree  newTreeNode = HDLmTree.addTreeNode(jsonElementRule, hostName, storeNodePath);
 					/* Get the node ID from the new tree node and save it for later use */ 
 					String    newNodeId = newTreeNode.getId();
@@ -1886,7 +1915,7 @@ public class HDLmWebSocketInternalAdapter extends WebSocketAdapter {
 					if (logDebugEnabled)
 					  LOG.debug("In HDLmWebSocketInternalAdapter.handleMessageStoreTreeNode - about to update a tree node");
 					/* LOG.info("In HDLmWebSocketInternalAdapter.handleMessageUpdateTreeNode"); */
-					/* Pass the JSON element to another routine for further handling */
+					/* Pass the JSON element to another routine for further handling */http://themarvelouslandofoz.com/
 					HDLmTree.updateTreeNode(storeNode, jsonElementRule);
 					/* Get the node ID from the new tree node and save it for later use */ 
 					String    newNodeId = storeNode.getId();

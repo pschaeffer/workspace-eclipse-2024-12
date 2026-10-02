@@ -1955,6 +1955,9 @@ public class HDLmMain {
     if (reloadRules) {
 			/* Use a common routine to reload all of the rules */
     	HDLmMain.reloadNodes();
+      /* System.out.println("In HDLmMain.getMods - thread ID " + HDLmUtility.getThreadId()); */
+  	  HDLmTree  topTreeNode = HDLmModTop.getTopTree();
+  	  /* HDLmModCompanies.getNumberOfCompanies(topTreeNode); */
     }
     HDLmTiming.addTiming(HDLmTimingTypes.GENERAL, "After reload rules check in getMods");
     /* Get the string value for the top node of the tree */
@@ -2445,8 +2448,11 @@ public class HDLmMain {
 		/*
 		String  badHtml = "<!DOCTYPE html><html><head><title>Test</title></head><body><p>Unclosed paragraph element</div></body></html>";
 		String  goodHtml = "<!DOCTYPE html><html><head><title>Test</title></head><body><p>Unclosed paragraph element</body></html>";
-    HDLmHtml.checkIfWebpageValidNuNotUsed(badHtml, HDLmReportErrors.REPORTERRORS);  
+    HDLmHtml.checkIfWebpageValidNuNotUsed(goodHtml, HDLmReportErrors.REPORTERRORS);  
     */
+    /*
+		HDLmUtility.showStackTrace(-1, HDLmShowTypes.SHOWLOG);
+		*/
 		/* This is just test code for strings */
 		/* String testStringNull = null; */
 		/* String testStringConvert = testStringNull.toString(); */		
@@ -2459,7 +2465,13 @@ public class HDLmMain {
 		/* The following statement was used to test database connections. 
 		   This statement is not really needed. Note, that the return 
 		   value is not saved and used. */ 
-		/* HDLmDatabase.getConnection(); */    
+		/* HDLmDatabase.getConnection(); */ 
+		/* The following code was put in for testing regular expressions. 
+		   This code is not really needed. */
+		/* 
+		String  testStr = "<!DOCTYPE html\r\r\nPUBLIC \\\"-//W3C//DTD XHTML 1.0 Strict//EN\\\"\r\r\n\\\"http://www.w3.org/TR/xhtml1/DTD/strict.dtd\\\">";
+		String  testStringFixed = testStr.replaceFirst("(DOCTYPE html)(\r\r\n)(.*)(\r\r\n)(.*)(>)", "DOCTYPE html>");
+    */
 		/* Get the Hikari data source. This call has the effect
 		   of building the JDBC connection pool. */ 
 		HDLmHikariPool.getDataSource();

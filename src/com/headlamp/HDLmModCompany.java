@@ -188,6 +188,7 @@ public class HDLmModCompany extends HDLmMod {
 		  String  errorText = "New company name string reference passed to addCompanyExtended is null";
 		  throw new NullPointerException(errorText);
 	  }
+		/* System.out.println("In HDLmModCompany.addCompanyExtended - thread ID is " + HDLmUtility.getThreadId()); */
 		/* Create the new company instance */
 		HDLmModCompany   company = new HDLmModCompany(companyName);
 		if (company == null)
@@ -223,8 +224,11 @@ public class HDLmModCompany extends HDLmMod {
 	  HDLmTree  companiesNode = HDLmTree.locateTreeNode(topNode, newCompaniesNodePath); 
 	  if (companiesNode == null) {
 	    HDLmAssertAction(false, "Null companies node returned by locateTreeNode");
-	  }	  		
+	  }	 
+	  /* System.out.println("In HDLmModCompany.addCompanyExtended - debug info - ID is " + HDLmUtility.showDebugInfo()); */
 	  HDLmTree  companyTree = HDLmModCompany.buildTreeExtended(newCompaniesNodePath, company);
+	  /* System.out.println("In HDLmModCompany.addCompanyExtended - debug info - ID is " + HDLmUtility.showDebugInfo()); */
+	  /* System.out.println("In HDLmModCompany.addCompanyExtended - hex code for companies node is " + companiesNode); */
 	  companiesNode.addOrReplaceChild(companyTree);
 	  /* Try to update the JSON source stored on the server, now that
 	     we have added a new report */ 			

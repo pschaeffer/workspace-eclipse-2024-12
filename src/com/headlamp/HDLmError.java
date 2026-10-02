@@ -109,6 +109,9 @@ import org.slf4j.LoggerFactory;
 	 86 - Boolean is not valid
 	 87 - Number is not valid
 	 88 - Invalid version value in a switch
+	 89 - Invalid script
+	 90 - Invalid web page
+	 91 - Fetch failed
 */
 /* This is a purely static class and no instances of this class
    can ever be created */ 

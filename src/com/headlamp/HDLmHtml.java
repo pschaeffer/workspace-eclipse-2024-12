@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.script.*;
 
-/* import nu.validator.validation.EmbeddedValidator; */
+/* import nu.validator.validation.EmbeddedValidator; */ 
 import nu.validator.client.EmbeddedValidator; 
 import nu.validator.validation.SimpleDocumentValidator;
 import nu.validator.xml.SystemErrErrorHandler;
@@ -33,6 +33,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 /**
  * HDLmHtml short summary.
  *
@@ -852,7 +855,16 @@ public class HDLmHtml {
     /* Retrieve the collected errors */
     List<ParseError>  errors = parser.getErrors();
     /* Check if no errors were found. Just return in this case. */
-		rv = errors.isEmpty();  
+		rv = errors.isEmpty();
+    /* Log all of the errors, if any were found */
+		if (rv == false) {		 
+			LOG.info("Errors found in the web page");
+			LOG.info("Web page" + " - " + webpage);
+			LOG.info("Number of errors found - " + errors.size());
+			for (ParseError error : errors) {
+				LOG.info(error.toString());
+			}
+		}  
     return rv;
 	}		
 	/* This routine checks if some HTML (possibly including CSS, links, images, 
@@ -888,22 +900,17 @@ public class HDLmHtml {
 	  try {
 	    /* Build the input stream */
 	    InputStream  inputStream = new ByteArrayInputStream(webpage.getBytes(StandardCharsets.UTF_8));
-		  /* Build the validator that is used to check the web page */ 
-		   
-		  EmbeddedValidator   validator = new EmbeddedValidator();
-			 
+		  /* Build the validator that is used to check the web page */		   
+		  EmbeddedValidator   validator = new EmbeddedValidator();			 
 		  // Initialize the validator
-		  
-      String output = validator.validate(
-        new ByteArrayInputStream(webpage.getBytes(StandardCharsets.UTF_8))
-      );
+		      String  output = validator.validate(inputStream);
       if (!output.isEmpty()) {
+    		/* Create a new JSON parser for use below */
+    	  JsonParser    parser = HDLmMain.gsonJsonParserMain;  
+     	  /* Make sure the inbound payload has the required key */
+    	  JsonElement   outputJsonElement = parser.parse(output);
         throw new Exception("Validation failed:\n " + output);
-      }
-		  
-		  
-		  
-	
+      }	
     } catch (SAXException e) {
 		 	rv = false;
 		 	System.out.println("✅ HTML is not perfectly valid!");

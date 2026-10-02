@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.slf4j.Logger;
@@ -60,6 +63,11 @@ public class HDLmTree {
 	   slf4j jars and the log4j jars in the classpath also plays some role in
 	   logging initialization. */
 	private static final Logger   LOG = LoggerFactory.getLogger(HDLmTree.class);
+	/* The next field (a lock) is used to serialize some tree 
+	   operations. In most cases, serialization is not needed
+	   or wanted. However, tree reads must come after tree  
+	   writes have been finished. */  
+	private static ReentrantLock  treeLock = new ReentrantLock();
 	/* Build the (initially) empty top node. We would like to build the correct top
 	   node here. However, we can not. The tree top is statically initialized. */
 	private static HDLmTree   nodeModTreeTop = addTop();
@@ -92,6 +100,10 @@ public class HDLmTree {
      like a tree node) and an ID value. The ID value is used to identify
      the server database row that must be updated. */
   private static ArrayList<String>  pendingUpdates = new ArrayList<String>();	
+  /* The following values are used to keep track of calls to routine
+     in this module */
+  private static AtomicInteger  buildInfoArrayCounter = new AtomicInteger(0);
+  private static AtomicInteger  buildNodeTreeCounter = new AtomicInteger(0);  
 	/* All instances of the HDLmTree class have a standard set of fields. These
 	   fields are initialized by the constructor. Details are really only used by
 	   HDLmTree instances for modifications and a few other types. */
@@ -170,6 +182,7 @@ public class HDLmTree {
 			String  errorText = "Node type value passed to addLevels is null";
 			throw new NullPointerException(errorText);
 		}
+		/* System.out.println("In HDLmTree.addLevels - show debug info " + HDLmUtility.showDebugInfo()); */
 		/* Declare and define a boolean value showing if any inserts have
 		   actually been done */ 
 		boolean   insertsDone = false;
@@ -422,6 +435,8 @@ public class HDLmTree {
 						the parent of the next tree node that is created */
 					nodeTree = HDLmTree.locateTreeNode(topTreeNode, nodePath);
 					nodeParent = nodeTree;
+					/* System.out.println("In HDLmTree.addLevels - node parent is " + nodeParent); */
+					/* System.out.println("In HDLmTree.addLevels - node parent children " + nodeParent.children); */
 					/* We don't need to add an insert here because the company node was 
 						already written out to the database */ 
 					if (1 == 2) {
@@ -479,6 +494,14 @@ public class HDLmTree {
 					/* Make sure the new extended modification node was actually created */
 					if (newModNode == null) 
 						HDLmAssertAction(false, "Null division extended modification returned by new extended modification constructor");
+					/* The code that follows is a bug fix added on 2026-09-08.
+					   This code adds the division name to the division extended 
+					   modification. This is important because the name is checked
+					   later. This change was made as a bug fix on 2026-09-08. */
+					String  newModDivisionName = newModNode.getName();
+				  if (newModDivisionName == null) 
+					  newModNode.setName(divisionNodeName);
+				  /* The next line was not changed */ 
 					divisionTree.setMod(newModNode);				
 					/* Add the division tree node to the Data or Rules tree node */
 					nodeParent.addOrReplaceChild(divisionTree);
@@ -509,6 +532,15 @@ public class HDLmTree {
 					/* Make sure the new extended modification node was actually created */
 					if (newModNode == null) 
 						HDLmAssertAction(false, "Null site extended modification returned by new extended modification constructor");
+					/* The code that follows is a bug fix added on 2026-09-08.
+	  		     This code adds the site name to the site extended 
+		   	     modification. This is important because the name 
+			       is checked later. This change was made as a bug 
+			       fix on 2026-09-08. */
+			    String  newModSiteName = newModNode.getName();
+		      if (newModSiteName == null) 
+			      newModNode.setName(siteNodeName);
+					/* The next line was not changed */ 
 					siteTree.setMod(newModNode);	
 					/* Add the site tree node to the division tree node */
 					nodeParent.addOrReplaceChild(siteTree);
@@ -579,7 +611,7 @@ public class HDLmTree {
 			String  nodeString = nodePath.toString(); 
 			HDLmUtility.logString(nodeString, LOG);
 			HDLmUtility.logStackTrace();
-			HDLmAssertAction(false, "Null tree node returned by locateTreeNode");
+			HDLmAssertAction(false, "Null tree node returned by locateTreeNode 1");
 		}
 		/* We can now create the tree node for the modification rule 
 		   and the actual modification */
@@ -679,6 +711,9 @@ public class HDLmTree {
 		else if (!(newChildNode instanceof HDLmTree)) {
 			HDLmAssertAction(false, "New tree child node value has incorrect type");
 		}
+		/* System.out.println("In HDLmModTree.addOrReplaceChild - thread ID is " + HDLmUtility.getThreadId()); */
+		/* Get the tree lock */
+		/* System.out.println("In HDLmTree.addOrReplaceChild - lock count get is " + HDLmTree.getTreeLock()); */
 		/* Declare and define a few local values */
 		boolean addChildDone = false;
 		/* Get the current level and the child level. The child level must be exactly
@@ -690,7 +725,7 @@ public class HDLmTree {
 			HDLmAssertAction(false, errorText);
 		}
 		/* Get the new child node name value, if possible */
-		String newChildNodeName = newChildNode.getLastNodePathEntry();
+		String  newChildNodeName = newChildNode.getLastNodePathEntry();
 		if (newChildNodeName == null) {
 			String  errorText = "New child node name not set in addOrReplaceChild";
 			HDLmAssertAction(false, errorText);
@@ -700,7 +735,7 @@ public class HDLmTree {
 		for (int i = 0; i < parentChildrenLength; i++) {
 			HDLmTree  childNode = this.children.get(i);
 			/* Get the name of the current child node */
-			String childNodeName = childNode.getLastNodePathEntry();
+			String  childNodeName = childNode.getLastNodePathEntry();
 			if (childNodeName == null)
 				break;
 			/* Compare the new child node name with the node name from the children array.
@@ -710,19 +745,40 @@ public class HDLmTree {
 			/* Check if the names match. If they match, replace the existing child node. */
 			if (compareValue == 0) {
 				this.children.set(i, newChildNode);
+				/* System.out.println("In HDLmTree.addOrReplaceChild - work done with set - thread ID is " + HDLmUtility.getThreadId()); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - new child node name " + newChildNodeName); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - hex code for this " + this); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - contents of this.children " + this.children); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - size of children " + this.children.size()); */
 				addChildDone = true;
 				break;
 			}
 			/* Add the new child node to the children array */
 			if (compareValue < 0) {
+				/* HDLmTree.displayTree(); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - lock count get is " + HDLmTree.getTreeLock()); */
 				this.children.add(i, newChildNode);
+				/* System.out.println("In HDLmTree.addOrReplaceChild - lock count release is " + HDLmTree.releaseTreeLock()); */
+				/* HDLmTree.displayTree(); */
+				/* HDLmUtility.logStackTrace(); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - work done with add - thread ID is " + HDLmUtility.getThreadId()); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - new child node name " + newChildNodeName); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - hex code for this " + this); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - contents of this.children " + this.children); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - size of children " + this.children.size()); */
+				/* System.out.println("In HDLmTree.addOrReplaceChild - show debug info " + HDLmUtility.showDebugInfo()); */
 				addChildDone = true;
 				break;
 			}
 		}
 		/* Just add the child to the end of the children array, if need be */
-		if (!addChildDone)
+		if (!addChildDone) {
 			this.children.add(newChildNode);
+			/* System.out.println("In HDLmTree.addOrReplaceChild - work not done - thread ID is " + HDLmUtility.getThreadId()); */
+			/* System.out.println("In HDLmTree.addOrReplaceChild - new child node name " + newChildNodeName); */			
+		}
+		/* Release the tree lock */
+		/* System.out.println("In HDLmTree.addOrReplaceChild - lock count release is " + HDLmTree.releaseTreeLock()); */
 	}
   /* This routine adds a set of pending deletes to the pending deletes 
 	   array. The caller passes a tree node (which may or may not have 
@@ -1412,6 +1468,7 @@ public class HDLmTree {
 			String  errorText = "Node path array list passed to addTreeNode is null";
 			throw new NullPointerException(errorText);
 		}
+		/* System.out.println("In HDLmTree.addTreeNode debug info is " + HDLmUtility.showDebugInfo()); */
 		/* At this point, we may want to add a data value or we may want to add
 		   a rule (a modification). We need to check for each case. */		
 		String  localTypeString = HDLmJson.getJsonString(jsonElements, "type");
@@ -1443,7 +1500,7 @@ public class HDLmTree {
 			String  nodeString = parentNodePath.toString(); 
 			HDLmUtility.logString(nodeString, LOG);
 			HDLmUtility.logStackTrace();
-			HDLmAssertAction(false, "Null tree node returned by locateTreeNode");
+			HDLmAssertAction(false, "Null tree node returned by locateTreeNode 2");
 		}
 		/* We can now create the tree node for the modification rule 
 		   and the actual modification */
@@ -1590,6 +1647,17 @@ public class HDLmTree {
 	  /* Save the children array and then remove it from the current
 	     temporary tree node */
 	  ArrayList<HDLmTree>  childrenArray = treePos.getChildren();
+	  /* 
+	  long  curThreadId = HDLmUtility.getThreadId();
+	  */
+	  /* System.out.println("In HDLmTree.buildInfoArray - thread ID is " + HDLmUtility.getThreadId()); */
+	  /*
+	  if (curThreadId > 1) {
+	  	HDLmTree.buildInfoArrayCounter.incrementAndGet();
+			if (HDLmTree.buildInfoArrayCounter.get() == 1)
+			  HDLmUtility.logStackTrace(); 
+	  }
+	  */
 	  /* Insert the current node into the information array */
 	  infoArray.add(infoStr);     
 	  /* Insert the current node ID value into the ID array */
@@ -1865,6 +1933,8 @@ public class HDLmTree {
 			String  errorText = "Node Type value passed to buildLevelsGetSetTree is invalid";
 			throw new IllegalArgumentException(errorText);
 		}
+		/* System.out.println("In HDLmTree.buildLevelsGetSetTree - fresh tree is " + freshTree.toString()); */
+		/* System.out.println("In HDLmTree.buildLevelsGetSetTree - debug info " + HDLmUtility.showDebugInfo()); */
 		/* Build an instance of the response object used to return values
 		   to the caller */
 		HDLmModResponse   modResponse = new HDLmModResponse();
@@ -1879,6 +1949,7 @@ public class HDLmTree {
 			if (topTreeNode == null) {
 				HDLmAssertAction(false, "Null modifications tree returned by getFreshTreeSetTop");
 			}
+			/* System.out.println("In HDLmTree.buildLevelsGetSetTree - top tree " + topTreeNode); */
 		}
 		/* In other cases, we don't need to get a fresh copy of all of the
 		   modifications. However, we do need to get a reference to the top
@@ -2058,6 +2129,16 @@ public class HDLmTree {
 				throw new NullPointerException(errorText);
 			}
 			curNode.children.add(jsonArrayEntryTree);
+			/* System.out.println("In HDLmTree.buildNodeTree - thread ID is " + HDLmUtility.getThreadId()); */
+			/* 
+		  long  curThreadId = HDLmUtility.getThreadId();
+		  if (curThreadId > 1) {
+		  	HDLmTree.buildNodeTreeCounter.incrementAndGet();
+				if (HDLmTree.buildNodeTreeCounter.get() == 1)
+				  HDLmUtility.logStackTrace(); 
+		  }
+		  */
+      /* HDLmUtility.logStackTrace(); */
 			HDLmTree.buildNodeTree(jsonData, jsonArrayEntryTree, editorType);
 		}
 		return curNode;
@@ -4047,14 +4128,18 @@ public class HDLmTree {
 	   This method is used for debugging purposes. Note that the 
 	   tree is displayed in a hierarchical format. Also note that 
 	   this routine calls itself, to display lower-level nodes. */
-	protected static void  displayTree() { 
+	protected static void  displayTree() {  
+		/* System.out.println("In HDLmTree.displayTree - lock count get is " + HDLmTree.getTreeLock()); */
 		/* Set the initial level value */
 		int       level = 1;
 		/* Get the top node of the tree. We will start the 
 		   display with the top node. */
 		HDLmTree  topTreeNode = HDLmTree.getNodePassTreeTop();
+		/* System.out.println("In HDLmTree.displayTree - thread ID " + HDLmUtility.getThreadId()); */
+		/* System.out.println("In HDLmTree.displayTree - tree top " + topTreeNode); */
 		/* Display the tree */
 		HDLmTree.displayTreeNode(topTreeNode, level);
+		/* System.out.println("In HDLmTree.displayTree - lock count release is " + HDLmTree.releaseTreeLock()); */
 		return;
 	}
 	/* This method can be used to display the data of a single 
@@ -5093,10 +5178,6 @@ public class HDLmTree {
 	protected static HDLmTree  getNodePassTreeTop() {
 		return HDLmTree.nodePassTreeTop;
 	}
-	/* Get the node path from an HDLmTree element */
-	protected ArrayList<String>  getNodePath() {
-		return nodePath;
-	}
 	/* Get the node path for the current node */ 
 	protected static ArrayList<String>  getNodePath(final HDLmTree topTreeNode, 
 			                                            final String hostName,
@@ -5325,6 +5406,10 @@ public class HDLmTree {
 		/* Return the final node path array to the caller */
 		return infoNodePath;
 	}
+	/* Get the node path from an HDLmTree element */
+	protected ArrayList<String>         getNodePath() {
+		return nodePath;
+	}
 	/* Get the node path length from an HDLmTree element */
 	protected int          getNodePathLength() {
 		return nodePath.size();
@@ -5496,15 +5581,27 @@ public class HDLmTree {
 		}
 		return tooltip;
 	}
+	/* Get the tree lock. The lock may already be held. This is
+     not an error. If the lock is already held, then the lock count
+     is incremented. The 'after' lock hold count is returned to the 
+     caller. */          
+  protected static int   getTreeLock() {
+  	treeLock.lock();
+	  return treeLock.getHoldCount();
+  }	 
+	/* Get the tree lock hold count */          
+	protected static int   getTreeLockHoldCount() {
+	  return treeLock.getHoldCount();
+	}
   /* Get the type from an HDLmTree element */
-	protected HDLmTreeTypes getType() {
+	protected HDLmTreeTypes  getType() {
 		return type;
 	}
 	/* Check if an array of nodes (possibly an empty array) has a node with the name
 	   passed by the caller. If a node with the same name is found, the node is
 	   returned to the caller. Otherwise, a null value is returned to the caller. */
-	protected static HDLmTree hasNode(final ArrayList<HDLmTree> nodeArray, 
-			                              final String searchName) {
+	protected static HDLmTree  hasNode(final ArrayList<HDLmTree> nodeArray, 
+			                               final String searchName) {
 		HDLmTree node = null;
 		if (nodeArray == null) {
 			String  errorText = "Node array value is null";
@@ -5732,6 +5829,8 @@ public class HDLmTree {
 				String  nameDivision = path.get(4);
 				String  nameSite = path.get(5);
 				String  nameModification = path.get(6);
+				/* System.out.println("About to call HDLmEvent.addEvent "+ nameCompany + "/" + nameDivision + "/" + nameSite + "/" + nameModification); */
+				/* HDLmUtility.printStackTrace(2); */
 				HDLmEvent.addEvent(HDLmEventTypes.MOD, nameCompany, nameDivision, nameSite, nameModification);
 				HDLmRule.addRule(HDLmRuleTypes.MOD, nameCompany, nameDivision, nameSite, nameModification);
 				break;
@@ -6073,6 +6172,10 @@ public class HDLmTree {
 			String  errorText = "Tree top reference passed by the caller to passUpdateAllRows is null";
 			throw new NullPointerException(errorText);
 		}	  
+  	/* We must get the top tree node for use later */
+	  /* System.out.println("In HDLmTree.passUpdateAllRows - thread ID is " + HDLmUtility.getThreadId()); */
+	  HDLmTree  topTreeNode = HDLmModTop.getTopTree();
+	  /* HDLmModCompanies.getNumberOfCompanies(topTreeNode); */
 	  /* Declare and define a few variables */
 	  ArrayList<Integer>  idArray = new ArrayList<Integer>();
 	  if (idArray == null) {
@@ -6392,6 +6495,15 @@ public class HDLmTree {
 	    HDLmTree.processTree(childArray.get(i), processTreeInstance);
 	  }	
 	}
+	/* Release the tree lock. The lock may still be held, if the 
+	   lock count is more than one, on entry. This is not an error. If 
+	   the lock count is more than one, then the lock count is decremented.
+	   Actually, the lock count is decremented in all cases. The 'after' 
+	   lock hold count is returned to the caller. */ 
+	protected static int   releaseTreeLock() {
+		treeLock.unlock();
+		return treeLock.getHoldCount();
+	}
 	/* This routine replaces the entire modification rule tree */
 	protected static void  replaceEntireTree(final String contentType, 
 			                                     final HDLmTree topTreeNode) {
@@ -6415,7 +6527,7 @@ public class HDLmTree {
 		   routines that used to have the same name. */
 		HDLmTree.updateEntireTree(contentType, topTreeNode);
 	} 
-
+  
 	/* This routine resets the data and time values for a tree node. The actual 
 	   changes (if any) are in the associated modification (the details of the 
 	   tree node. */
@@ -6480,7 +6592,9 @@ public class HDLmTree {
 	    HDLmAssertAction(false, errorText);
 	  }
   	/* We must get the top tree node for use later */
+	  /* System.out.println("In HDLmTree.resetIdValues - thread ID is " + HDLmUtility.getThreadId()); */
 	  HDLmTree  topTreeNode = HDLmModTop.getTopTree();
+	  /* HDLmModCompanies.getNumberOfCompanies(topTreeNode); */
 	  /* Process each entry in the info array */
 	  for (i = 0; i < infoArrayLen; i++) {
 	    String    infoArrayEntry = infoArray.get(i);
@@ -6494,10 +6608,12 @@ public class HDLmTree {
 	    HDLmTree  infoEntryNode = HDLmTree.locateTreeNode(topTreeNode, infoEntryNodePath);
 	    /* Report an error if the node could not be found */
 	    if (infoEntryNode == null) {
+	    	System.out.println("In HDLmTree.resetIdValues - thread ID is " + HDLmUtility.getThreadId());
 	      String  nodeString = infoEntryNodePath.toString(); 
 	      HDLmUtility.logStackTrace();
 	      HDLmUtility.logString(nodeString, LOG);
-				HDLmAssertAction(false, "Null tree node returned by locateTreeNode");		
+	      HDLmTree.displayTree(); 
+				HDLmAssertAction(false, "Null tree node returned by locateTreeNode 3");		
 	      return false;
 	    }
 	    /* Get the new and old ID values */
@@ -6741,7 +6857,7 @@ public class HDLmTree {
 			String  nodeString = nodePath.toString(); 
 			HDLmUtility.logString(nodeString, LOG);
 			HDLmUtility.logStackTrace();
-			HDLmAssertAction(false, "Null tree node returned by locateTreeNode");
+			HDLmAssertAction(false, "Null tree node returned by locateTreeNode 4");
 		}
 		/* We can now create or replace the tree node for the data value */ 
 		ArrayList<String>   nodePathTree = new ArrayList<String>(nodePath);
@@ -6779,12 +6895,12 @@ public class HDLmTree {
 		HDLmTree.addPendingInserts(newTreeNode);
 		HDLmTree.processPendingInserts();
 		/* The call below sends the updated rule tree back to the server.
-	    The call also sets or resets the tree top to the new value. 
-	    The new tree will include the tree node possibly added above. 
+	     The call also sets or resets the tree top to the new value. 
+	     The new tree will include the tree node possibly added above. 
 	    
-	    The entire tree of nodes (the HDLmTree) is no longer sent back
-	    to the database here. Instead, new nodes are selectively added
-	    to the database as need be. */ 
+	     The entire tree of nodes (the HDLmTree) is no longer sent back
+	     to the database here. Instead, new nodes are selectively added
+	     to the database as need be. */ 
 		if (1 == 2) {
 	    String  contentType = HDLmEditorTypes.PASS.toString();
 	    HDLmTree.replaceEntireTree(contentType, topTreeNode);
@@ -6878,10 +6994,14 @@ public class HDLmTree {
 			throw new NullPointerException(errorText);
 		}
 		HDLmTree.nodePassTreeTop = newNodeTreeTop;
+		/* System.out.println("In HDLmTree.setNodePassTreeTop - thread ID is " + HDLmUtility.getThreadId()); */
+		/* System.out.println("In HDLmTree.setNodePassTreeTop - tree top is " + newNodeTreeTop); */
 	}
 	/* Set the node tree top value to a null value */
 	protected static void setNodePassTreeTopNull() {
 		HDLmTree.nodePassTreeTop = null;
+		/* System.out.println("In HDLmTree.setNodePassTreeTop - thread ID is " + HDLmUtility.getThreadId()); */
+		/* System.out.println("In HDLmTree.setNodePassTreeTop - tree top is " + ((HDLmTree) null)); */
 	}
 	/* The next routine sets the saved details (if any) */
 	protected static void setSavedDetails(final String contentType, 
@@ -7035,7 +7155,7 @@ public class HDLmTree {
 			String  nodeString = nodePath.toString(); 
 			HDLmUtility.logString(nodeString, LOG);
 			HDLmUtility.logStackTrace();
-			HDLmAssertAction(false, "Null tree node returned by locateTreeNode");
+			HDLmAssertAction(false, "Null tree node returned by locateTreeNode 5");
 		}
 	  targetTreeNode.setMod(newMod);		 
 	  /* We can now update the tree node with the new details */ 
@@ -7093,7 +7213,7 @@ public class HDLmTree {
 			String  nodeString = nodePath.toString(); 
 			HDLmUtility.logString(nodeString, LOG);
 			HDLmUtility.logStackTrace();
-			HDLmAssertAction(false, "Null tree node returned by locateTreeNode");
+			HDLmAssertAction(false, "Null tree node returned by locateTreeNode 6");
 		}
 		/* Check if the JSON element is a null value */
 		if (jsonElement.isJsonNull()) {
@@ -7129,7 +7249,7 @@ public class HDLmTree {
 		nodeParent.addOrReplaceChild(newTreeNode);
 		/* The call below sends the updated rule tree back to the server.
 		   The call also sets or resets the tree top to the new value. 
-		   The new tree will include the tree node possibly added above.  */  
+		   The new tree will include the tree node possibly added above. */  
 		HDLmTree.replaceEntireTree(contentType, 
 	 	                           topTreeNode);
 	  /* Save the updated tree node in a common location. This has

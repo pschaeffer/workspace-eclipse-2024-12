@@ -32,7 +32,7 @@ public enum HDLmHttpTypes {
      by the caller must not be null.*/
 	protected static HDLmHttpTypes valueOfString(String newType) {
 		if (newType == null) {
-		  String  errorText = "String passed to tree type conversion is null";
+		  String  errorText = "String passed to HTTP type conversion is null";
 		  throw new NullPointerException(errorText);
 		}
 	 newType = newType.toUpperCase();

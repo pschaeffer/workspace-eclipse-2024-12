@@ -2307,7 +2307,196 @@ public class HDLmJetty {
 		catch (Exception exception) {
 			if (pathValueString != null)
 			  LOG.info("Path value - " + pathValueString);
-			LOG.info("Exception while executing handleContentsCommands");
+			LOG.info("Exception while executing handleGetData");
+			LOG.info(exception.getMessage(), exception);
+			HDLmEvent.eventOccurred("Exception");
+			return;
+		}
+	}
+	/* This routine handles a request for a perceptual hash value (in hex)
+	   from an image URL. The commands are routed as need be and the
+	   response is set back to the browser. */
+	protected static void handleGetPerceptualHash(final String pathValueString,
+							                                  final String hostName,
+							                                  final HttpServletRequest request,
+							                                  final HttpServletResponse response,
+							                                  final String clientStr,
+							                                  final String timeStamp) {
+		/* Create a new string builder for the output HTML */
+		StringBuilder  rv = new StringBuilder();
+		/* Check if the path value string passed by the caller is null */
+		if (pathValueString == null) {
+			String  errorText = "Path value string passed to handleGetPerceptualHash is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the host name passed by the caller is null */
+		if (hostName == null) {
+			String  errorText = "Host name passed to handleGetPerceptualHash is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the input request passed by the caller is null */
+		if (request == null) {
+			String  errorText = "Servlet request passed to handleGetPerceptualHash is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the output response passed by the caller is null */
+		if (response == null) {
+			String  errorText = "Servlet response passed to handleGetPerceptualHash is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the client string passed by the caller is null */
+		if (clientStr == null) {
+			String  errorText = "Client string passed to handleGetPerceptualHash is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the timestamp string passed by the caller is null */
+		if (timeStamp == null) {
+			String  errorText = "Timestamp string passed to handleGetPerceptualHash is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Declare and define a few variables */
+		String  pHashHex = null;
+		int   httpStatusCode = HttpStatus.OK_200;
+		/* What follows is a dummy loop used only to allow break to work */
+		while (true) {
+	 	  /* Try to get the image from the inbound GET request */
+		  String  imageStr = request.getParameter("image");
+		  /* Check if the image string could not be obtained */
+		  if (imageStr == null) {
+		  	String  reqStr = request.toString();
+		  	LOG.info("In HDLmJetty.handleGetPerceptualHash - image not obtained from request: " + reqStr);
+		  	pHashHex = "";
+		  	httpStatusCode = HttpStatus.BAD_REQUEST_400;
+		  	break;
+		  }
+			/* Check for a data URL. Special handling is needed for a data URL.
+			   A data URL is processed differently than a standard URL. */
+			if (imageStr.startsWith("data:")) {
+	  	  HDLmImageInformation  imageInfo = HDLmImageInformation.processDataUrl(imageStr);
+	  	  Image   image = imageInfo.getImage();
+	  	  /* Check for a null image */
+	  	  if (image == null) {
+					/* Get the error message from the image information object.
+					   This message is not used in this code, but it may be useful 
+					   for debugging purposes. */
+	  	  	String  errMsg = imageInfo.getErrorMessage();
+					if (errMsg != null && 
+							errMsg.length() > 0) {
+						LOG.error("In HDLmJetty.handleGetPerceptualHash - error message obtained from image information: " + errMsg);
+					}
+					/* Convert the request to a string for logging purposes. 
+					   This is not used in this code, but it may be useful 
+					   for debugging purposes. */						
+			  	String  reqStr = request.toString();
+			  	LOG.info("In HDLmJetty.handleGetPerceptualHash - image not obtained from data URL request: " + reqStr);
+			  	pHashHex = "";
+			  	httpStatusCode = HttpStatus.BAD_REQUEST_400;
+			  	break;
+	  	  }	  	   
+			  pHashHex = HDLmUtility.getPerceptualHashFromImage(image);  	   
+	  	}
+			/* we have a standard URL. A standard URL is processed differently than a data URL. */
+			else {		
+			  /* Get the perceptual hash value */
+		    var   utilityResponse = HDLmUtility.getPerceptualHashFromUrl(imageStr, null);
+		    pHashHex = utilityResponse.getPHashValue();
+		    /* Check if the utility response object has an error message */
+  	  	String  errMsg = utilityResponse.getExecuteMessage();
+				if (errMsg != null && 
+						errMsg.length() > 0) {
+					LOG.error("In HDLmJetty.handleGetPerceptualHash - error message obtained from utility response: " + errMsg);
+				}
+		  }
+		  /* Check if the perceptual hash could not be obtained */
+		  if (pHashHex == null) {
+		  	String  reqStr = request.toString();
+		  	LOG.info("In HDLmJetty.handleGetPerceptualHash - perceptual hash not calulated from request: " + reqStr);
+		  	pHashHex = "";
+		  	httpStatusCode = HttpStatus.BAD_REQUEST_400;
+		  	break;
+		  }
+			break;
+		}
+		/* Return a value */
+		rv.append(pHashHex);
+    /* Add the Access-Control-Allow-Origin header */
+    HDLmJetty.handleResponseAllowAllOrigins(request, response);		
+		/* Now that we have the command output, we need to send the HTML
+		   command output back to the browser. The code below does this. */
+		try {
+			 response.setStatus(httpStatusCode);
+			 response.getWriter().print(rv.toString());
+			 response.getWriter().flush();
+			 response.setContentType("text/html");
+		}
+		catch (Exception exception) {
+			if (pathValueString != null)
+			  LOG.info("Path value - " + pathValueString);
+			LOG.info("Exception while executing handleGetPerceptualHash");
+			LOG.info(exception.getMessage(), exception);
+			HDLmEvent.eventOccurred("Exception");
+			return;
+		}
+	}
+	/* This routine handles a server status request. If this routine 
+	   responds at all, the server is up and running. The commands are 
+	   routed as need be and the response is set back to the browser. */
+	protected static void handleGetServerStatus(final String pathValueString,
+							                                final String hostName,
+							                                final HttpServletRequest request,
+							                                final HttpServletResponse response,
+							                                final String clientStr,
+							                                final String timeStamp) {
+		/* Create a new string builder for the output HTML */
+		StringBuilder  rv = new StringBuilder();
+		/* Check if the path value string passed by the caller is null */
+		if (pathValueString == null) {
+			String  errorText = "Path value string passed to handleGetServerStatus is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the host name passed by the caller is null */
+		if (hostName == null) {
+			String  errorText = "Host name passed to handleGetServerStatus is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the input request passed by the caller is null */
+		if (request == null) {
+			String  errorText = "Servlet request passed to handleGetServerStatus is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the output response passed by the caller is null */
+		if (response == null) {
+			String  errorText = "Servlet response passed to handleGetServerStatus is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the client string passed by the caller is null */
+		if (clientStr == null) {
+			String  errorText = "Client string passed to handleGetServerStatus is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Check if the timestamp string passed by the caller is null */
+		if (timeStamp == null) {
+			String  errorText = "Timestamp string passed to handleGetServerStatus is null";
+			throw new NullPointerException(errorText);
+		}
+		/* Start the main div */
+		rv.append("<div>");
+		/* End the main div */
+		rv.append("</div>");
+    /* Add the Access-Control-Allow-Origin header */
+    HDLmJetty.handleResponseAllowAllOrigins(request, response);		
+		/* Now that we have the HTML command output, we need to send the HTML
+		   command output back to the browser. The code below does this. */
+		try {
+			 response.setStatus(HttpStatus.OK_200);
+			 response.getWriter().print(rv.toString());
+			 response.getWriter().flush();
+			 response.setContentType("text/html");
+		}
+		catch (Exception exception) {
+			if (pathValueString != null)
+			  LOG.info("Path value - " + pathValueString);
+			LOG.info("Exception while executing handleGetServerStatus");
 			LOG.info(exception.getMessage(), exception);
 			HDLmEvent.eventOccurred("Exception");
 			return;
@@ -3740,6 +3929,7 @@ public class HDLmJetty {
 		/* Log the response status code and a set of other information */
 		if (true) {
 		  String  accessFormat = "Access from %s - actual server name %s - response status %d";
+      /* System.out.println("In HDLmJetty.handleProxy - thread ID " + HDLmUtility.getThreadId()); */
 		  String  accessMessage = String.format(accessFormat,
 		  		                                  clientStr,
 		  		                                  actualServerName,
@@ -4540,8 +4730,6 @@ public class HDLmJetty {
 		}
 		else if (pathValueString.startsWith("/sessionId-status"))
 		  rvString = HDLmMain.sessionIdStatus(hostName, clientStr);
-		else if (pathValueString.startsWith("/server-status"))
-		  rvString = HDLmMain.serverStatus(hostName, clientStr);
 		else if (pathValueString.startsWith("/systhr-status"))
 			rvString = HDLmMain.systhrStatus(hostName, clientStr);
 		else if (pathValueString.startsWith("/timings-status"))

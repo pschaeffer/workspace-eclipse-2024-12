@@ -2117,7 +2117,9 @@ class HDLmBuildJsNoCompression {
     builder.addLine("          nodeActualUrl = HDLmRemoveProtocol(nodeActualValue);");
     builder.addLine("          /* Try to get the perceptual hash value for the current URL */");
     builder.addLine("          nodeActualPHash = HDLmFindPHash(nodeActualUrl);");
+    builder.addLine("          HDLmGetPHash(nodeActualUrl);");
     builder.addLine("          if (nodeActualPHash == null) {");
+    builder.addLine("            HDLmSendImage(nodeActualUrl);");
     builder.addLine("            HDLmGetPHash(nodeActualUrl);");
     builder.addLine("            break;");
     builder.addLine("          }");
@@ -2241,7 +2243,9 @@ class HDLmBuildJsNoCompression {
     builder.addLine("          nodeActualUrl = HDLmRemoveProtocol(nodeActualUrl);");
     builder.addLine("          /* Try to get the perceptual hash value for the current URL */");
     builder.addLine("          nodeActualPHash = HDLmFindPHash(nodeActualUrl);");
+    builder.addLine("          HDLmGetPHash(nodeActualUrl);");
     builder.addLine("          if (nodeActualPHash == null) {");
+    builder.addLine("            HDLmSendImage(nodeActualUrl);");
     builder.addLine("            HDLmGetPHash(nodeActualUrl);");
     builder.addLine("            break;");
     builder.addLine("          }");
@@ -3223,6 +3227,28 @@ class HDLmBuildJsNoCompression {
     builder.addLine("    }");
     /* Finish the current JavaScript function */
     builder.addLine("  }");
+    /* Start the JavaScript function that fixes an image URL */
+    builder.addLine("  function HDLmFixImageUrl(urlStr) {");
+    builder.addLine("    /* Check for a data URL and return it as-is if found */");
+    builder.addLine("    if (urlStr.startsWith('data')) {");
+    builder.addLine("      return urlStr;");
+    builder.addLine("    }");
+    builder.addLine("    /* Check if the URL starts with double slashes */");
+    builder.addLine("    if (urlStr.startsWith('//')) {");
+    builder.addLine("      return urlStr;");
+    builder.addLine("    }");
+    builder.addLine("    /* Add a single slash to the beginning of the URL,");
+    builder.addLine("       if it doesn't already have one */");
+    builder.addLine("    if (urlStr.startsWith('/') == false) {");
+    builder.addLine("      urlStr = '/' + urlStr;");
+    builder.addLine("    }");
+    builder.addLine("    /* Add the double slashes and the host name, ");
+    builder.addLine("       if not already present */");
+    builder.addLine("    if (urlStr.startsWith('//') == false) {");
+    builder.addLine("      urlStr = '//' + window.location.host + urlStr;");
+    builder.addLine("    }");
+    builder.addLine("    return urlStr;");
+    builder.addLine("  }");
     /* Build a set of functions that contain the JavaScript that is stored
        in each of rules. Note that JavaScript is only store in script rules. */
     for (HDLmMod mod: mods) {
@@ -3394,17 +3420,67 @@ class HDLmBuildJsNoCompression {
        a URL (the part of the URL that starts with two slashes).
        The caller provides the URL. This routine builds the network
        request and sends it. Of course, the answer comes back later
-       and is ignored. No callback routines are provided or used. */
-    builder.addLine("  function HDLmGetPHash(urlStr) {");
-    builder.addLine("    /* Build the AJAX object */");
-    builder.addLine("    let xHttpReq = new XMLHttpRequest();");
-    String   protocolStringGetPHash;
-    protocolStringGetPHash = protocol.toString().toLowerCase();
-    builder.addLine("    let serverNameValue = '" + serverName + "';");
-    builder.addLine("    let urlVal = '" + protocolStringGetPHash + "://' + serverNameValue + '/" + HDLmConfigInfo.getPHashName() + "';");
-    builder.addLine("    xHttpReq.open('POST', urlVal);");
-    builder.addLine("    urlStr = encodeURIComponent(urlStr);");
-    builder.addLine("    xHttpReq.send(urlStr);");
+       and is used. The outer function invokes the inner function so 
+       that waiting on the inner function actually works. The inner
+       function must actually finish, before the await in the outer
+       function returns. */
+    builder.addLine("  async function HDLmGetPHash(urlStr) {");
+    builder.addLine("    /* console.log('In HDLmGetPHash function - urlStr is:', urlStr); */  ");
+    builder.addLine("    /* urlStr = 'data:,Hello%2C%20World%21'; */  ");
+    builder.addLine("    /* urlStr = 'data:text/plain,Hello%2C%20%57%6F%72%6C%64%21'; */  ");
+    builder.addLine("    /* urlStr = 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=='; */  ");
+    builder.addLine("    /* urlStr = 'data:image/gif;base64,R0lGODdhAQABAPAAAP8AAAAAACwAAAAAAQABAAACAkQBADs'; */  ");
+    builder.addLine("    /* urlStr = 'Wizard of Oz - The Lion.jpg'; */  ");
+    builder.addLine("    let outputText = '';  ");
+    /* Fix the image URL before attempting to get the perceptual hash.
+       Double slash, the domain name, and a single slaash are added,
+       if need be */
+    builder.addLine("    urlStr = HDLmFixImageUrl(urlStr);  ");
+    builder.addLine("    outputText = await HDLmGetPHashLow(urlStr);  ");
+    builder.addLine("    /* console.log('In HDLmGetPHash function - outputText is:', outputText); */  ");
+    builder.addLine("    return outputText;  ");
+    /* Finish the current JavaScript function */ 
+    builder.addLine("  }");   
+    /* This is the low-level function that actually performs the network request 
+       to get the perceptual hash of an image. */
+    builder.addLine("  async function HDLmGetPHashLow(urlStr) {");
+    builder.addLine("    /* console.log('In HDLmGetPHashLow function - urlStr is:', urlStr); */ ");
+    builder.addLine("    /* return; */  ");
+    /* Build the protocol string */
+    String   protocolStringGetPHashLow;
+    protocolStringGetPHashLow = protocol.toString().toLowerCase();
+    String  pathValue;
+    pathValue = HDLmDefines.getString("HDLMGETPHVALUE");
+    builder.addLine("    let outputText = '';  ");
+    builder.addLine("    try {");
+    builder.addLine("      let serverNameValue = '" + serverName + "';");
+    builder.addLine("      /* console.log('In HDLmGetPHashLow function - serverNameValue is:', serverNameValue);  */  ");
+    builder.addLine("      let urlVal = '" + protocolStringGetPHashLow + "' + '://' + serverNameValue + '/' + '" + pathValue + "';");
+    builder.addLine("      urlVal += '?image=' + encodeURIComponent(urlStr);  ");
+    builder.addLine("      /* console.log('In HDLmGetPHashLow function - urlVal is:', urlVal); */  ");
+    builder.addLine("      const response = await fetch(urlVal);  ");
+    builder.addLine("      /* console.log('In HDLmGetPHashLow function - response is:', response); */  ");
+    builder.addLine("      /* Check if the fetch was successful */  ");
+    builder.addLine("      if (response.ok != true) {");
+    builder.addLine("        let errorText = `HTTP(S) error - Status: ${response.status}`; ");
+    builder.addLine("        HDLmBuildError('Error', 'Fetch', 91, errorText);");
+    builder.addLine("        outputText = null;  ");
+    builder.addLine("      }  ");    
+    builder.addLine("      else {  ");    
+    builder.addLine("        /* Get the output value from the response body */  "); 
+    builder.addLine("        for await (const chunk of response.body) {  "); 
+    builder.addLine("          const text = new TextDecoder().decode(chunk);  ");
+    builder.addLine("          outputText += text;  ");
+    builder.addLine("        }  ");
+    builder.addLine("        /* console.log('In HDLmGetPHashLow function - outputText is:', outputText); */  ");
+    builder.addLine("      }  ");    
+    builder.addLine("    } catch (errorObj) {");
+    builder.addLine("      console.log(errorObj);");
+    builder.addLine("      let errorText = `HTTP(S) error - Status: ${errorObj.message}`; ");
+    builder.addLine("      HDLmBuildError('Error', 'Fetch', 91, errorText);");
+    builder.addLine("      outputText = null;  ");
+    builder.addLine("    }  ");
+    builder.addLine("    return outputText;  ");
     /* Finish the current JavaScript function */ 
     builder.addLine("  }");
     /* Send a message to the server for the current link and some events
@@ -3496,6 +3572,25 @@ class HDLmBuildJsNoCompression {
     builder.addLine("    httpReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');");
     builder.addLine("    dataStr = encodeURIComponent(dataStr);");
     builder.addLine("    httpReq.send(dataStr);");
+    builder.addLine("  }");
+    /* The next routine tries to get a perceptual hash value for
+       a URL (the part of the URL that starts with two slashes).
+       The caller provides the URL. This routine builds the network
+       request and sends it. Of course, the answer comes back later
+       and is ignored. No callback routines are provided or used. */
+    /* Define the JavaScript function that sends an image URL back 
+       to the server */    
+    builder.addLine("  function HDLmSendImage(urlStr) {");
+    builder.addLine("    /* Build the AJAX object */");
+    builder.addLine("    let xHttpReq = new XMLHttpRequest();");
+    String   protocolStringSendImage;
+    protocolStringSendImage = protocol.toString().toLowerCase();
+    builder.addLine("    let serverNameValue = '" + serverName + "';");
+    builder.addLine("    let urlVal = '" + protocolStringSendImage + "://' + serverNameValue + '/" + HDLmConfigInfo.getPHashName() + "';");
+    builder.addLine("    xHttpReq.open('POST', urlVal);");
+    builder.addLine("    urlStr = encodeURIComponent(urlStr);");
+    builder.addLine("    xHttpReq.send(urlStr);");
+    /* Finish the current JavaScript function */ 
     builder.addLine("  }");
     /* Define the JavaScript function that sends the update information
        back to the server */ 

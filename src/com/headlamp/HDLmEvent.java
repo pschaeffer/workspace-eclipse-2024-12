@@ -219,7 +219,8 @@ public class HDLmEvent {
 		if (newEventName == null) {
 			String  errorText = "New event name string passed to addEvent is null";
 			throw new NullPointerException(errorText);
-		}
+		}		
+		/* System.out.println("In HDLmEvent.addEvent 2 parameters"); */		
   	boolean   eventAdded = false;
   	/* Check if the event has already been added */
   	if (eventsValues.containsKey(newEventName))
@@ -268,7 +269,8 @@ public class HDLmEvent {
 		if (newEventModification == null) {
 			String  errorText = "New event modification string passed to addEvent is null";
 			throw new NullPointerException(errorText);
-		}
+		} 	
+		/* System.out.println("In HDLmEvent.addEvent 5 parameters"); */
 		/* Assume that the current event will not be added */
 		boolean   eventAdded = false;
 		/* Build the event name from the values passed by the caller */
@@ -544,7 +546,8 @@ public class HDLmEvent {
                         siteName + "/" + ruleName;
 		/* Check if the event name can be found in the map of events. 
 	     In some cases, we may need to add a "www." prefix to the 
-	     host name to find the event in the map. */ 
+	     host name to find the event in the map. This change was
+	     made as a bug fix on 2026-09-08. */ 
 		if (!eventsMap.containsKey(eventName)) {
 			String eventNameWithPrefix = "www." + eventName;
 			if (eventsMap.containsKey(eventNameWithPrefix)) 

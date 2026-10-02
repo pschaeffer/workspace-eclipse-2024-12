@@ -59,6 +59,7 @@ public class HDLmMainServlet extends HttpServlet {
     if (true) {
     	String  requestOriginalPathValue = HDLmJetty.getOriginalPathValue(request);
 			String  accessFormat = "Access from %s - port %d - using %s - host name %s - original path value %s";
+			/* System.out.println("In HDLmMainServlet.doAll - thread ID " + HDLmUtility.getThreadId()); */
 			String  accessMessage = String.format(accessFormat,
 					                                  clientStr,
 					                                  requestLocalPort,
@@ -147,7 +148,8 @@ public class HDLmMainServlet extends HttpServlet {
            this code. The name is used in several places. As a 
            consequence, the name is maintained as a define value.
            A second value is provided because the marvelouslandofoz.com
-           website can not be currently changed */ 
+           website can not be currently changed. This change was made 
+           on 2026-09-08. */ 
         String  getJTName = HDLmDefines.getString("HDLMGETJTVALUE");
 		    if (getJTName == null) {
 		   	  String   errorFormat = "Define value for the second get JavaScript file name not found (%s)";
@@ -156,7 +158,7 @@ public class HDLmMainServlet extends HttpServlet {
 		    }	
 		    /* Check if this is a request for the JavaScript program we really want */
 	      if (pathValueString.equals("/" + getJSName + ".js") ||
-	          pathValueString.equals("/" + getJTName + ".js")) {	
+	      		pathValueString.equals("/" + getJTName + ".js")) {	        	 
 	      	getGenericJsCheck = true;
 				}
 	      HDLmTiming.addTiming(HDLmTimingTypes.GENERAL, "After check for generic JavaScript in doAll"); 
@@ -316,7 +318,7 @@ public class HDLmMainServlet extends HttpServlet {
 				   pathValueString.equals("/systhr-contents")     || 
 			     pathValueString.equals("/systhr-contents/")))
 			  contentsCommandCheck = true;		
-			/* Check for a get request of some type */ 
+			/* Check for a get data request of some type */ 
 		  String  getDataKey = HDLmDefines.getString("HDLMGETDATA");
    		if (getDataKey == null) {
    			String   errorFormat = "Define value for get data key not found (%s)";
@@ -326,7 +328,29 @@ public class HDLmMainServlet extends HttpServlet {
    		boolean  getDataCheck = false;
 			if (pathValueString != null &&
 				  (pathValueString.equals("/" + getDataKey)))
-			  getDataCheck = true;
+			  getDataCheck = true;			
+			/* Check for a get perceptual hash request of some type */ 
+		  String  getPerceptualHashKey = HDLmDefines.getString("HDLMGETPHVALUE");
+   		if (getPerceptualHashKey == null) {
+   			String   errorFormat = "Define value for get perceptual hash key not found (%s)";
+   			String   errorText = String.format(errorFormat, "HDLMGETPHVALUE");
+   			HDLmAssertAction(false, errorText);		    	
+   		}
+   		boolean  getPerceptualHashCheck = false;
+			if (pathValueString != null &&
+				  (pathValueString.equals("/" + getPerceptualHashKey)))
+			  getPerceptualHashCheck = true;			
+			/* Check for a get server status request of some type */ 
+		  String  getServerStatusKey = HDLmDefines.getString("HDLMGETSSVALUE");
+   		if (getServerStatusKey == null) {
+   			String   errorFormat = "Define value for get server status key not found (%s)";
+   			String   errorText = String.format(errorFormat, "HDLMGETSSVALUE");
+   			HDLmAssertAction(false, errorText);		    	
+   		}
+   		boolean  getServerStatusCheck = false;
+			if (pathValueString != null &&
+				  (pathValueString.equals("/" + getServerStatusKey)))
+			  getServerStatusCheck = true;			
 			/* Check for and handle one of the server status commands */
 			boolean  statusCommandCheck = false;
 			if (pathValueString != null &&
@@ -350,8 +374,6 @@ public class HDLmMainServlet extends HttpServlet {
 				   pathValueString.equals("/phash-status/")           ||
 					 pathValueString.equals("/rules-status")            ||
 					 pathValueString.equals("/rules-status/")           || 
-					 pathValueString.equals("/server-status")           ||
-				   pathValueString.equals("/server-status/")          ||
 					 pathValueString.equals("/sessionId-status")        ||
 					 pathValueString.equals("/sessionId-status/")       ||		
 			     pathValueString.equals("/systhr-status")           ||
@@ -365,18 +387,20 @@ public class HDLmMainServlet extends HttpServlet {
 				  (pathValueString.startsWith("/io/bucket/")))
 				bridgeRequestCheck = true;	
 			/* Check if this is a request for one of the editors */
-			if (hostNameJavaCheck    == true  &&
-					actionCommandCheck   == false &&
-					contentsCommandCheck == false &&
-				  getDataCheck         == false &&
-					statusCommandCheck   == false &&
-					getGenericJsCheck    == false &&
-					specialPostCheck     == false &&
-					invokeApiCheck       == false &&
-					setTestCheck         == false &&
-					buildCookieCheck     == false &&
-					httpOptionsCheck     == false &&
-					bridgeRequestCheck   == false) {
+			if (hostNameJavaCheck      == true  &&
+					actionCommandCheck     == false &&
+					contentsCommandCheck   == false &&
+				  getDataCheck           == false &&
+				  getPerceptualHashCheck == false &&
+				  getServerStatusCheck   == false &&
+					statusCommandCheck     == false &&
+					getGenericJsCheck      == false &&
+					specialPostCheck       == false &&
+					invokeApiCheck         == false &&
+					setTestCheck           == false &&
+					buildCookieCheck       == false &&
+					httpOptionsCheck       == false &&
+					bridgeRequestCheck     == false) {
 				if (httpType == HDLmHttpTypes.GET) {
 					HDLmJetty.editorGet(request, response);				
 				}
@@ -450,6 +474,29 @@ public class HDLmMainServlet extends HttpServlet {
 								                response,
 								                clientStr,
 								                timeStamp);
+				break;
+			}
+			/* Check if this is a request to get a perceptual hash. This type
+		     of operation is passed to a handler that does the actual work. */   
+			if (getPerceptualHashCheck) {
+				HDLmJetty.handleGetPerceptualHash(pathValueString,
+							                            hostName,
+							                            request, 
+													                response,
+													                clientStr,
+													                timeStamp);
+				break;
+			}
+			/* Check if this is a request to get the server status (if the server
+			   is up). This type of operation is passed to a handler that does the
+			   actual work. */   
+			if (getServerStatusCheck) {
+				HDLmJetty.handleGetServerStatus(pathValueString,
+							                          hostName,
+							                          request, 
+													              response,
+													              clientStr,
+													              timeStamp);
 				break;
 			}
 			/* Check for and handle one of the status commands */
@@ -626,7 +673,11 @@ public class HDLmMainServlet extends HttpServlet {
 		/* Add some thread status information */
 		HDLmThreadStatus.put("Main Servlet Get");
 		/* Handle the current servlet request */
+		HDLmTree.getTreeLock();
+		/* System.out.println("In HDLmMainServlet.doGet - lock count get is " + HDLmTree.getTreeLock()); */ 	
 		doAll(request, response, HDLmHttpTypes.GET);
+		HDLmTree.releaseTreeLock();
+		/* System.out.println("In HDLmMainServlet.doGet - lock count release is " + HDLmTree.releaseTreeLock()); */
   }
 	/* The next method handles all of the inbound (HEAD) requests 
      generated for the proxy server and the editors. Each request

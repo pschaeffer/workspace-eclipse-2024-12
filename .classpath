@@ -84,5 +84,6 @@
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/Mozilla-Rhino/rhino-1.8.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/workspace-eclipse-2024-12/ProxyServerA/ProxyServer.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/java-image-hash-master/Java-Image-Hash-Master.jar"/>
-	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/validator-main/validator-26.8.30.jar"/><classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="C:/Users/pscha/HeadlampJetty/vnu/vnu.jar"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

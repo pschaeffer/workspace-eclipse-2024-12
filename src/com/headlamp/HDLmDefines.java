@@ -71,8 +71,12 @@ public class HDLmDefines {
 	  Map.entry("HDLMGETDATA",                               "HDLmGetData"),
 	  Map.entry("HDLMGETJSVALUE",                            "HDLmGetJS"),
 	  /* A second value is provided because the marvelouslandofoz.com website
-	     can not be currently changed */
+	     can not be currently changed. This change was on 2026-09-08. */
 	  Map.entry("HDLMGETJTVALUE",                            "HDLmGetJT"),
+	  Map.entry("HDLMGETPHVALUE",                            "HDLmGetPH"),
+	  /* SS stands for server status. This define is used to get the server 
+	     status value from the server. */	 
+	  Map.entry("HDLMGETSSVALUE",                            "HDLmGetSS"),
 	  Map.entry("HDLMGRAALSYNTAXERROR",                      "SyntaxError"),
 	  Map.entry("HDLMGXEPREFIX",                             "HDLmGxePrfx"),
 	  Map.entry("HDLMLEFTDEF",                               "leftDef"),
@@ -125,7 +129,6 @@ public class HDLmDefines {
 	  Map.entry("HDLMRULESTYPE",                             "rules"),
 	  Map.entry("HDLMRUNNINGLOCALLY",                        "HDLm_Running_Locally"),
 	  Map.entry("HDLMSCRIPTSYNTAXERROR",                     "SyntaxError"),
-	  Map.entry("HDLMSERVERSTATUS",                          "server-status"),
     Map.entry("HDLMSESSIONCLASSES",                        "HDLmSessionClasses"),
     Map.entry("HDLMSESSIONCOOKIE",                         "HDLmSessionCookie"),
     Map.entry("HDLMSESSIONDEBUGRULESENABLED",              "HDLmSessionDebugRulesEnabled"),

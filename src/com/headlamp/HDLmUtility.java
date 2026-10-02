@@ -1575,7 +1575,7 @@ public class HDLmUtility {
 	   hash value to the caller. The returned value is actually a 64-bit
 	   integer. However, the value is always returned as a 16-digit hex
 	   string. */
-	protected static String getPerceptualHashFromImage(final Image imageValue) {
+	protected static String  getPerceptualHashFromImage(final Image imageValue) {
 		if (imageValue == null) {
 		  String  errorText = "Image value passed to getPerceptualHash is null";
 		  throw new NullPointerException(errorText);
@@ -1887,6 +1887,13 @@ public class HDLmUtility {
     }
   	return 'a';
   }
+  /* This routine returns the current thread ID as a long value.
+     The thread ID is returned to the caller. */
+  protected static long  getThreadId() {
+		Thread  currentThread = Thread.currentThread();
+		long    threadId = currentThread.getId();
+		return threadId;
+  }
   /* Get a timestamp string that can be used in log files and the
 	   like. The returns string will always have an ISO 8601 format.
 	   The format will be YYYY-MM-DDTHH:MM:SS.UUUUUU and that time
@@ -2087,21 +2094,14 @@ public class HDLmUtility {
      means that all of the stack entries will be logged. One will
      skip the stack trace entry for the getStackTrace call. Two
      will skip the getStackTrace call and the call to this routine. */
-  protected static void logStackTrace(final int skipEntries) {
-  	StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-  	for (int i = skipEntries; i < elements.length; i++) {
-  	     StackTraceElement  s = elements[i];
-  	     String   stackElememtClass = s.getClassName();
-  	     String   stackElementMethod = s.getMethodName();
-  	     String   stackElementFile = s.getFileName();
-  	     int      stackElementLine = s.getLineNumber();
-  	     String   stackFormat = "%s.%s(%s:%d)";
-  	     String   stackElementStr = String.format(stackFormat, stackElememtClass,
-  	    		                                                   stackElementMethod,
-  	    		                                                   stackElementFile,
-  	    		                                                   stackElementLine);
-  	     LOG.info(stackElementStr);
-  	}
+  protected static void  logStackTrace(final int skipEntries) {
+		/* Check the skip entries passed by the caller */
+		if (skipEntries < 0) {
+			String  errorText = "Skip entries passed to logStackTrace is less than zero";
+			throw new IllegalArgumentException(errorText);
+	  }
+		/* Log the stack trace */
+  	showStackTrace(skipEntries, HDLmShowTypes.SHOWLOG);
   }
 	/* This routine logs a string passed by the caller. The caller must
 	   make sure that the string can be logged (is short enough). */
@@ -2142,6 +2142,20 @@ public class HDLmUtility {
 			LOG.info(whereStr + " " + partOffset.toString() + " " + strEntry);
 			partOffset += partSize;
 		}
+	}
+  /* This routine displays (prints) the current stack trace. The caller
+	   specifies the number of stack trace entries to be skipped. Zero
+	   means that all of the stack entries will be printed. One will
+	   skip the stack trace entry for the getStackTrace call. Two
+	   will skip the getStackTrace call and the call to this routine. */
+	protected static void  printStackTrace(final int skipEntries) {
+		/* Check the skip entries passed by the caller */
+		if (skipEntries < 0) {
+			String  errorText = "Skip entries passed to printStackTrace is less than zero";
+			throw new IllegalArgumentException(errorText);
+	  }
+		/* Pring the stack trace */
+  	showStackTrace(skipEntries, HDLmShowTypes.SHOWPRINT);
 	}
   /* The next routine takes an input URL and removes the protocol
 	   and the host name from it (if they are present). The returned
@@ -2440,6 +2454,62 @@ public class HDLmUtility {
 		}
 		/* Set the system property */ 
 		System.setProperty(propertyName, propertyValue);
+	}
+	/* This routine shows a bunch of debugging information */
+	protected static String  showDebugInfo() {
+		HDLmTree  treeTop = HDLmTree.getNodePassTreeTop();
+		System.out.println("In HDLmUtility.showDebugInfo - thread ID is " + HDLmUtility.getThreadId());
+		System.out.println("In HDLmUtility.showDebugInfo - tree lock hold count is " + HDLmTree.getTreeLockHoldCount());
+		System.out.println("In HDLmUtility.showDebugInfo - hex code for tree top is " + treeTop);
+		System.out.println("In HDLmUtility.showDebugInfo - tree top node path is " + treeTop.getNodePath());
+		System.out.println("In HDLmUtility.showDebugInfo - tree top children is " + treeTop.getChildren());
+		System.out.println("In HDLmUtility.showDebugInfo - hex code for tree top children get(0) is " + treeTop.getChildren().get(0));
+		System.out.println("In HDLmUtility.showDebugInfo - tree top children get(0) node path is " + treeTop.getChildren().get(0).getNodePath());
+		System.out.println("In HDLmUtility.showDebugInfo - tree top children get(0) children is " + treeTop.getChildren().get(0).getChildren());
+		System.out.println("In HDLmUtility.showDebugInfo - number of companies is " + treeTop.getChildren().get(0).getChildren().size());		
+		System.out.println("In HDLmUtility.showDebugInfo - hex code for tree top children get(0) children get(0) is " + treeTop.getChildren().get(0).getChildren().get(0));
+		System.out.println("In HDLmUtility.showDebugInfo - tree top children get(0) children get(0) node path is " + treeTop.getChildren().get(0).getChildren().get(0).getNodePath());
+		return "debug";
+	}
+  /* This routine shows the current stack trace. The caller
+	   specifies the number of stack trace entries to be skipped. Zero
+	   means that all of the stack entries will be logged. One will
+	   skip the stack trace entry for the getStackTrace call. Two
+	   will skip the getStackTrace call and the call to this routine. */
+	protected static void  showStackTrace(final int skipEntries, final HDLmShowTypes showType) {
+		/* Check the skip entries passed by the caller */
+		if (skipEntries < 0) {
+	    String  errorFormat = "Skip entries (%d) passed to showStackTrace is less than zero";
+	    String  errorText = String.format(errorFormat, skipEntries);
+			throw new IllegalArgumentException(errorText);
+	  }
+		/* Check the show type passed by the caller for a null value */
+		if (showType == null) {
+		  String  errorText = "Show type value passed to showStackTrace is null";
+		  throw new NullPointerException(errorText);
+		}
+		/* Check if the show type passed by the caller is invalid */
+		if (showType == HDLmShowTypes.NONE) {
+		  HDLmAssertAction(false, "Show type value passed to showStackTrace is invalid");
+		}
+		StackTraceElement[]   elements = Thread.currentThread().getStackTrace();
+		for (int i = skipEntries; i < elements.length; i++) {
+	    StackTraceElement  s = elements[i];
+	    String  stackElememtClass = s.getClassName();
+	    String  stackElementMethod = s.getMethodName();
+	    String  stackElementFile = s.getFileName();
+	    int     stackElementLine = s.getLineNumber();
+	    String  stackFormat = "%s.%s(%s:%d)";
+	    String  stackElementStr = String.format(stackFormat, stackElememtClass,
+	   		                                      stackElementMethod,
+	   		                                      stackElementFile,
+	   		                                      stackElementLine);
+	    /* Display the stack trace entry based on the show type passed by the caller */
+	    if (showType  == HDLmShowTypes.SHOWLOG) 
+ 	      LOG.info(stackElementStr);
+	    else if (showType == HDLmShowTypes.SHOWPRINT)
+				System.out.println(stackElementStr);
+		}
 	}
   /* This routine processes a string and splits it into a set of
      lines. The caller provides the input string and the suffix

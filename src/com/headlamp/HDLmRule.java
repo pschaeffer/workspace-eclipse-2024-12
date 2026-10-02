@@ -515,7 +515,8 @@ public class HDLmRule {
                               siteName + "/" + ruleName;		
 		/* Check if the rule name can be found in the map of rules. 
        In some cases, we may need to add a "www." prefix to the 
-       host name to find the rule in the map. */ 
+       host name to find the rule in the map. This change was
+	     made as a bug fix on 2026-09-08. */ 
 		if (!rulesMap.containsKey(ruleNameOverall)) {
 			String ruleNameOverallWithPrefix = "www." + ruleNameOverall;
 			if (rulesMap.containsKey(ruleNameOverallWithPrefix)) 

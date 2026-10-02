@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
+import javax.imageio.ImageIO; 
+/* import org.apache.batik.ext.awt.image.codec.imageio.*; */
 
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
@@ -1136,7 +1137,6 @@ private static final Logger LOG = LoggerFactory.getLogger(HDLmImageInformation.c
 		}
 		/* Define a few local variables */
 		HDLmImageInformation   imageInfo = new HDLmImageInformation();
-		HDLmToken              token;
 		int                    curPos = 0;
 		/* What follows is a dummy loop used only to allow break to work */
 		while (true) {
